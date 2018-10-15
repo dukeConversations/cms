@@ -30,6 +30,7 @@ export function getDinners(successCallback, errorCallback) {
     });
 }
 
+// Get user with the given id
 export function getUser(id, successCallback, errorCallback) {
   api
     .get("/users", {
@@ -45,6 +46,7 @@ export function getUser(id, successCallback, errorCallback) {
     });
 }
 
+// Get professor with the given id
 export function getProfessor(id, successCallback, errorCallback) {
   api
     .get("/professors", {

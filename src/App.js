@@ -4,7 +4,7 @@ import { Route, NavLink, HashRouter } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
 import Professors from "./pages/professors/Professors";
-import Dinners from "./pages/Dinners";
+import Dinners from "./pages/dinners/Dinners";
 import Selection from "./pages/Selection";
 import Users from "./pages/Users";
 import CheckIn from "./pages/CheckIn";
@@ -39,12 +39,13 @@ class App extends Component {
           </ul>
           <div className="content">
             <Route exact path="/" component={Dashboard} />
-            <Route path="/students" component={Students} />
-            <Route path="/professors" component={Professors} />
-            <Route path="/dinners" component={Dinners} />
-            <Route path="/selection" component={Selection} />
-            <Route path="/users" component={Users} />
-            <Route path="/checkIn" component={CheckIn} />
+            <Route exact path="/students" component={Students} />
+            <Route exact path="/professors" component={Professors} />
+            <Route exact path="/dinners" component={Dinners} />
+            <Route exact path="/selection" component={Selection} />
+            <Route exact path="/users" component={Users} />
+            <Route exact path="/checkIn" component={CheckIn} />
+            <Route exact path="/users/:id" component={Users} />
           </div>
         </div>
       </HashRouter>

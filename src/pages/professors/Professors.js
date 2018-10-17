@@ -54,7 +54,6 @@ export default class Professors extends Component {
               <th>id</th>
               <th>first name</th>
               <th>last name</th>
-              <th>email</th>
               <th>gender pronouns</th>
               <th>department</th>
               <th>title</th>

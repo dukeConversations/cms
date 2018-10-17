@@ -19,7 +19,6 @@ export default class ProfessorItem extends Component {
         <td className="text-left">{this.props.professor.uniqueID}</td>
         <td className="text-left">{this.props.professor.firstName}</td>
         <td className="text-left">{this.props.professor.lastName}</td>
-        <td className="text-left">{this.props.professor.email}</td>
         <td className="text-left">{this.props.professor.genderPronouns}</td>
         <td className="text-left">{this.props.professor.department}</td>
         <td className="text-left">{this.props.professor.title}</td>

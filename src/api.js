@@ -10,8 +10,7 @@ export function getProfessors(successCallback, errorCallback) {
   api
     .get("professors")
     .then(response => {
-      console.log(response);
-      successCallback(response);
+      successCallback(response.data);
     })
     .catch(error => {
       errorCallback(error);
@@ -23,7 +22,7 @@ export function getDinners(successCallback, errorCallback) {
   api
     .get("dinners")
     .then(response => {
-      successCallback(response);
+      successCallback(response.data);
     })
     .catch(error => {
       errorCallback(error);
@@ -32,14 +31,23 @@ export function getDinners(successCallback, errorCallback) {
 
 // Get user with the given id
 export function getUser(id, successCallback, errorCallback) {
+  // api
+  //   .get("/users/", {
+  //     params: {
+  //       id: id
+  //     }
+  //   })
+  //   .then(response => {
+  //     successCallback(response);
+  //   })
+  //   .catch(error => {
+  //     errorCallback(error);
+  //   });
+
   api
-    .get("/users", {
-      params: {
-        id: id
-      }
-    })
+    .get("/users")
     .then(response => {
-      successCallback(response);
+      successCallback(response.data[0]);
     })
     .catch(error => {
       errorCallback(error);
@@ -48,14 +56,22 @@ export function getUser(id, successCallback, errorCallback) {
 
 // Get professor with the given id
 export function getProfessor(id, successCallback, errorCallback) {
+  // api
+  //   .get("/professor/", {
+  //     params: {
+  //       id: id
+  //     }
+  //   })
+  //   .then(response => {
+  //     successCallback(response);
+  //   })
+  //   .catch(error => {
+  //     errorCallback(error);
+  //   });
   api
-    .get("/professors", {
-      params: {
-        id: id
-      }
-    })
+    .get("/professor/" + id)
     .then(response => {
-      successCallback(response);
+      successCallback(response.data);
     })
     .catch(error => {
       errorCallback(error);

@@ -2,11 +2,11 @@ import "./App.css";
 import React, { Component } from "react";
 import { Route, NavLink, HashRouter } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import Students from "./pages/Students";
+import Students from "./pages/students/Students";
 import Professors from "./pages/professors/Professors";
 import Dinners from "./pages/dinners/Dinners";
 import Selection from "./pages/Selection";
-import Users from "./pages/Users";
+import Users from "./pages/users/Users";
 import CheckIn from "./pages/CheckIn";
 
 class App extends Component {

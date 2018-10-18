@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Button, Label, Row } from "reactstrap";
+import { Button } from "reactstrap";
+import { NavLink } from "react-router-dom";
 import moment from "moment";
-import { Route, NavLink, HashRouter } from "react-router-dom";
 import * as API from "../../api";
 
-export default class DinnerItem extends Component {
+export default class DinnerRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,9 +61,6 @@ export default class DinnerItem extends Component {
 
     return (
       <tr>
-        <td>
-          <input type="checkbox" />
-        </td>
         <td className="text-left">{this.props.dinner.id}</td>
         <td className="text-left">{this.props.dinner.topic}</td>
         <td className="text-left">

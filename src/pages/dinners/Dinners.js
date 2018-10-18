@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DinnerItem from "./DinnerItem";
+import DinnerRow from "./DinnerRow";
 import * as API from "../../api";
 import { Table, Button } from "reactstrap";
 
@@ -8,8 +8,7 @@ export default class Dinners extends Component {
   constructor() {
     super();
     this.state = {
-      dinners: [],
-      checkedAll: false
+      dinners: []
     };
   }
 
@@ -28,9 +27,9 @@ export default class Dinners extends Component {
   }
 
   render() {
-    // Generate a list of DinnerItems from the array in state.dinners
-    const dinnerListItems = this.state.dinners.map(dinner => {
-      return <DinnerItem dinner={dinner} key={dinner.url} />;
+    // Generate a list of DinnerRows from the array in state.dinners
+    const dinnerRows = this.state.dinners.map(dinner => {
+      return <DinnerRow dinner={dinner} key={dinner.url} />;
     });
 
     // Render the JSX
@@ -49,13 +48,6 @@ export default class Dinners extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th>
-                <input
-                  type="checkbox"
-                  checked={this.state.checkedAll}
-                  onChange={this.toggleCheckedAll}
-                />
-              </th>
               <th>id</th>
               <th>topic</th>
               <th>professor</th>
@@ -71,7 +63,7 @@ export default class Dinners extends Component {
           </thead>
           <tbody>
             {/* Add the rows to represent each dinner */}
-            {dinnerListItems}
+            {dinnerRows}
           </tbody>
         </Table>
       </div>

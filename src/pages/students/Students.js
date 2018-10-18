@@ -1,23 +1,23 @@
 import React, { Component } from "react";
-import ProfessorRow from "./ProfessorRow";
+import StudentRow from "./StudentRow";
 import * as API from "../../api";
 import { Table, Button } from "reactstrap";
 
-export default class Professors extends Component {
+export default class Students extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      professors: []
+      students: []
     };
   }
 
-  // When the component is added, fetch the professors and update state
+  // When the component is added, fetch the students and update state
   componentDidMount() {
-    API.getProfessors(
-      // the data is returned in professors
-      professors => {
-        this.setState({ professors: professors });
+    API.getStudents(
+      // the data is returned in students
+      students => {
+        this.setState({ students: students });
       },
       // an error is returned
       error => {
@@ -27,15 +27,15 @@ export default class Professors extends Component {
   }
 
   render() {
-    // Generate a list of ProfessorRows from the array in state.professors
-    const professorRows = this.state.professors.map(professor => {
-      return <ProfessorRow key={professor.uniqueID} professor={professor} />;
+    // Generate a list of StudentRows from the array in state.students
+    const studentRows = this.state.students.map(student => {
+      return <StudentRow key={student.uniqueID} student={student} />;
     });
 
     // Render the JSX
     return (
       <div>
-        <h1>Professors</h1>
+        <h1>Students</h1>
         <Button color="link" type="button">
           Create
         </Button>
@@ -50,13 +50,15 @@ export default class Professors extends Component {
             <tr>
               <th>First Name</th>
               <th>Last Name</th>
-              <th>Department</th>
-              <th>Dinner Count</th>
+              <th>NetID</th>
+              <th>Class</th>
+              <th>Overall Acceptance %</th>
+              <th>Semester Acceptance %</th>
             </tr>
           </thead>
           <tbody>
-            {/* Add the rows to represent each professor */}
-            {professorRows}
+            {/* Add the rows to represent each student */}
+            {studentRows}
           </tbody>
         </Table>
       </div>

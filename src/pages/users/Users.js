@@ -1,23 +1,23 @@
 import React, { Component } from "react";
-import ProfessorRow from "./ProfessorRow";
+import UserRow from "./UserRow";
 import * as API from "../../api";
 import { Table, Button } from "reactstrap";
 
-export default class Professors extends Component {
+export default class Users extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      professors: []
+      users: []
     };
   }
 
-  // When the component is added, fetch the professors and update state
+  // When the component is added, fetch the users and update state
   componentDidMount() {
-    API.getProfessors(
-      // the data is returned in professors
-      professors => {
-        this.setState({ professors: professors });
+    API.getUsers(
+      // the data is returned in users
+      users => {
+        this.setState({ users: users });
       },
       // an error is returned
       error => {
@@ -27,15 +27,15 @@ export default class Professors extends Component {
   }
 
   render() {
-    // Generate a list of ProfessorRows from the array in state.professors
-    const professorRows = this.state.professors.map(professor => {
-      return <ProfessorRow key={professor.uniqueID} professor={professor} />;
+    // Generate a list of UserRows from the array in state.users
+    const userRows = this.state.users.map(user => {
+      return <UserRow key={user.uniqueID} user={user} />;
     });
 
     // Render the JSX
     return (
       <div>
-        <h1>Professors</h1>
+        <h1>Users</h1>
         <Button color="link" type="button">
           Create
         </Button>
@@ -50,13 +50,14 @@ export default class Professors extends Component {
             <tr>
               <th>First Name</th>
               <th>Last Name</th>
-              <th>Department</th>
+              <th>Role</th>
               <th>Dinner Count</th>
+              <th>Semester Dinner Count</th>
             </tr>
           </thead>
           <tbody>
-            {/* Add the rows to represent each professor */}
-            {professorRows}
+            {/* Add the rows to represent each user */}
+            {userRows}
           </tbody>
         </Table>
       </div>

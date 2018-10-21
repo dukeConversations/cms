@@ -3,10 +3,15 @@ import React, { Component } from "react";
 import { Route, NavLink, HashRouter } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/students/Students";
+import StudentDetail from "./pages/students/StudentDetail";
+import StudentEdit from "./pages/students/StudentEdit";
 import Professors from "./pages/professors/Professors";
+import ProfessorDetail from "./pages/professors/ProfessorDetail";
 import Dinners from "./pages/dinners/Dinners";
+import DinnerDetail from "./pages/dinners/DinnerDetail";
 import Selection from "./pages/Selection";
 import Users from "./pages/users/Users";
+import UserDetail from "./pages/users/UserDetail";
 import CheckIn from "./pages/CheckIn";
 
 class App extends Component {
@@ -45,7 +50,10 @@ class App extends Component {
             <Route exact path="/selection" component={Selection} />
             <Route exact path="/users" component={Users} />
             <Route exact path="/checkIn" component={CheckIn} />
-            <Route exact path="/users/:id" component={Users} />
+            <Route exact path="/users/:id" component={UserDetail} />
+            <Route exact path="/professors/:id" component={ProfessorDetail} />
+            <Route exact path="/dinners/:id" component={DinnerDetail} />
+            <Route exact path="/students/:netID" component={StudentDetail} />
           </div>
         </div>
       </HashRouter>

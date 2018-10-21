@@ -29,7 +29,7 @@ export default class Students extends Component {
   render() {
     // Generate a list of StudentRows from the array in state.students
     const studentRows = this.state.students.map(student => {
-      return <StudentRow key={student.uniqueID} student={student} />;
+      return <StudentRow key={student.netID} student={student} />;
     });
 
     // Render the JSX
@@ -48,6 +48,7 @@ export default class Students extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
+              <th>Blah</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>NetID</th>

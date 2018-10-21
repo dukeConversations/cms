@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 export default class ProfessorRow extends Component {
   constructor(props) {
@@ -7,13 +8,16 @@ export default class ProfessorRow extends Component {
   }
 
   render() {
-    var prof = this.props.professor;
+    var professor = this.props.professor;
     return (
       <tr>
-        <td className="text-left">{prof.firstName}</td>
-        <td className="text-left">{prof.lastName}</td>
-        <td className="text-left">{prof.department}</td>
-        <td className="text-left">{prof.dinnerCount}</td>
+        <td>
+          <NavLink to={"/professors/" + professor.uniqueID}>View</NavLink>
+        </td>
+        <td className="text-left">{professor.firstName}</td>
+        <td className="text-left">{professor.lastName}</td>
+        <td className="text-left">{professor.department}</td>
+        <td className="text-left">{professor.dinnerCount}</td>
       </tr>
     );
   }

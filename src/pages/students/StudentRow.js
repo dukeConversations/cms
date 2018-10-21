@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 export default class StudentRow extends Component {
   constructor(props) {
@@ -24,10 +25,13 @@ export default class StudentRow extends Component {
       (isNaN(totalPercentage) ? 0 : totalPercentage) + "%";
     return (
       <tr>
+        <td>
+          <NavLink to={"/students/" + student.netID}>View</NavLink>
+        </td>
         <td className="text-left">{student.firstName}</td>
         <td className="text-left">{student.lastName}</td>
         <td className="text-left">{student.netID}</td>
-        <td className="text-left">{student.gradYear}</td>
+        <td className="text-left">{student.graduationYear}</td>
         <td className="text-left">{totalPercentString}</td>
         <td className="text-left">{semesterPercentString}</td>
       </tr>

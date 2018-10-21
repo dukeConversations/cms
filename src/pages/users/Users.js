@@ -48,6 +48,7 @@ export default class Users extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
+              <th>blah</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Role</th>

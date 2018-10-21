@@ -29,7 +29,7 @@ export default class Dinners extends Component {
   render() {
     // Generate a list of DinnerRows from the array in state.dinners
     const dinnerRows = this.state.dinners.map(dinner => {
-      return <DinnerRow dinner={dinner} key={dinner.url} />;
+      return <DinnerRow key={dinner.id} dinner={dinner} />;
     });
 
     // Render the JSX
@@ -49,16 +49,11 @@ export default class Dinners extends Component {
           <thead className="thead-dark">
             <tr>
               <th>id</th>
-              <th>topic</th>
-              <th>professor</th>
-              <th>user</th>
-              <th>date</th>
-              <th>address</th>
-              <th># of apps</th>
-              <th>invite sent</th>
-              <th>invite response</th>
-              <th>catering</th>
-              <th>transportation</th>
+              <th>Professor</th>
+              <th>User</th>
+              <th>Date/Time</th>
+              <th>Catering</th>
+              <th>Transportation</th>
             </tr>
           </thead>
           <tbody>

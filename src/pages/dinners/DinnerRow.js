@@ -25,59 +25,42 @@ export default class DinnerRow extends Component {
         console.error(error);
       }
     );
-
-    API.getProfessor(
-      this.props.dinner.professorId,
-      // the data is returned
-      professor => {
-        this.setState({ professor: professor });
-      },
-      // an error is returned
-      error => {
-        console.error(error);
-      }
-    );
   }
 
   render() {
-    var date = moment
-      .unix(this.props.dinner.timestamp)
-      .format("MMMM Do YYYY, h:mm:ss a");
+    var dinner = this.props.dinner;
 
-    var inviteSentDate = moment
-      .unix(this.props.dinner.invitationSent)
-      .format("MMMM Do YYYY, h:mm:ss a");
+    var date = moment.unix(dinner.timeStamp);
+    var dateString = date.isValid()
+      ? date.format("MMMM Do YYYY, h:mm:ss a")
+      : dinner.timeStamp;
 
-    var userString = this.props.dinner.userId;
+    var userString = dinner.userId;
     var user = this.state.user;
     if (user !== null) {
       userString = user.firstName + " " + user.lastName;
     }
-    var professor = this.state.professor;
-    var professorString = this.props.dinner.professorId;
-    if (professor !== null) {
-      professorString = professor.firstName + " " + professor.lastName;
-    }
+
+    var professor = dinner.professor;
+    var professorString = professor.firstName + " " + professor.lastName;
+
+    var cateringString = dinner.catering ? "Yes" : "No";
+    var transportationString = dinner.transportation ? "Yes" : "No";
 
     return (
       <tr>
-        <td className="text-left">{this.props.dinner.id}</td>
-        <td className="text-left">{this.props.dinner.topic}</td>
+        <td className="text-left">{dinner.id}</td>
         <td className="text-left">
-          <Button color="link">{professorString}</Button>
-        </td>
-        <td className="text-left">
-          <NavLink to={"/users/" + this.props.dinner.userId}>
-            {userString}
+          <NavLink to={"/professors/" + professor.uniqueID}>
+            {professorString}
           </NavLink>
         </td>
-        <td className="text-left">{date}</td>
-        <td className="text-left">{this.props.dinner.address}</td>
-        <td className="text-left">{this.props.dinner.numApps}</td>
-        <td className="text-left">{inviteSentDate}</td>
-        <td className="text-left">{this.props.dinner.invitationResponse}</td>
-        <td className="text-left">{this.props.dinner.catering}</td>
-        <td className="text-left">{this.props.dinner.transportation}</td>
+        <td className="text-left">
+          <NavLink to={"/users/" + dinner.userId}>{userString}</NavLink>
+        </td>
+        <td className="text-left">{dateString}</td>
+        <td className="text-left">{cateringString}</td>
+        <td className="text-left">{transportationString}</td>
       </tr>
     );
   }

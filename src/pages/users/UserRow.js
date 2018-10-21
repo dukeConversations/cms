@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 export default class UserRow extends Component {
   constructor(props) {
@@ -11,6 +12,9 @@ export default class UserRow extends Component {
 
     return (
       <tr>
+        <td>
+          <NavLink to={"/users/" + user.uniqueID}>View</NavLink>
+        </td>
         <td className="text-left">{user.firstName}</td>
         <td className="text-left">{user.lastName}</td>
         <td className="text-left">{user.role}</td>

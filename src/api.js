@@ -23,18 +23,6 @@ export function getDinners(successCallback, errorCallback) {
 }
 // Get dinner with given id
 export function getDinner(id, successCallback, errorCallback) {
-  // api
-  //   .get("/dinner/", {
-  //     params: {
-  //       id: id
-  //     }
-  //   })
-  //   .then(response => {
-  //     successCallback(response.data);
-  //   })
-  //   .catch(error => {
-  //     errorCallback(error);
-  //   });
   api
     .get("/dinner/" + id)
     .then(response => {
@@ -61,21 +49,10 @@ export function getProfessors(successCallback, errorCallback) {
 }
 // Get professor with the given id
 export function getProfessor(id, successCallback, errorCallback) {
-  // api
-  //   .get("/professor/", {
-  //     params: {
-  //       id: id
-  //     }
-  //   })
-  //   .then(response => {
-  //     successCallback(response);
-  //   })
-  //   .catch(error => {
-  //     errorCallback(error);
-  //   });
   api
-    .get("/professor/" + id)
+    .get("/professors/" + id)
     .then(response => {
+      console.log(response.data);
       successCallback(response.data);
     })
     .catch(error => {
@@ -89,81 +66,22 @@ export function getProfessor(id, successCallback, errorCallback) {
 
 // Get all students
 export function getStudents(successCallback, errorCallback) {
-  // api
-  //   .get("students")
-  //   .then(response => {
-  //     console.log(response);
-  //     successCallback(response.data);
-  //   })
-  //   .catch(error => {
-  //     errorCallback(error);
-  //   });
-  var students = [
-    {
-      netID: "abc01",
-      uniqueID: 7654321,
-      role: 0,
-      firstName: "Cooper",
-      lastName: "Edmunds",
-      phone: 7608037301,
-      major: 33,
-      genderPronouns: 0,
-      gradYear: 20,
-      numApps: 5,
-      numSelections: 3,
-      semesterApps: 2,
-      semesterDins: 2
-    },
-    {
-      netID: "abc02",
-      uniqueID: 7564321,
-      role: 0,
-      firstName: "Yasa",
-      lastName: "Baig",
-      phone: 7608037301,
-      major: 33,
-      genderPronouns: 0,
-      gradYear: 20,
-      numApps: 0,
-      numSelections: 0,
-      semesterApps: 0,
-      semesterDins: 0
-    },
-    {
-      netID: "abc03",
-      uniqueID: 7564312,
-      role: 0,
-      firstName: "Grant",
-      lastName: "Besner",
-      phone: 7608037301,
-      major: 33,
-      genderPronouns: 0,
-      gradYear: 20,
-      numApps: 0,
-      numSelections: 0,
-      semesterApps: 0,
-      semesterDins: 0
-    }
-  ];
-  successCallback(students);
+  api
+    .get("students")
+    .then(response => {
+      console.log(response);
+      successCallback(response.data);
+    })
+    .catch(error => {
+      errorCallback(error);
+    });
 }
 // Get student with the given netid
-export function getStudent(netid, successCallback, errorCallback) {
-  // api
-  //   .get("/student/", {
-  //     params: {
-  //       netid: netid
-  //     }
-  //   })
-  //   .then(response => {
-  //     successCallback(response.data);
-  //   })
-  //   .catch(error => {
-  //     errorCallback(error);
-  //   });
+export function getStudent(netID, successCallback, errorCallback) {
   api
-    .get("/student/" + netid)
+    .get("student/" + netID)
     .then(response => {
+      console.log(response);
       successCallback(response.data);
     })
     .catch(error => {
@@ -197,7 +115,7 @@ export function getUsers(successCallback, errorCallback) {
       major: 33,
       dinners: 12,
       semesterDins: 3,
-      email_text:
+      emailText:
         "Thanks so much for applying to the dinner. I'm super excited to have you!",
       pictureId: 28
     },
@@ -211,7 +129,7 @@ export function getUsers(successCallback, errorCallback) {
       major: 33,
       dinners: 12,
       semesterDins: 3,
-      email_text: "Thanks, bro. Yay!",
+      emailText: "Thanks, bro. Yay!",
       pictureId: 27
     }
   ];
@@ -220,11 +138,7 @@ export function getUsers(successCallback, errorCallback) {
 // Get user with the given id
 export function getUser(id, successCallback, errorCallback) {
   // api
-  //   .get("/users/", {
-  //     params: {
-  //       id: id
-  //     }
-  //   })
+  //   .get("/user/" + id)
   //   .then(response => {
   //     successCallback(response);
   //   })
@@ -236,13 +150,13 @@ export function getUser(id, successCallback, errorCallback) {
     netID: "abc12",
     uniqueID: 1234567,
     role: 0,
-    firstFame: "Johnny",
+    firstName: "Johnny",
     lastName: "Appleseed",
     phone: 7608037301,
     major: 33,
     dinners: 12,
     semesterDins: 3,
-    email_text:
+    emailText:
       "Thanks so much for applying to the dinner. I'm super excited to have you!",
     pictureId: 28
   };

@@ -15,7 +15,6 @@ export default class StudentDetail extends Component {
 
   // When the component is added, fetch the student and update state
   componentDidMount() {
-    console.log(this.props.match.params.netID);
     API.getStudent(
       this.props.match.params.netID,
       // the data is returned in student
@@ -37,6 +36,7 @@ export default class StudentDetail extends Component {
       // Render the JSX
       return (
         <Container>
+          <NavLink to={"/students/e/" + student.netID}>Edit</NavLink>
           <Row>Name: {name}</Row>
           <Row>
             Unique id: {student.uniqueID} | Net id: {student.netID}

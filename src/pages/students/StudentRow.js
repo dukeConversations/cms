@@ -26,7 +26,10 @@ export default class StudentRow extends Component {
     return (
       <tr>
         <td>
-          <NavLink to={"/students/" + student.netID}>View</NavLink>
+          <NavLink to={"/students/v/" + student.netID}>View</NavLink>
+        </td>
+        <td>
+          <NavLink to={"/students/e/" + student.netID}>Edit</NavLink>
         </td>
         <td className="text-left">{student.firstName}</td>
         <td className="text-left">{student.lastName}</td>

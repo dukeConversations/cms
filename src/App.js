@@ -53,7 +53,18 @@ class App extends Component {
             <Route exact path="/users/:id" component={UserDetail} />
             <Route exact path="/professors/:id" component={ProfessorDetail} />
             <Route exact path="/dinners/:id" component={DinnerDetail} />
-            <Route exact path="/students/:netID" component={StudentDetail} />
+
+            <Route exact path="/students/v/:netID" component={StudentDetail} />
+            <Route
+              exact
+              path="/students/e/:netID"
+              render={props => <StudentEdit {...props} isCreating={false} />}
+            />
+            <Route
+              exact
+              path="/students/c"
+              render={props => <StudentEdit {...props} isCreating={true} />}
+            />
           </div>
         </div>
       </HashRouter>

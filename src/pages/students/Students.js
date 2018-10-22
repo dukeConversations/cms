@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import StudentRow from "./StudentRow";
 import * as API from "../../api";
 import { Table, Button } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 export default class Students extends Component {
   // Instantiate state when the component is constructed
@@ -36,9 +37,7 @@ export default class Students extends Component {
     return (
       <div>
         <h1>Students</h1>
-        <Button color="link" type="button">
-          Create
-        </Button>
+        <NavLink to={"/students/c"}>Create</NavLink>
         <span> | </span>
         <Button color="link" type="button">
           Delete Selected
@@ -48,7 +47,8 @@ export default class Students extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th>Blah</th>
+              <th> </th>
+              <th> </th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>NetID</th>

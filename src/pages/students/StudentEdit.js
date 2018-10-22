@@ -22,110 +22,131 @@ export default class StudentDetail extends Component {
 
   // When the component is added, fetch the student and update state
   componentDidMount() {
-    API.getStudent(
-      this.props.match.params.netID,
-      // the data is returned in student
-      student => {
-        this.setState({ student: student });
-      },
-      // an error is returned
-      error => {
-        console.error(error);
-      }
-    );
+    console.log(this.props);
+    if (!this.props.isCreating) {
+      API.getStudent(
+        this.props.match.params.netID,
+        // the data is returned in student
+        student => {
+          this.setState({ student: student });
+        },
+        // an error is returned
+        error => {
+          console.error(error);
+        }
+      );
+    } else {
+      this.setState({
+        student: { firstName: "", lastName: "" }
+      });
+    }
   }
 
-  onFormSubmit(event) {
-    event.preventDefault();
-  }
+  submit = () => {
+    this.props.history.goBack();
+  };
+
+  cancel = () => {
+    this.props.history.goBack();
+  };
 
   render() {
     var student = this.state.student;
 
-    if (student != null) {
-      return (
-        /*
-        netID
-        UniqueID
-        first_name
-        last_name
-        phone
-        Major
-        gender_pronouns
-          takes an int and maps to a set of pronouns
-          ex. 1 => “he/his/him”
-        grad_year
-          Only 2 ints
-          ex. Class of 2019 = 19, Class of 2021 = 21...etc.
+    var majors = [
+      "Computer Science",
+      "Economics",
+      "Public Policy",
+      "Biomedical Engineering"
+    ];
 
-        */
-        <form onSubmit={this.onFormSubmit}>
-          <Container>
-            <Row className="my-2">
-              <Col className="form-group">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="firstName"
-                  id="firstName"
-                  placeholder="Johnny"
-                  value={this.state.student.firstName}
-                  onChange={this.handleChange}
-                />
-              </Col>
-              <Col className="form-group">
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="lastName"
-                  placeholder="Appleseed"
-                  value={this.state.student.lastName}
-                  onChange={this.handleChange}
-                />
-              </Col>
-            </Row>
-            <Row className="my-2">
-              <Col className="form-group col-3">
-                <label htmlFor="netID">Net ID</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="netID"
-                  id="netID"
-                  placeholder="abc01"
-                  value={this.state.student.netID}
-                  onChange={this.handleChange}
-                />
-              </Col>
-              <Col className="form-group col-3">
-                <label htmlFor="uniqueID">Unique ID</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="uniqueID"
-                  id="uniqueID"
-                  placeholder="1234567"
-                  value={this.state.student.uniqueID}
-                  onChange={this.handleChange}
-                />
-              </Col>
-            </Row>
-            <Row className="my-2">
-              <Col className="form-group col-3">
-                <label htmlFor="phone">Phone</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="phone"
-                  placeholder="(123) 456-789"
-                  value={this.state.student.phoneNumber}
-                  onChange={this.handleChange}
-                />
-              </Col>
-            </Row>
-            <div className="form-group">
+    var gradYears = ["2019", "2020", "2021", "2022"];
+
+    var genderPronouns = [
+      "He, Him, His",
+      "She, Her, Hers",
+      "They, Them, Theirs"
+    ];
+
+    if (student != null) {
+      const majorOptions = majors.map(major => {
+        return <option>{major}</option>;
+      });
+
+      const gradYearOptions = gradYears.map(year => {
+        return <option>{year}</option>;
+      });
+
+      const genderPronounOptions = genderPronouns.map(genderPronoun => {
+        return <option>{genderPronoun}</option>;
+      });
+
+      return (
+        <Container>
+          <Row className="my-2">
+            <Col className="form-group col-4">
+              <label htmlFor="firstName">First Name</label>
+              <input
+                className="form-control"
+                type="text"
+                name="firstName"
+                id="firstName"
+                placeholder="Johnny"
+                value={this.state.student.firstName}
+                onChange={this.handleChange}
+              />
+            </Col>
+            <Col className="form-group col-4">
+              <label htmlFor="lastName">Last Name</label>
+              <input
+                className="form-control"
+                type="text"
+                name="lastName"
+                placeholder="Appleseed"
+                value={this.state.student.lastName}
+                onChange={this.handleChange}
+              />
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-3">
+              <label htmlFor="netID">Net ID</label>
+              <input
+                className="form-control"
+                type="text"
+                name="netID"
+                id="netID"
+                placeholder="abc01"
+                value={this.state.student.netID}
+                onChange={this.handleChange}
+              />
+            </Col>
+            <Col className="form-group col-3">
+              <label htmlFor="uniqueID">Unique ID</label>
+              <input
+                className="form-control"
+                type="text"
+                name="uniqueID"
+                id="uniqueID"
+                placeholder="1234567"
+                value={this.state.student.uniqueID}
+                onChange={this.handleChange}
+              />
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-2">
+              <label htmlFor="phone">Phone</label>
+              <input
+                className="form-control"
+                type="text"
+                name="phone"
+                placeholder="(123) 456-789"
+                value={this.state.student.phoneNumber}
+                onChange={this.handleChange}
+              />
+            </Col>
+            <Col className="form-group col-4">
               <label htmlFor="major">Major</label>
               <select
                 onChange={this.handleChange}
@@ -134,29 +155,45 @@ export default class StudentDetail extends Component {
                 className="form-control"
                 id="major"
               >
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>33</option>
-                <option>5</option>
+                {majorOptions}
               </select>
-            </div>
-            <input
-              type="text"
-              name="major"
-              placeholder="Major"
-              value={this.state.student.major}
-              onChange={this.handleChange}
-            />
-            <input
-              type="text"
-              name="major"
-              placeholder="Major"
-              value={this.state.student.major}
-              onChange={this.handleChange}
-            />
-          </Container>
-        </form>
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-2">
+              <label htmlFor="graduationYear">Graduation Year</label>
+              <select
+                onChange={this.handleChange}
+                value={this.state.student.graduationYear}
+                name="graduationYear"
+                className="form-control"
+                id="graduationYear"
+              >
+                {gradYearOptions}
+              </select>
+            </Col>
+            <Col className="form-group col-3">
+              <label htmlFor="genderPronouns">Gender Pronouns</label>
+              <select
+                onChange={this.handleChange}
+                value={this.state.student.genderPronouns}
+                name="genderPronouns"
+                className="form-control"
+                id="genderPronouns"
+              >
+                {genderPronounOptions}
+              </select>
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="col-2">
+              <Button onClick={this.cancel}>Cancel</Button>
+            </Col>
+            <Col className="col-2">
+              <Button onClick={this.submit}>Submit</Button>
+            </Col>
+          </Row>
+        </Container>
       );
     } else {
       return null;

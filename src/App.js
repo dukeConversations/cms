@@ -1,6 +1,8 @@
 import "./App.css";
 import React, { Component } from "react";
 import { Route, NavLink, HashRouter } from "react-router-dom";
+import { Button, Nav, Navbar, NavItem } from "reactstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/students/Students";
 import StudentDetail from "./pages/students/StudentDetail";
@@ -19,29 +21,83 @@ class App extends Component {
     return (
       <HashRouter>
         <div>
-          <ul className="header">
-            <li>
-              <NavLink to="/">Dashboard</NavLink>
+          <Navbar color="dark" expand="md">
+            <Nav>
+              <NavItem>
+                <LinkContainer to="/">
+                  <Button color="link">Dashboard</Button>
+                </LinkContainer>
+              </NavItem>
+              <NavItem>
+                <LinkContainer to="/students">
+                  <Button color="link">Students</Button>
+                </LinkContainer>
+              </NavItem>
+              <NavItem>
+                <LinkContainer to="/professors">
+                  <Button color="link">Professors</Button>
+                </LinkContainer>
+              </NavItem>
+              <NavItem>
+                <LinkContainer to="/dinners">
+                  <Button color="link">Dinners</Button>
+                </LinkContainer>
+              </NavItem>
+              <NavItem>
+                <LinkContainer to="/selection">
+                  <Button color="link">Selection</Button>
+                </LinkContainer>
+              </NavItem>
+              <NavItem>
+                <LinkContainer to="/users">
+                  <Button color="link">Users</Button>
+                </LinkContainer>
+              </NavItem>
+              <NavItem>
+                <LinkContainer to="/checkIn">
+                  <Button color="link">Check In</Button>
+                </LinkContainer>
+              </NavItem>
+            </Nav>
+          </Navbar>
+          {/* <Navbar>
+            <li className="nav-item active">
+          <LinkContainer to="/">
+            <Button color="link">Dashboard</Button>
+          </LinkContainer>
             </li>
-            <li>
-              <NavLink to="/students">Students</NavLink>
+            <li className="nav-item">
+          <LinkContainer to="/students">
+            <Button>Students</Button>
+          </LinkContainer>
             </li>
-            <li>
-              <NavLink to="/professors">Professors</NavLink>
+            <li className="nav-item">
+          <LinkContainer to="/professors">
+            <Button>Professors</Button>
+          </LinkContainer>
             </li>
-            <li>
-              <NavLink to="/dinners">Dinners</NavLink>
+            <li className="nav-item">
+          <LinkContainer to="/dinners">
+            <Button>Dinners</Button>
+          </LinkContainer>
             </li>
-            <li>
-              <NavLink to="/selection">Selection</NavLink>
+            <li className="nav-item">
+          <LinkContainer to="/selection">
+            <Button>Selection</Button>
+          </LinkContainer>
             </li>
-            <li>
-              <NavLink to="/users">Users</NavLink>
+            <li className="nav-item">
+          <LinkContainer to="/users">
+            <Button>Users</Button>
+          </LinkContainer>
             </li>
-            <li>
-              <NavLink to="/checkIn">Check In</NavLink>
+            <li className="nav-item">
+          <LinkContainer to="/checkIn">
+            <Button>Check In</Button>
+          </LinkContainer>
             </li>
-          </ul>
+        </Navbar> */}
+
           <div className="content">
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/students" component={Students} />

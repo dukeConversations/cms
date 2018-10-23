@@ -3,21 +3,46 @@ import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import * as API from "../../api";
+import Validator from "../../validator";
+import * as Rules from "../../rules";
 
 export default class StudentDetail extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      student: null
+      student: null,
+      showErrors: false,
+      validationErrors: {}
     };
     this.handleChange = this.handleChange.bind(this);
   }
+
+  validateFields = () => {
+    let studentObj = this.state.student;
+
+    let validator = new Validator(studentObj);
+
+    validator.validate("firstName", true, [Rules.isText]);
+    validator.validate("lastName", true, [Rules.isText]);
+
+    let errorsDict = validator.errorsDict;
+    this.setState({ validationErrors: errorsDict });
+
+    return Object.keys(errorsDict).length === 0;
+  };
+
+  showError = field => {
+    return (
+      this.state.validationErrors.hasOwnProperty(field) && this.state.showErrors
+    );
+  };
 
   handleChange(evt) {
     var studentObj = this.state.student;
     studentObj[evt.target.name] = evt.target.value;
     this.setState({ student: studentObj });
+    if (this.state.showErrors) this.validateFields();
   }
 
   // When the component is added, fetch the student and update state
@@ -37,13 +62,17 @@ export default class StudentDetail extends Component {
       );
     } else {
       this.setState({
-        student: { firstName: "", lastName: "" }
+        student: {}
       });
     }
   }
 
   submit = () => {
-    this.props.history.goBack();
+    this.setState({ showErrors: true });
+    let valid = this.validateFields();
+    if (valid) {
+      // submit and go to last page
+    }
   };
 
   cancel = () => {
@@ -70,15 +99,15 @@ export default class StudentDetail extends Component {
 
     if (student != null) {
       const majorOptions = majors.map(major => {
-        return <option>{major}</option>;
+        return <option key={major}>{major}</option>;
       });
 
       const gradYearOptions = gradYears.map(year => {
-        return <option>{year}</option>;
+        return <option key={year}>{year}</option>;
       });
 
       const genderPronounOptions = genderPronouns.map(genderPronoun => {
-        return <option>{genderPronoun}</option>;
+        return <option key={genderPronoun}>{genderPronoun}</option>;
       });
 
       return (
@@ -95,6 +124,9 @@ export default class StudentDetail extends Component {
                 value={this.state.student.firstName}
                 onChange={this.handleChange}
               />
+              <label htmlFor="firstName" hidden={!this.showError("firstName")}>
+                {this.state.validationErrors["firstName"]}
+              </label>
             </Col>
             <Col className="form-group col-4">
               <label htmlFor="lastName">Last Name</label>

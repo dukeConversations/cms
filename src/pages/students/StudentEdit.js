@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
-import * as API from "../../api";
+import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
 
@@ -23,8 +23,14 @@ export default class StudentDetail extends Component {
 
     let validator = new Validator(studentObj);
 
-    validator.validate("firstName", true, [Rules.isText]);
-    validator.validate("lastName", true, [Rules.isText]);
+    validator.validate("firstName", true);
+    validator.validate("lastName", true);
+    validator.validate("netID", true);
+    validator.validate("uniqueID", true);
+    validator.validate("phoneNumber", true, [Rules.isPhoneNumber]);
+    validator.validate("major", true);
+    validator.validate("genderPronouns", true);
+    validator.validate("graduationYear", true);
 
     let errorsDict = validator.errorsDict;
     this.setState({ validationErrors: errorsDict });
@@ -124,7 +130,11 @@ export default class StudentDetail extends Component {
                 value={this.state.student.firstName}
                 onChange={this.handleChange}
               />
-              <label htmlFor="firstName" hidden={!this.showError("firstName")}>
+              <label
+                className="errorLabel"
+                htmlFor="firstName"
+                hidden={!this.showError("firstName")}
+              >
                 {this.state.validationErrors["firstName"]}
               </label>
             </Col>
@@ -138,6 +148,13 @@ export default class StudentDetail extends Component {
                 value={this.state.student.lastName}
                 onChange={this.handleChange}
               />
+              <label
+                className="errorLabel"
+                htmlFor="lastName"
+                hidden={!this.showError("lastName")}
+              >
+                {this.state.validationErrors["lastName"]}
+              </label>
             </Col>
           </Row>
           <Row className="my-2">
@@ -152,6 +169,13 @@ export default class StudentDetail extends Component {
                 value={this.state.student.netID}
                 onChange={this.handleChange}
               />
+              <label
+                className="errorLabel"
+                htmlFor="netID"
+                hidden={!this.showError("netID")}
+              >
+                {this.state.validationErrors["netID"]}
+              </label>
             </Col>
             <Col className="form-group col-3">
               <label htmlFor="uniqueID">Unique ID</label>
@@ -164,19 +188,34 @@ export default class StudentDetail extends Component {
                 value={this.state.student.uniqueID}
                 onChange={this.handleChange}
               />
+              <label
+                className="errorLabel"
+                htmlFor="uniqueID"
+                hidden={!this.showError("uniqueID")}
+              >
+                {this.state.validationErrors["uniqueID"]}
+              </label>
             </Col>
           </Row>
           <Row className="my-2">
             <Col className="form-group col-2">
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="phoneNumber">Phone</label>
               <input
                 className="form-control"
                 type="text"
-                name="phone"
+                name="phoneNumber"
+                id="phoneNumber"
                 placeholder="(123) 456-789"
                 value={this.state.student.phoneNumber}
                 onChange={this.handleChange}
               />
+              <label
+                className="errorLabel"
+                htmlFor="phoneNumber"
+                hidden={!this.showError("phoneNumber")}
+              >
+                {this.state.validationErrors["phoneNumber"]}
+              </label>
             </Col>
             <Col className="form-group col-4">
               <label htmlFor="major">Major</label>
@@ -189,6 +228,13 @@ export default class StudentDetail extends Component {
               >
                 {majorOptions}
               </select>
+              <label
+                className="errorLabel"
+                htmlFor="major"
+                hidden={!this.showError("major")}
+              >
+                {this.state.validationErrors["major"]}
+              </label>
             </Col>
           </Row>
           <Row className="my-2">
@@ -203,6 +249,13 @@ export default class StudentDetail extends Component {
               >
                 {gradYearOptions}
               </select>
+              <label
+                className="errorLabel"
+                htmlFor="graduationYear"
+                hidden={!this.showError("graduationYear")}
+              >
+                {this.state.validationErrors["graduationYear"]}
+              </label>
             </Col>
             <Col className="form-group col-3">
               <label htmlFor="genderPronouns">Gender Pronouns</label>
@@ -215,6 +268,13 @@ export default class StudentDetail extends Component {
               >
                 {genderPronounOptions}
               </select>
+              <label
+                className="errorLabel"
+                htmlFor="genderPronouns"
+                hidden={!this.showError("genderPronouns")}
+              >
+                {this.state.validationErrors["genderPronouns"]}
+              </label>
             </Col>
           </Row>
           <Row className="my-2">

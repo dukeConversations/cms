@@ -16,26 +16,26 @@ export default class Validator {
     }
   };
 
-  validate(field, required, rules) {
-    var errors = [];
-
+  validate(field, required, rules = []) {
     if (!this.propertyExists(field)) {
       if (required) {
         this.errorsDict[field] = "This field is required.";
       }
-    }
+    } else {
+      var errors = [];
 
-    let value = this.obj[field];
+      let value = this.obj[field];
 
-    rules.forEach(rule => {
-      let error = rule(value);
-      if (error !== null) {
-        errors.push(error);
+      rules.forEach(rule => {
+        let error = rule(value);
+        if (error !== null) {
+          errors.push(error);
+        }
+      });
+
+      if (errors.length != 0) {
+        this.errorsDict[field] = errors.join(" ");
       }
-    });
-
-    if (errors.length != 0) {
-      this.errorsDict[field] = errors.join(" ");
     }
   }
 }

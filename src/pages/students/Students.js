@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import StudentRow from "./StudentRow";
-import * as API from "../../api";
+import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 

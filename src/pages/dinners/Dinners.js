@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DinnerRow from "./DinnerRow";
-import * as API from "../../api";
+import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 
 export default class Dinners extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
-import * as API from "../../api";
+import * as API from "duke-convos-api";
 
 export default class ProfessorDetail extends Component {
   // Instantiate state when the component is constructed

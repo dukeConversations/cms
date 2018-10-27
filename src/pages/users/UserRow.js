@@ -13,7 +13,10 @@ export default class UserRow extends Component {
     return (
       <tr>
         <td>
-          <NavLink to={"/users/" + user.uniqueID}>View</NavLink>
+          <NavLink to={"/users/v/" + user.netID}>View</NavLink>
+        </td>
+        <td>
+          <NavLink to={"/users/e/" + user.netID}>Edit</NavLink>
         </td>
         <td className="text-left">{user.firstName}</td>
         <td className="text-left">{user.lastName}</td>

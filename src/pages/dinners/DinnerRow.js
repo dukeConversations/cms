@@ -25,6 +25,18 @@ export default class DinnerRow extends Component {
         console.error(error);
       }
     );
+
+    API.getProfessor(
+      this.props.dinner.professorID,
+      // the data is returned
+      professor => {
+        this.setState({ professor: professor });
+      },
+      // an error is returned
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   render() {
@@ -41,17 +53,26 @@ export default class DinnerRow extends Component {
       userString = user.firstName + " " + user.lastName;
     }
 
-    var professor = dinner.professor;
-    var professorString = professor.firstName + " " + professor.lastName;
+    var professorString = dinner.professorID;
+    var professor = this.state.professor;
+    if (professor != null) {
+      professorString = professor.firstName + " " + professor.lastName;
+    }
 
     var cateringString = dinner.catering ? "Yes" : "No";
     var transportationString = dinner.transportation ? "Yes" : "No";
 
     return (
       <tr>
+        <td>
+          <NavLink to={"/dinners/v/" + dinner.id}>View</NavLink>
+        </td>
+        <td>
+          <NavLink to={"/dinners/e/" + dinner.id}>Edit</NavLink>
+        </td>
         <td className="text-left">{dinner.id}</td>
         <td className="text-left">
-          <NavLink to={"/professors/" + professor.uniqueID}>
+          <NavLink to={"/professors/" + dinner.professorID}>
             {professorString}
           </NavLink>
         </td>

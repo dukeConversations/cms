@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserRow from "./UserRow";
 import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 export default class Users extends Component {
   // Instantiate state when the component is constructed
@@ -36,9 +37,7 @@ export default class Users extends Component {
     return (
       <div>
         <h1>Users</h1>
-        <Button color="link" type="button">
-          Create
-        </Button>
+        <NavLink to={"/users/c"}>Create</NavLink>
         <span> | </span>
         <Button color="link" type="button">
           Delete Selected
@@ -48,7 +47,8 @@ export default class Users extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th>blah</th>
+              <th> </th>
+              <th> </th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Role</th>

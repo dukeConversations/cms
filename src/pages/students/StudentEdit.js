@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
-import * as API from "duke-convos-api";
+//import * as API from "duke-convos-api";
+import * as API from "../../api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
 
-export default class StudentDetail extends Component {
+export default class StudentEdit extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
@@ -53,7 +54,6 @@ export default class StudentDetail extends Component {
 
   // When the component is added, fetch the student and update state
   componentDidMount() {
-    console.log(this.props);
     if (!this.props.isCreating) {
       API.getStudent(
         this.props.match.params.netID,
@@ -77,7 +77,32 @@ export default class StudentDetail extends Component {
     this.setState({ showErrors: true });
     let valid = this.validateFields();
     if (valid) {
-      // submit and go to last page
+      if (this.props.isCreating) {
+        API.createStudent(
+          this.state.student,
+          // the data is returned in students
+          student => {
+            console.log(student);
+          },
+          // an error is returned
+          error => {
+            console.error(error);
+          }
+        );
+      } else {
+        API.updateStudent(
+          this.state.student.netID,
+          this.state.student,
+          // the data is returned in students
+          student => {
+            console.log(student);
+          },
+          // an error is returned
+          error => {
+            console.error(error);
+          }
+        );
+      }
     }
   };
 
@@ -104,20 +129,11 @@ export default class StudentDetail extends Component {
   render() {
     var student = this.state.student;
 
-    var majors = [
-      "Computer Science",
-      "Economics",
-      "Public Policy",
-      "Biomedical Engineering"
-    ];
+    var majors = [0, 1, 2, 3, 4, 5, 6, 7];
 
-    var gradYears = ["2019", "2020", "2021", "2022"];
+    var gradYears = [2019, 2020, 2021, 2022];
 
-    var genderPronouns = [
-      "He, Him, His",
-      "She, Her, Hers",
-      "They, Them, Theirs"
-    ];
+    var genderPronouns = [0, 1, 2, 3, 4];
 
     if (student != null) {
       var majorOptions = majors.map(major => {
@@ -126,7 +142,7 @@ export default class StudentDetail extends Component {
       majorOptions.splice(
         0,
         0,
-        <option selected disabled>
+        <option key={majors.length} disabled>
           Make Selection
         </option>
       );
@@ -137,7 +153,7 @@ export default class StudentDetail extends Component {
       gradYearOptions.splice(
         0,
         0,
-        <option selected disabled>
+        <option key={gradYears.length} selected disabled>
           Make Selection
         </option>
       );
@@ -148,7 +164,7 @@ export default class StudentDetail extends Component {
       genderPronounOptions.splice(
         0,
         0,
-        <option selected disabled>
+        <option key={genderPronouns.length} selected disabled>
           Make Selection
         </option>
       );
@@ -161,7 +177,6 @@ export default class StudentDetail extends Component {
                 "firstName",
                 "First Name",
                 <input
-                  key="firstName"
                   className="form-control"
                   type="text"
                   name="firstName"

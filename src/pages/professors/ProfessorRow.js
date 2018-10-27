@@ -12,7 +12,10 @@ export default class ProfessorRow extends Component {
     return (
       <tr>
         <td>
-          <NavLink to={"/professors/" + professor.uniqueID}>View</NavLink>
+          <NavLink to={"/professors/v/" + professor.uniqueID}>View</NavLink>
+        </td>
+        <td>
+          <NavLink to={"/professors/e/" + professor.uniqueID}>Edit</NavLink>
         </td>
         <td className="text-left">{professor.firstName}</td>
         <td className="text-left">{professor.lastName}</td>

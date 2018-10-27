@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProfessorRow from "./ProfessorRow";
 import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 export default class Professors extends Component {
   // Instantiate state when the component is constructed
@@ -36,9 +37,7 @@ export default class Professors extends Component {
     return (
       <div>
         <h1>Professors</h1>
-        <Button color="link" type="button">
-          Create
-        </Button>
+        <NavLink to={"/professors/c"}>Create</NavLink>
         <span> | </span>
         <Button color="link" type="button">
           Delete Selected

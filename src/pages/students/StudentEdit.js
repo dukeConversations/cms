@@ -85,6 +85,22 @@ export default class StudentDetail extends Component {
     this.props.history.goBack();
   };
 
+  renderInput = (inputId, inputName, inputField) => {
+    return (
+      <div>
+        <label htmlFor={inputId}>{inputName}</label>
+        {inputField}
+        <label
+          className="error-label"
+          htmlFor={inputId}
+          hidden={!this.showError(inputId)}
+        >
+          {this.state.validationErrors[inputId]}
+        </label>
+      </div>
+    );
+  };
+
   render() {
     var student = this.state.student;
 
@@ -104,177 +120,168 @@ export default class StudentDetail extends Component {
     ];
 
     if (student != null) {
-      const majorOptions = majors.map(major => {
+      var majorOptions = majors.map(major => {
         return <option key={major}>{major}</option>;
       });
+      majorOptions.splice(
+        0,
+        0,
+        <option selected disabled>
+          Make Selection
+        </option>
+      );
 
       const gradYearOptions = gradYears.map(year => {
         return <option key={year}>{year}</option>;
       });
+      gradYearOptions.splice(
+        0,
+        0,
+        <option selected disabled>
+          Make Selection
+        </option>
+      );
 
       const genderPronounOptions = genderPronouns.map(genderPronoun => {
         return <option key={genderPronoun}>{genderPronoun}</option>;
       });
+      genderPronounOptions.splice(
+        0,
+        0,
+        <option selected disabled>
+          Make Selection
+        </option>
+      );
 
       return (
         <Container>
           <Row className="my-2">
             <Col className="form-group col-4">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                className="form-control"
-                type="text"
-                name="firstName"
-                id="firstName"
-                placeholder="Johnny"
-                value={this.state.student.firstName}
-                onChange={this.handleChange}
-              />
-              <label
-                className="errorLabel"
-                htmlFor="firstName"
-                hidden={!this.showError("firstName")}
-              >
-                {this.state.validationErrors["firstName"]}
-              </label>
+              {this.renderInput(
+                "firstName",
+                "First Name",
+                <input
+                  key="firstName"
+                  className="form-control"
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  placeholder="Johnny"
+                  value={this.state.student.firstName}
+                  onChange={this.handleChange}
+                />
+              )}
             </Col>
             <Col className="form-group col-4">
-              <label htmlFor="lastName">Last Name</label>
-              <input
-                className="form-control"
-                type="text"
-                name="lastName"
-                placeholder="Appleseed"
-                value={this.state.student.lastName}
-                onChange={this.handleChange}
-              />
-              <label
-                className="errorLabel"
-                htmlFor="lastName"
-                hidden={!this.showError("lastName")}
-              >
-                {this.state.validationErrors["lastName"]}
-              </label>
+              {this.renderInput(
+                "lastName",
+                "Last Name",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  placeholder="Appleseed"
+                  value={this.state.student.lastName}
+                  onChange={this.handleChange}
+                />
+              )}
             </Col>
           </Row>
           <Row className="my-2">
             <Col className="form-group col-3">
-              <label htmlFor="netID">Net ID</label>
-              <input
-                className="form-control"
-                type="text"
-                name="netID"
-                id="netID"
-                placeholder="abc01"
-                value={this.state.student.netID}
-                onChange={this.handleChange}
-              />
-              <label
-                className="errorLabel"
-                htmlFor="netID"
-                hidden={!this.showError("netID")}
-              >
-                {this.state.validationErrors["netID"]}
-              </label>
+              {this.renderInput(
+                "netID",
+                "Net ID",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="netID"
+                  id="netID"
+                  placeholder="abc01"
+                  value={this.state.student.netID}
+                  onChange={this.handleChange}
+                />
+              )}
             </Col>
             <Col className="form-group col-3">
-              <label htmlFor="uniqueID">Unique ID</label>
-              <input
-                className="form-control"
-                type="text"
-                name="uniqueID"
-                id="uniqueID"
-                placeholder="1234567"
-                value={this.state.student.uniqueID}
-                onChange={this.handleChange}
-              />
-              <label
-                className="errorLabel"
-                htmlFor="uniqueID"
-                hidden={!this.showError("uniqueID")}
-              >
-                {this.state.validationErrors["uniqueID"]}
-              </label>
+              {this.renderInput(
+                "uniqueID",
+                "Unique ID",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="uniqueID"
+                  id="uniqueID"
+                  placeholder="1234567"
+                  value={this.state.student.uniqueID}
+                  onChange={this.handleChange}
+                />
+              )}
             </Col>
           </Row>
           <Row className="my-2">
             <Col className="form-group col-2">
-              <label htmlFor="phoneNumber">Phone</label>
-              <input
-                className="form-control"
-                type="text"
-                name="phoneNumber"
-                id="phoneNumber"
-                placeholder="(123) 456-789"
-                value={this.state.student.phoneNumber}
-                onChange={this.handleChange}
-              />
-              <label
-                className="errorLabel"
-                htmlFor="phoneNumber"
-                hidden={!this.showError("phoneNumber")}
-              >
-                {this.state.validationErrors["phoneNumber"]}
-              </label>
+              {this.renderInput(
+                "phoneNumber",
+                "Phone",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  placeholder="(123) 456-789"
+                  value={this.state.student.phoneNumber}
+                  onChange={this.handleChange}
+                />
+              )}
             </Col>
             <Col className="form-group col-4">
-              <label htmlFor="major">Major</label>
-              <select
-                onChange={this.handleChange}
-                value={this.state.student.major}
-                name="major"
-                className="form-control"
-                id="major"
-              >
-                {majorOptions}
-              </select>
-              <label
-                className="errorLabel"
-                htmlFor="major"
-                hidden={!this.showError("major")}
-              >
-                {this.state.validationErrors["major"]}
-              </label>
+              {this.renderInput(
+                "major",
+                "Major",
+                <select
+                  onChange={this.handleChange}
+                  value={this.state.student.major}
+                  name="major"
+                  className="form-control"
+                  id="major"
+                >
+                  {majorOptions}
+                </select>
+              )}
             </Col>
           </Row>
           <Row className="my-2">
             <Col className="form-group col-2">
-              <label htmlFor="graduationYear">Graduation Year</label>
-              <select
-                onChange={this.handleChange}
-                value={this.state.student.graduationYear}
-                name="graduationYear"
-                className="form-control"
-                id="graduationYear"
-              >
-                {gradYearOptions}
-              </select>
-              <label
-                className="errorLabel"
-                htmlFor="graduationYear"
-                hidden={!this.showError("graduationYear")}
-              >
-                {this.state.validationErrors["graduationYear"]}
-              </label>
+              {this.renderInput(
+                "graduationYear",
+                "Graduation Year",
+                <select
+                  onChange={this.handleChange}
+                  value={this.state.student.graduationYear}
+                  name="graduationYear"
+                  className="form-control"
+                  id="graduationYear"
+                >
+                  {gradYearOptions}
+                </select>
+              )}
             </Col>
             <Col className="form-group col-3">
-              <label htmlFor="genderPronouns">Gender Pronouns</label>
-              <select
-                onChange={this.handleChange}
-                value={this.state.student.genderPronouns}
-                name="genderPronouns"
-                className="form-control"
-                id="genderPronouns"
-              >
-                {genderPronounOptions}
-              </select>
-              <label
-                className="errorLabel"
-                htmlFor="genderPronouns"
-                hidden={!this.showError("genderPronouns")}
-              >
-                {this.state.validationErrors["genderPronouns"]}
-              </label>
+              {this.renderInput(
+                "genderPronouns",
+                "Gender Pronouns",
+                <select
+                  onChange={this.handleChange}
+                  value={this.state.student.genderPronouns}
+                  name="genderPronouns"
+                  className="form-control"
+                  id="genderPronouns"
+                >
+                  {genderPronounOptions}
+                </select>
+              )}
             </Col>
           </Row>
           <Row className="my-2">

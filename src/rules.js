@@ -1,5 +1,3 @@
-import { PhoneNumberUtil } from "google-libphonenumber";
-
 export function isNumber(value) {
   if (!isNaN(parseFloat(value)) && isFinite(value)) return null;
   return "Not a number";

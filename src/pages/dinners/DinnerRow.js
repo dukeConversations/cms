@@ -30,7 +30,9 @@ export default class DinnerRow extends Component {
       this.props.dinner.professorID,
       // the data is returned
       professor => {
-        this.setState({ professor: professor });
+        if (!professor.hasOwnProperty("message")) {
+          this.setState({ professor: professor });
+        }
       },
       // an error is returned
       error => {
@@ -72,12 +74,12 @@ export default class DinnerRow extends Component {
         </td>
         <td className="text-left">{dinner.id}</td>
         <td className="text-left">
-          <NavLink to={"/professors/" + dinner.professorID}>
+          <NavLink to={"/professors/v/" + dinner.professorID}>
             {professorString}
           </NavLink>
         </td>
         <td className="text-left">
-          <NavLink to={"/users/" + dinner.userId}>{userString}</NavLink>
+          <NavLink to={"/users/v/" + dinner.userId}>{userString}</NavLink>
         </td>
         <td className="text-left">{dateString}</td>
         <td className="text-left">{cateringString}</td>

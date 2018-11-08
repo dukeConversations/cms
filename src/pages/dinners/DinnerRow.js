@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import API from "duke-convos-api";

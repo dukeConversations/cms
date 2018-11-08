@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import moment from "moment";
+import { Container, Row, Col } from "reactstrap";
 import * as API from "duke-convos-api";
 
 export default class UserDetail extends Component {
@@ -61,6 +59,13 @@ export default class UserDetail extends Component {
           roleLabel = (
             <span className="badge badge-pill badge-secondary">
               Conversationalist
+            </span>
+          );
+          break;
+        default:
+          roleLabel = (
+            <span className="badge badge-pill badge-secondary">
+              Unknown Role
             </span>
           );
           break;

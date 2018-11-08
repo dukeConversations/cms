@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import moment from "moment";
 import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
@@ -58,6 +56,7 @@ export default class StudentEdit extends Component {
         this.props.match.params.netID,
         // the data is returned in student
         student => {
+          console.log(student);
           this.setState({ student: student });
         },
         // an error is returned
@@ -73,6 +72,7 @@ export default class StudentEdit extends Component {
   }
 
   submit = () => {
+    console.log(this.state.student);
     this.setState({ showErrors: true });
     let valid = this.validateFields();
     if (valid) {
@@ -93,7 +93,7 @@ export default class StudentEdit extends Component {
         API.updateStudent(
           this.state.student.netID,
           this.state.student,
-          // the data is returned in students
+          // the data is returned in student
           student => {
             console.log(student);
             this.props.history.goBack();
@@ -101,6 +101,7 @@ export default class StudentEdit extends Component {
           // an error is returned
           error => {
             console.error(error);
+            //this.props.history.goBack();
           }
         );
       }
@@ -154,7 +155,7 @@ export default class StudentEdit extends Component {
       gradYearOptions.splice(
         0,
         0,
-        <option key={gradYears.length} selected disabled>
+        <option key={gradYears.length} disabled>
           Make Selection
         </option>
       );
@@ -165,7 +166,7 @@ export default class StudentEdit extends Component {
       genderPronounOptions.splice(
         0,
         0,
-        <option key={genderPronouns.length} selected disabled>
+        <option key={genderPronouns.length} disabled>
           Make Selection
         </option>
       );
@@ -183,7 +184,7 @@ export default class StudentEdit extends Component {
                   name="firstName"
                   id="firstName"
                   placeholder="Johnny"
-                  value={this.state.student.firstName}
+                  value={this.state.student.firstName || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -198,7 +199,7 @@ export default class StudentEdit extends Component {
                   name="lastName"
                   id="lastName"
                   placeholder="Appleseed"
-                  value={this.state.student.lastName}
+                  value={this.state.student.lastName || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -215,7 +216,7 @@ export default class StudentEdit extends Component {
                   name="netID"
                   id="netID"
                   placeholder="abc01"
-                  value={this.state.student.netID}
+                  value={this.state.student.netID || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -230,7 +231,7 @@ export default class StudentEdit extends Component {
                   name="uniqueID"
                   id="uniqueID"
                   placeholder="1234567"
-                  value={this.state.student.uniqueID}
+                  value={this.state.student.uniqueID || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -247,7 +248,7 @@ export default class StudentEdit extends Component {
                   name="phoneNumber"
                   id="phoneNumber"
                   placeholder="(123) 456-789"
-                  value={this.state.student.phoneNumber}
+                  value={this.state.student.phoneNumber || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -258,7 +259,7 @@ export default class StudentEdit extends Component {
                 "Major",
                 <select
                   onChange={this.handleChange}
-                  value={this.state.student.major}
+                  value={this.state.student.major || "Make Selection"}
                   name="major"
                   className="form-control"
                   id="major"
@@ -275,7 +276,7 @@ export default class StudentEdit extends Component {
                 "Graduation Year",
                 <select
                   onChange={this.handleChange}
-                  value={this.state.student.graduationYear}
+                  value={this.state.student.graduationYear || "Make Selection"}
                   name="graduationYear"
                   className="form-control"
                   id="graduationYear"
@@ -290,7 +291,7 @@ export default class StudentEdit extends Component {
                 "Gender Pronouns",
                 <select
                   onChange={this.handleChange}
-                  value={this.state.student.genderPronouns}
+                  value={this.state.student.genderPronouns || "Make Selection"}
                   name="genderPronouns"
                   className="form-control"
                   id="genderPronouns"

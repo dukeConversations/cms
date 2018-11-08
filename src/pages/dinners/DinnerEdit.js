@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import moment from "moment";
 import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
@@ -12,6 +9,7 @@ export default class DinnerEdit extends Component {
     super();
     this.state = {
       dinner: null,
+      professors: [],
       showErrors: false,
       validationErrors: {}
     };
@@ -19,18 +17,39 @@ export default class DinnerEdit extends Component {
   }
 
   validateFields = () => {
-    let studentObj = this.state.student;
+    let dinnerObj = this.state.dinner;
 
-    let validator = new Validator(studentObj);
+    let validator = new Validator(dinnerObj);
 
-    validator.validate("firstName", true);
-    validator.validate("lastName", true);
-    validator.validate("netID", true);
-    validator.validate("uniqueID", true);
-    validator.validate("phoneNumber", true, [Rules.isPhoneNumber]);
-    validator.validate("major", true);
-    validator.validate("genderPronouns", true);
-    validator.validate("graduationYear", true);
+    /*
+    {
+    "id": 1,
+    "timeStamp": "20NOV1652",
+    "topic": "The Spanish Inquisitino",
+    "description": "You'll never expect it",
+    "studentLimit": 1330,
+    "address": "200 Carr",
+    "dietaryRestrictions": "No Heretics",
+    "invitationSentTimeStamp": "12341",
+    "catering": false,
+    "transportation": true,
+    "professorID": "111",
+    "applications": []
+    }
+    */
+
+    validator.validate("id", true);
+    validator.validate("timeStamp", true);
+    validator.validate("topic", true);
+    validator.validate("description", true);
+    validator.validate("studentLimit", true, [Rules.isNumber]);
+    validator.validate("address", true);
+    validator.validate("dietaryRestrictions", true);
+    validator.validate("invitationSentTimeStamp", true);
+    validator.validate("catering", true);
+    validator.validate("transportation", true);
+    validator.validate("professorID", true);
+    validator.validate("applications", true);
 
     let errorsDict = validator.errorsDict;
     this.setState({ validationErrors: errorsDict });
@@ -54,11 +73,11 @@ export default class DinnerEdit extends Component {
   // When the component is added, fetch the student and update state
   componentDidMount() {
     if (!this.props.isCreating) {
-      API.getProfessor(
-        this.props.match.params.netID,
-        // the data is returned in student
-        student => {
-          this.setState({ student: student });
+      API.getDinner(
+        this.props.match.params.id,
+        // the data is returned in dinner
+        dinner => {
+          this.setState({ dinner: dinner });
         },
         // an error is returned
         error => {
@@ -67,9 +86,18 @@ export default class DinnerEdit extends Component {
       );
     } else {
       this.setState({
-        student: {}
+        dinner: {}
       });
     }
+
+    API.getProfessors(
+      professors => {
+        this.setState({ professors: professors });
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   submit = () => {

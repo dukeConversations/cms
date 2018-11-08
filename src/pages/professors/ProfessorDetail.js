@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import moment from "moment";
+import { Container, Row } from "reactstrap";
 import * as API from "duke-convos-api";
 
 export default class ProfessorDetail extends Component {

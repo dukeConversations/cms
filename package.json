@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@typeform/embed": "^0.5.12",
     "ajv": "^6.5.5",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",

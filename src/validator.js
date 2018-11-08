@@ -1,5 +1,3 @@
-import * as Rules from "./rules";
-
 export default class Validator {
   constructor(o) {
     this.obj = o;
@@ -11,8 +9,10 @@ export default class Validator {
 
     let value = this.obj[field];
 
-    if (toString.call(value) == "[object String]") {
+    if (toString.call(value) === "[object String]") {
       return value !== "";
+    } else {
+      return true;
     }
   };
 
@@ -33,7 +33,7 @@ export default class Validator {
         }
       });
 
-      if (errors.length != 0) {
+      if (errors.length !== 0) {
         this.errorsDict[field] = errors.join(" ");
       }
     }

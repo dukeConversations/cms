@@ -1,4 +1,6 @@
 import "./App.css";
+import "./react-datetime.css";
+
 import React, { Component } from "react";
 import { Route, HashRouter } from "react-router-dom";
 import { Button, Nav, Navbar, NavItem } from "reactstrap";

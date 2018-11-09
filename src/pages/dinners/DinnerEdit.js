@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { Container, Row, Col, Button } from "reactstrap";
 import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
+import moment from "moment";
+import DateTime from "react-datetime";
 
 export default class DinnerEdit extends Component {
   // Instantiate state when the component is constructed
@@ -38,7 +41,6 @@ export default class DinnerEdit extends Component {
     }
     */
 
-    validator.validate("id", true);
     validator.validate("timeStamp", true);
     validator.validate("topic", true);
     validator.validate("description", true);
@@ -63,12 +65,16 @@ export default class DinnerEdit extends Component {
     );
   };
 
-  handleChange(evt) {
+  internalHandleChange = (key, value) => {
     var dinnerObj = this.state.dinner;
-    dinnerObj[evt.target.name] = evt.target.value;
+    dinnerObj[key] = value;
     this.setState({ dinner: dinnerObj });
     if (this.state.showErrors) this.validateFields();
-  }
+  };
+
+  handleChange = evt => {
+    this.internalHandleChange(evt.target.name, evt.target.value);
+  };
 
   // When the component is added, fetch the student and update state
   componentDidMount() {
@@ -113,9 +119,13 @@ export default class DinnerEdit extends Component {
   };
 
   renderInput = (inputId, inputName, inputField) => {
+    let inputLabel =
+      inputName.length !== 0 ? (
+        <label htmlFor={inputId}>{inputName}</label>
+      ) : null;
     return (
       <div>
-        <label htmlFor={inputId}>{inputName}</label>
+        {inputLabel}
         {inputField}
         <label
           className="error-label"
@@ -128,7 +138,206 @@ export default class DinnerEdit extends Component {
     );
   };
 
+  updateDate = date => {
+    this.internalHandleChange("timeStamp", date.unix());
+  };
+
+  profForID = professorID => {
+    var professor = null;
+    this.professors.forEach((prof, index) => {
+      if (prof.id === professorID) professor = prof;
+    });
+  };
+
   render() {
-    return <div>Edit dinner stuff</div>;
+    let dinner = this.state.dinner;
+    /*
+    {
+  -  "id": 1,
+  +  "timeStamp": "20NOV1652",
+  +  "topic": "The Spanish Inquisitino",
+  +  "description": "You'll never expect it",
+  +  "studentLimit": 1330,
+  +  "address": "200 Carr",
+  +  "dietaryRestrictions": "No Heretics",
+  -  "invitationSentTimeStamp": "12341",
+  +  "catering": false,
+  +  "transportation": true,
+  +  "professorID": "111",
+  -  "applications": []
+    }
+    */
+    if (dinner != null) {
+      let date = moment.unix(dinner.timeStamp);
+
+      let professors = this.state.professors;
+      const professorOptions = professors.map(prof => {
+        return (
+          <option key={prof.id} value={prof.id}>
+            {prof.firstName + " " + prof.lastName}
+          </option>
+        );
+      });
+      professorOptions.splice(
+        0,
+        0,
+        <option key={professors.length} disabled>
+          Make Selection
+        </option>
+      );
+
+      return (
+        <Container>
+          <Row className="my-2">
+            <Col className="form-group col-5">
+              {this.renderInput(
+                "topic",
+                "Topic",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="topic"
+                  id="topic"
+                  placeholder="The history of history"
+                  value={this.state.dinner.topic || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+            <Col className="form-group col-5">
+              {this.renderInput(
+                "professorID",
+                "professor",
+                <select
+                  className="form-control"
+                  onChange={this.updateProfessor}
+                  value={this.state.dinner.professorID || "Make Selection"}
+                  name="professorID"
+                  id="professorID"
+                >
+                  {professorOptions}
+                </select>
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col className="form-group">
+              {this.renderInput(
+                "description",
+                "Description",
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  type="text"
+                  name="description"
+                  id="description"
+                  placeholder="This conversation is about this and this and this, too. Oh! and even that."
+                  value={this.state.dinner.description || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-5">
+              {this.renderInput(
+                "address",
+                "Address",
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  type="text"
+                  name="address"
+                  id="address"
+                  placeholder="1 Infinite Loop"
+                  value={this.state.dinner.address || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+            <Col className="form-group col-3">
+              {this.renderInput(
+                "timeStamp",
+                "Date & time",
+                <DateTime
+                  name="timeStamp"
+                  id="timeStamp"
+                  value={date.isValid() ? date : null}
+                  onChange={this.updateDate}
+                />
+              )}
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-2">
+              {this.renderInput(
+                "studentLimit",
+                "Student limit",
+                <input
+                  className="form-control"
+                  type="number"
+                  name="studentLimit"
+                  id="studentLimit"
+                  placeholder={12}
+                  min={0}
+                  value={this.state.dinner.studentLimit || 0}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+            <Col className="form-group">
+              {this.renderInput(
+                "dietaryRestrictions",
+                "Dietary Restrictions",
+                <input
+                  className="form-control"
+                  rows="3"
+                  type="text"
+                  name="dietaryRestrictions"
+                  id="dietaryRestrictions"
+                  placeholder="Wheat, liquid, meat"
+                  value={this.state.dinner.dietaryRestrictions || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-2">
+              <label htmlFor="catering">Catering: </label>
+              &ensp;
+              <input
+                type="checkbox"
+                name="catering"
+                id="catering"
+                value={this.state.dinner.catering || false}
+                onChange={this.handleChange}
+              />
+            </Col>
+            <Col className="form-group col-2">
+              <label htmlFor="transportation">Transportation: </label>
+              &ensp;
+              <input
+                type="checkbox"
+                name="transportation"
+                id="transportation"
+                value={this.state.dinner.transportation || false}
+                onChange={this.handleChange}
+              />
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="col-1">
+              <Button onClick={this.cancel}>Cancel</Button>
+            </Col>
+            <Col className="col-1">
+              <Button onClick={this.submit}>Submit</Button>
+            </Col>
+          </Row>
+        </Container>
+      );
+    } else {
+      return null;
+    }
   }
 }

@@ -210,8 +210,8 @@ export default class DinnerEdit extends Component {
                 "professor",
                 <select
                   className="form-control"
-                  onChange={this.updateProfessor}
                   value={this.state.dinner.professorID || "Make Selection"}
+                  onChange={this.updateProfessor}
                   name="professorID"
                   id="professorID"
                 >

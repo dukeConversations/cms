@@ -131,15 +131,24 @@ export default class StudentEdit extends Component {
   render() {
     var student = this.state.student;
 
-    var majors = [0, 1, 2, 3, 4, 5, 6, 7];
+    let majors = {
+      0: "Computer Science",
+      1: "Neuro Science",
+      2: "Political Science",
+      3: "Public Policy"
+    };
 
-    var gradYears = [2019, 2020, 2021, 2022];
+    let gradYears = [2019, 2020, 2021, 2022];
 
-    var genderPronouns = [0, 1, 2, 3, 4];
+    let genderPronouns = { 0: "He, Him", 1: "She, Her", 2: "They, Them" };
 
     if (student != null) {
-      var majorOptions = majors.map(major => {
-        return <option key={major}>{major}</option>;
+      const majorOptions = Object.keys(majors).map(key => {
+        return (
+          <option key={key} value={key}>
+            {majors[key]}
+          </option>
+        );
       });
       majorOptions.splice(
         0,
@@ -150,7 +159,11 @@ export default class StudentEdit extends Component {
       );
 
       const gradYearOptions = gradYears.map(year => {
-        return <option key={year}>{year}</option>;
+        return (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        );
       });
       gradYearOptions.splice(
         0,
@@ -160,8 +173,12 @@ export default class StudentEdit extends Component {
         </option>
       );
 
-      const genderPronounOptions = genderPronouns.map(genderPronoun => {
-        return <option key={genderPronoun}>{genderPronoun}</option>;
+      const genderPronounOptions = Object.keys(genderPronouns).map(key => {
+        return (
+          <option key={key} value={key}>
+            {genderPronouns[key]}
+          </option>
+        );
       });
       genderPronounOptions.splice(
         0,

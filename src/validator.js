@@ -1,6 +1,6 @@
 export default class Validator {
   constructor(o) {
-    this.obj = o;
+    this.obj = JSON.parse(JSON.stringify(o));
     this.errorsDict = {};
   }
 

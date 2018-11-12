@@ -19,8 +19,44 @@ export default class DinnerEdit extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  // When the component is added, fetch the student and update state
+  componentDidMount() {
+    if (!this.props.isCreating) {
+      API.getDinner(
+        this.props.match.params.id,
+        // the data is returned in dinner
+        dinner => {
+          this.setState({ dinner: dinner });
+        },
+        // an error is returned
+        error => {
+          console.error(error);
+        }
+      );
+    } else {
+      this.setState({
+        dinner: {
+          catering: false,
+          transportation: false,
+          applications: []
+        }
+      });
+    }
+
+    API.getProfessors(
+      professors => {
+        this.setState({ professors: professors });
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
   validateFields = () => {
     let dinnerObj = this.state.dinner;
+
+    console.log(dinnerObj);
 
     let validator = new Validator(dinnerObj);
 
@@ -76,41 +112,51 @@ export default class DinnerEdit extends Component {
     this.internalHandleChange(evt.target.name, evt.target.value);
   };
 
-  // When the component is added, fetch the student and update state
-  componentDidMount() {
-    if (!this.props.isCreating) {
-      API.getDinner(
-        this.props.match.params.id,
-        // the data is returned in dinner
-        dinner => {
-          this.setState({ dinner: dinner });
-        },
-        // an error is returned
-        error => {
-          console.error(error);
-        }
-      );
-    } else {
-      this.setState({
-        dinner: {}
-      });
+  handleTimestampChange = date => {
+    if (date instanceof moment) {
+      this.internalHandleChange("timeStamp", date.unix());
     }
+  };
 
-    API.getProfessors(
-      professors => {
-        this.setState({ professors: professors });
-      },
-      error => {
-        console.error(error);
-      }
-    );
-  }
+  handleBooleanChange = evt => {
+    this.internalHandleChange(evt.target.name, evt.target.checked);
+  };
 
   submit = () => {
+    console.log(this.state.dinner);
     this.setState({ showErrors: true });
     let valid = this.validateFields();
-    if (valid) {
+    if (valid || !valid) {
       // submit and go to last page
+      if (this.props.isCreating) {
+        API.createDinner(
+          this.state.dinner,
+          // the data is returned in dinners
+          dinner => {
+            console.log(dinner);
+            this.props.history.goBack();
+          },
+          // an error is returned
+          error => {
+            console.error(error);
+          }
+        );
+      } else {
+        API.updateDinner(
+          this.state.dinner.id,
+          this.state.dinner,
+          // the data is returned in dinner
+          dinner => {
+            console.log(dinner);
+            this.props.history.goBack();
+          },
+          // an error is returned
+          error => {
+            console.error(error);
+            //this.props.history.goBack();
+          }
+        );
+      }
     }
   };
 
@@ -138,16 +184,13 @@ export default class DinnerEdit extends Component {
     );
   };
 
-  updateDate = date => {
-    this.internalHandleChange("timeStamp", date.unix());
-  };
-
-  profForID = professorID => {
-    var professor = null;
-    this.professors.forEach((prof, index) => {
-      if (prof.id === professorID) professor = prof;
-    });
-  };
+  renderDateInput(props, openCalendar, closeCalendar) {
+    return (
+      <div>
+        <input className="form-control" {...props} readOnly />
+      </div>
+    );
+  }
 
   render() {
     let dinner = this.state.dinner;
@@ -173,7 +216,7 @@ export default class DinnerEdit extends Component {
       let professors = this.state.professors;
       const professorOptions = professors.map(prof => {
         return (
-          <option key={prof.id} value={prof.id}>
+          <option key={prof.uniqueID} value={prof.uniqueID}>
             {prof.firstName + " " + prof.lastName}
           </option>
         );
@@ -185,6 +228,24 @@ export default class DinnerEdit extends Component {
           Make Selection
         </option>
       );
+
+      /*
+      <div>
+        <label>
+          {date.isValid()
+            ? date.format("MM/DD/YY h:mm a")
+            : dinner.timeStamp}
+        </label>
+        <DateTime
+          name="timeStamp"
+          id="timeStamp"
+          input={false}
+          timeConstraints={{ seconds: { step: 5 } }}
+          value={date.isValid() ? date : null}
+          onChange={this.handleTimestampChange}
+        />
+      </div>
+      */
 
       return (
         <Container>
@@ -211,7 +272,7 @@ export default class DinnerEdit extends Component {
                 <select
                   className="form-control"
                   value={this.state.dinner.professorID || "Make Selection"}
-                  onChange={this.updateProfessor}
+                  onChange={this.handleChange}
                   name="professorID"
                   id="professorID"
                 >
@@ -255,15 +316,17 @@ export default class DinnerEdit extends Component {
                 />
               )}
             </Col>
-            <Col className="form-group col-3">
+            <Col className="form-group col-4">
               {this.renderInput(
                 "timeStamp",
                 "Date & time",
                 <DateTime
                   name="timeStamp"
                   id="timeStamp"
+                  renderInput={this.renderDateInput}
+                  timeConstraints={{ minutes: { step: 5 } }}
                   value={date.isValid() ? date : null}
-                  onChange={this.updateDate}
+                  onChange={this.handleTimestampChange}
                 />
               )}
             </Col>
@@ -280,7 +343,7 @@ export default class DinnerEdit extends Component {
                   id="studentLimit"
                   placeholder={12}
                   min={0}
-                  value={this.state.dinner.studentLimit || 0}
+                  value={this.state.dinner.studentLimit || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -311,7 +374,7 @@ export default class DinnerEdit extends Component {
                 name="catering"
                 id="catering"
                 value={this.state.dinner.catering || false}
-                onChange={this.handleChange}
+                onChange={this.handleBooleanChange}
               />
             </Col>
             <Col className="form-group col-2">
@@ -322,7 +385,7 @@ export default class DinnerEdit extends Component {
                 name="transportation"
                 id="transportation"
                 value={this.state.dinner.transportation || false}
-                onChange={this.handleChange}
+                onChange={this.handleBooleanChange}
               />
             </Col>
           </Row>

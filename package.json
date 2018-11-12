@@ -7,7 +7,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "chart.js": "^2.7.3",
-    "duke-convos-api": "^1.0.24",
+    "duke-convos-api": "^1.0.31",
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
     "popper.js": "^1.14.5",

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
+import { NavLink } from "react-router-dom";
 import * as API from "duke-convos-api";
 
 export default class ProfessorDetail extends Component {
@@ -27,7 +28,7 @@ export default class ProfessorDetail extends Component {
     );
   }
 
-  renderLabel = (id, labelName) => {
+  innerRenderLabel = (id, labelName, value) => {
     return (
       <div>
         <label htmlFor={id}>
@@ -35,10 +36,14 @@ export default class ProfessorDetail extends Component {
         </label>
         <br />
         <label className="property-label" id={id}>
-          {this.state.professor[id]}
+          {value}
         </label>
       </div>
     );
+  };
+
+  renderLabel = (id, labelName) => {
+    return this.innerRenderLabel(id, labelName, this.state.professor[id]);
   };
 
   render() {
@@ -60,19 +65,9 @@ export default class ProfessorDetail extends Component {
 
     if (professor != null) {
       // Render the JSX
-
-      /*
-      "uniqueID": String
-      "firstName": String
-      "lastName": String
-      "email": String
-      "genderPronouns": Integer
-      "department": Integer
-      "title": String
-      "school": Integer
-      */
       return (
         <Container>
+          <NavLink to={"/professors/e/" + professor.uniqueID}>Edit</NavLink>
           <Row className="my-2">
             <Col className="form-group col-3">
               {this.renderLabel("firstName", "First Name")}
@@ -86,7 +81,11 @@ export default class ProfessorDetail extends Component {
           </Row>
           <Row className="my-2">
             <Col className="form-group col-3">
-              {this.renderLabel("genderPronouns", "Gender Pronouns")}
+              {this.innerRenderLabel(
+                "genderPronouns",
+                "Gender Pronouns",
+                genderPronouns[this.state.professor["genderPronouns"]]
+              )}
             </Col>
             <Col className="form-group col-4">
               {this.renderLabel("email", "Email")}
@@ -99,20 +98,24 @@ export default class ProfessorDetail extends Component {
           </Row>
           <Row className="my-2">
             <Col className="form-group col-6">
-              {this.renderLabel("department", "Department")}
+              {this.innerRenderLabel(
+                "department",
+                "Department",
+                departments[this.state.professor["department"]]
+              )}
             </Col>
             <Col className="form-group col-3">
-              {this.renderLabel("school", "School")}
+              {this.innerRenderLabel(
+                "school",
+                "School",
+                schools[this.state.professor["school"]]
+              )}
             </Col>
           </Row>
         </Container>
       );
     } else {
-      return (
-        <Container>
-          <Row>Loading...</Row>
-        </Container>
-      );
+      return null;
     }
   }
 }

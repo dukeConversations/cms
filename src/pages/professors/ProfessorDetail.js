@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import * as API from "duke-convos-api";
 
@@ -84,11 +84,24 @@ export default class ProfessorDetail extends Component {
               {this.innerRenderLabel(
                 "genderPronouns",
                 "Gender Pronouns",
-                genderPronouns[this.state.professor["genderPronouns"]]
+                genderPronouns[this.state.professor.genderPronouns]
               )}
             </Col>
             <Col className="form-group col-4">
-              {this.renderLabel("email", "Email")}
+              <div>
+                <label htmlFor="professor">
+                  <strong>Email</strong>
+                </label>
+                <br />
+                <Button
+                  className="property-label"
+                  color="link"
+                  id="professor"
+                  href={"mailto:" + this.state.professor.email}
+                >
+                  {this.state.professor.email}
+                </Button>
+              </div>
             </Col>
           </Row>
           <Row className="my-2">

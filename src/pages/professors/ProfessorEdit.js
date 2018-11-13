@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
-
+import DeleteControl from "../../DeleteModalControl";
 export default class ProfessorEdit extends Component {
   // Instantiate state when the component is constructed
   constructor() {
@@ -50,7 +50,7 @@ export default class ProfessorEdit extends Component {
     "email": String
     "genderPronouns": Integer
     "department": Integer
-    "title": Integer
+    "title": String
     "school": Integer
     */
 
@@ -119,7 +119,7 @@ export default class ProfessorEdit extends Component {
 
   delete = () => {
     API.deleteProfessor(
-      this.state.professor.id,
+      this.state.professor.uniqueID,
       // the data is returned in professor
       professor => {
         console.log(professor);

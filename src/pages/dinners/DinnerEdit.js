@@ -5,6 +5,7 @@ import Validator from "../../validator";
 import * as Rules from "../../rules";
 import moment from "moment";
 import DateTime from "react-datetime";
+import DeleteControl from "../../DeleteModalControl";
 
 export default class DinnerEdit extends Component {
   // Instantiate state when the component is constructed
@@ -243,24 +244,6 @@ export default class DinnerEdit extends Component {
           Make Selection
         </option>
       );
-
-      /*
-      <div>
-        <label>
-          {date.isValid()
-            ? date.format("MM/DD/YY h:mm a")
-            : dinner.timeStamp}
-        </label>
-        <DateTime
-          name="timeStamp"
-          id="timeStamp"
-          input={false}
-          timeConstraints={{ seconds: { step: 5 } }}
-          value={date.isValid() ? date : null}
-          onChange={this.handleTimestampChange}
-        />
-      </div>
-      */
 
       return (
         <Container>

@@ -248,6 +248,7 @@ export default class StudentEdit extends Component {
                   type="text"
                   name="netID"
                   id="netID"
+                  disabled={!this.props.isCreating}
                   placeholder="abc01"
                   value={this.state.student.netID || ""}
                   onChange={this.handleChange}

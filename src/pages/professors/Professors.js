@@ -47,7 +47,8 @@ export default class Professors extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th>Blah</th>
+              <th> </th>
+              <th> </th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Department</th>

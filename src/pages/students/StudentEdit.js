@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, Modal } from "reactstrap";
 import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
+import DeleteControl from "../../DeleteModalControl";
 
 export default class StudentEdit extends Component {
   // Instantiate state when the component is constructed
@@ -106,6 +107,21 @@ export default class StudentEdit extends Component {
         );
       }
     }
+  };
+
+  delete = () => {
+    API.deleteStudent(
+      this.state.student.netID,
+      // the data is returned in student
+      student => {
+        console.log(student);
+        this.props.history.goBack();
+      },
+      // an error is returned
+      error => {
+        console.error(error);
+      }
+    );
   };
 
   cancel = () => {
@@ -319,11 +335,21 @@ export default class StudentEdit extends Component {
             </Col>
           </Row>
           <Row className="my-2">
-            <Col className="col-2">
-              <Button onClick={this.cancel}>Cancel</Button>
+            <Col className="col-3">
+              <DeleteControl
+                title="Delete Student"
+                onClickAction={this.delete}
+              />
             </Col>
-            <Col className="col-2">
-              <Button onClick={this.submit}>Submit</Button>
+            <Col className="col-1">
+              <Button color="secondary" onClick={this.cancel}>
+                Cancel
+              </Button>
+            </Col>
+            <Col className="col-1">
+              <Button color="primary" onClick={this.submit}>
+                Save
+              </Button>
             </Col>
           </Row>
         </Container>

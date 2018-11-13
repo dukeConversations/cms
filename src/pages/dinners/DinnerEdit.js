@@ -160,6 +160,21 @@ export default class DinnerEdit extends Component {
     }
   };
 
+  delete = () => {
+    API.deleteDinner(
+      this.state.dinner.id,
+      // the data is returned in dinner
+      dinner => {
+        console.log(dinner);
+        this.props.history.goBack();
+      },
+      // an error is returned
+      error => {
+        console.error(error);
+      }
+    );
+  };
+
   cancel = () => {
     this.props.history.goBack();
   };
@@ -390,11 +405,21 @@ export default class DinnerEdit extends Component {
             </Col>
           </Row>
           <Row className="my-2">
-            <Col className="col-1">
-              <Button onClick={this.cancel}>Cancel</Button>
+            <Col className="col-3">
+              <DeleteControl
+                title="Delete Dinner"
+                onClickAction={this.delete}
+              />
             </Col>
             <Col className="col-1">
-              <Button onClick={this.submit}>Submit</Button>
+              <Button color="secondary" onClick={this.cancel}>
+                Cancel
+              </Button>
+            </Col>
+            <Col className="col-1">
+              <Button color="primary" onClick={this.submit}>
+                Save
+              </Button>
             </Col>
           </Row>
         </Container>

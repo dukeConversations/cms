@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container, Row, Col, Button } from "reactstrap";
 import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
@@ -15,39 +16,6 @@ export default class ProfessorEdit extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  validateFields = () => {
-    let professorObj = this.state.professor;
-
-    let validator = new Validator(professorObj);
-
-    validator.validate("firstName", true);
-    validator.validate("lastName", true);
-    validator.validate("netID", true);
-    validator.validate("uniqueID", true);
-    validator.validate("phoneNumber", true, [Rules.isPhoneNumber]);
-    validator.validate("major", true);
-    validator.validate("genderPronouns", true);
-    validator.validate("graduationYear", true);
-
-    let errorsDict = validator.errorsDict;
-    this.setState({ validationErrors: errorsDict });
-
-    return Object.keys(errorsDict).length === 0;
-  };
-
-  showError = field => {
-    return (
-      this.state.validationErrors.hasOwnProperty(field) && this.state.showErrors
-    );
-  };
-
-  handleChange(evt) {
-    var professorObj = this.state.student;
-    professorObj[evt.target.name] = evt.target.value;
-    this.setState({ professor: professorObj });
-    if (this.state.showErrors) this.validateFields();
-  }
-
   // When the component is added, fetch the professor and update state
   componentDidMount() {
     if (!this.props.isCreating) {
@@ -55,6 +23,7 @@ export default class ProfessorEdit extends Component {
         this.props.match.params.id,
         // the data is returned in professor
         professor => {
+          console.log(professor);
           this.setState({ professor: professor });
         },
         // an error is returned
@@ -69,12 +38,98 @@ export default class ProfessorEdit extends Component {
     }
   }
 
+  validateFields = () => {
+    let professorObj = this.state.professor;
+
+    let validator = new Validator(professorObj);
+
+    /*
+    "uniqueID": String
+    "firstName": String
+    "lastName": String
+    "email": String
+    "genderPronouns": Integer
+    "department": Integer
+    "title": Integer
+    "school": Integer
+    */
+
+    validator.validate("uniqueID", true);
+    validator.validate("firstName", true);
+    validator.validate("lastName", true);
+    validator.validate("email", true, [Rules.isEmail]);
+    validator.validate("genderPronouns", true, [Rules.isNumber]);
+    validator.validate("department", true, [Rules.isNumber]);
+    validator.validate("title", true);
+    validator.validate("school", true, [Rules.isNumber]);
+
+    let errorsDict = validator.errorsDict;
+    this.setState({ validationErrors: errorsDict });
+
+    return Object.keys(errorsDict).length === 0;
+  };
+
+  showError = field => {
+    return (
+      this.state.validationErrors.hasOwnProperty(field) && this.state.showErrors
+    );
+  };
+
+  handleChange(evt) {
+    var professorObj = this.state.professor;
+    professorObj[evt.target.name] = evt.target.value;
+    this.setState({ professor: professorObj });
+    if (this.state.showErrors) this.validateFields();
+  }
+
   submit = () => {
+    console.log(this.state.professor);
     this.setState({ showErrors: true });
     let valid = this.validateFields();
     if (valid) {
-      // submit and go to last page
+      if (this.props.isCreating) {
+        API.createProfessor(
+          this.state.professor,
+          // the data is returned in professor
+          professor => {
+            this.props.history.goBack();
+          },
+          // an error is returned
+          error => {
+            console.error(error);
+          }
+        );
+      } else {
+        API.updateProfessor(
+          this.state.professor.uniqueID,
+          this.state.professor,
+          // the data is returned in professor
+          professor => {
+            this.props.history.goBack();
+          },
+          // an error is returned
+          error => {
+            console.error(error);
+            //this.props.history.goBack();
+          }
+        );
+      }
     }
+  };
+
+  delete = () => {
+    API.deleteProfessor(
+      this.state.professor.id,
+      // the data is returned in professor
+      professor => {
+        console.log(professor);
+        this.props.history.goBack();
+      },
+      // an error is returned
+      error => {
+        console.error(error);
+      }
+    );
   };
 
   cancel = () => {
@@ -98,6 +153,257 @@ export default class ProfessorEdit extends Component {
   };
 
   render() {
-    return <div>Edit Professor stuff</div>;
+    var professor = this.state.professor;
+
+    let departments = {
+      0: "Computer Science",
+      1: "Neuro Science",
+      2: "Political Science",
+      3: "Public Policy"
+    };
+
+    let schools = {
+      0: "Pratt",
+      1: "Trinity"
+    };
+
+    let genderPronouns = { 0: "He, Him", 1: "She, Her", 2: "They, Them" };
+
+    if (professor != null) {
+      const departmentOptions = Object.keys(departments).map(key => {
+        return (
+          <option key={key} value={key}>
+            {departments[key]}
+          </option>
+        );
+      });
+      departmentOptions.splice(
+        0,
+        0,
+        <option
+          key={Object.keys(departments).length}
+          value="Make Selection"
+          disabled
+        >
+          Make Selection
+        </option>
+      );
+
+      const schoolOptions = Object.keys(schools).map(key => {
+        return (
+          <option key={key} value={key}>
+            {schools[key]}
+          </option>
+        );
+      });
+      schoolOptions.splice(
+        0,
+        0,
+        <option
+          key={Object.keys(schools).length}
+          value="Make Selection"
+          disabled
+        >
+          Make Selection
+        </option>
+      );
+
+      const genderPronounOptions = Object.keys(genderPronouns).map(key => {
+        return (
+          <option key={key} value={key}>
+            {genderPronouns[key]}
+          </option>
+        );
+      });
+      genderPronounOptions.splice(
+        0,
+        0,
+        <option
+          key={Object.keys(genderPronouns).length}
+          value="Make Selection"
+          disabled
+        >
+          Make Selection
+        </option>
+      );
+
+      /*
+      firstName
+      lastName
+      genderPronouns
+      department
+      title
+      School
+          0 = Pratt
+          1 = Trinity
+      */
+
+      /*
+      "uniqueID": String
+      "firstName": String
+      "lastName": String
+      "email": String
+      "genderPronouns": Integer
+      "department": Integer
+      "title": Integer
+      "school": Integer
+      */
+
+      return (
+        <Container>
+          <Row className="my-2">
+            <Col className="form-group col-3">
+              {this.renderInput(
+                "firstName",
+                "First Name",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  placeholder="Johnny"
+                  value={this.state.professor.firstName || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+            <Col className="form-group col-3">
+              {this.renderInput(
+                "lastName",
+                "Last Name",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  placeholder="Appleseed"
+                  value={this.state.professor.lastName || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+            <Col className="form-group col-3">
+              {this.renderInput(
+                "uniqueID",
+                "Unique ID",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="uniqueID"
+                  id="uniqueID"
+                  placeholder="12345"
+                  disabled={!this.props.isCreating}
+                  value={this.state.professor.uniqueID || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-3">
+              {this.renderInput(
+                "genderPronouns",
+                "Gender Pronouns",
+                <select
+                  className="form-control"
+                  id="genderPronouns"
+                  name="genderPronouns"
+                  value={
+                    this.state.professor.genderPronouns || "Make Selection"
+                  }
+                  onChange={this.handleChange}
+                >
+                  {genderPronounOptions}
+                </select>
+              )}
+            </Col>
+            <Col className="form-group col-4">
+              {this.renderInput(
+                "email",
+                "Email",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="cbray@duke.edu"
+                  value={this.state.professor.email || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group">
+              {this.renderInput(
+                "title",
+                "Title",
+                <input
+                  className="form-control"
+                  type="text"
+                  name="title"
+                  id="title"
+                  placeholder="Supreme dictator of maths"
+                  value={this.state.professor.title || ""}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="form-group col-6">
+              {this.renderInput(
+                "department",
+                "Department",
+                <select
+                  className="form-control"
+                  id="department"
+                  name="department"
+                  value={this.state.professor.department || "Make Selection"}
+                  onChange={this.handleChange}
+                >
+                  {departmentOptions}
+                </select>
+              )}
+            </Col>
+            <Col className="form-group col-3">
+              {this.renderInput(
+                "school",
+                "School",
+                <select
+                  className="form-control"
+                  id="school"
+                  name="school"
+                  value={this.state.professor.school || "Make Selection"}
+                  onChange={this.handleChange}
+                >
+                  {schoolOptions}
+                </select>
+              )}
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="col-3">
+              <DeleteControl
+                title="Delete Professor"
+                onClickAction={this.delete}
+              />
+            </Col>
+            <Col className="col-1">
+              <Button color="secondary" onClick={this.cancel}>
+                Cancel
+              </Button>
+            </Col>
+            <Col className="col-1">
+              <Button color="primary" onClick={this.submit}>
+                Save
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      );
+    } else {
+      return null;
+    }
   }
 }

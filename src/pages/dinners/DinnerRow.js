@@ -24,20 +24,6 @@ export default class DinnerRow extends Component {
         console.error(error);
       }
     );
-
-    API.getProfessor(
-      this.props.dinner.professorID,
-      // the data is returned
-      professor => {
-        if (!professor.hasOwnProperty("message")) {
-          this.setState({ professor: professor });
-        }
-      },
-      // an error is returned
-      error => {
-        console.error(error);
-      }
-    );
   }
 
   render() {
@@ -55,7 +41,7 @@ export default class DinnerRow extends Component {
     }
 
     var professorString = dinner.professorID;
-    var professor = this.state.professor;
+    var professor = dinner.professor;
     if (professor != null) {
       professorString = professor.firstName + " " + professor.lastName;
     }

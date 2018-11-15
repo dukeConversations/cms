@@ -207,7 +207,7 @@ export default class StudentEdit extends Component {
       return (
         <Container>
           <Row className="my-2">
-            <Col className="form-group col-4">
+            <Col className="form-group col-xs-12 col-md-4">
               {this.renderInput(
                 "firstName",
                 "First Name",
@@ -222,7 +222,7 @@ export default class StudentEdit extends Component {
                 />
               )}
             </Col>
-            <Col className="form-group col-4">
+            <Col className="form-group col-xs-12 col-md-4">
               {this.renderInput(
                 "lastName",
                 "Last Name",
@@ -239,7 +239,7 @@ export default class StudentEdit extends Component {
             </Col>
           </Row>
           <Row className="my-2">
-            <Col className="form-group col-3">
+            <Col className="form-group col-xs-12 col-md-3">
               {this.renderInput(
                 "netID",
                 "Net ID",
@@ -255,7 +255,7 @@ export default class StudentEdit extends Component {
                 />
               )}
             </Col>
-            <Col className="form-group col-3">
+            <Col className="form-group col-xs-11 col-md-3">
               {this.renderInput(
                 "uniqueID",
                 "Unique ID",
@@ -272,7 +272,7 @@ export default class StudentEdit extends Component {
             </Col>
           </Row>
           <Row className="my-2">
-            <Col className="form-group col-2">
+            <Col className="form-group col-xs-12 col-md-6">
               {this.renderInput(
                 "phoneNumber",
                 "Phone",
@@ -287,7 +287,7 @@ export default class StudentEdit extends Component {
                 />
               )}
             </Col>
-            <Col className="form-group col-4">
+            <Col className="form-group col-xs-12 col-md-6">
               {this.renderInput(
                 "major",
                 "Major",
@@ -304,7 +304,7 @@ export default class StudentEdit extends Component {
             </Col>
           </Row>
           <Row className="my-2">
-            <Col className="form-group col-2">
+            <Col className="form-group col-xs-12 col-md-4">
               {this.renderInput(
                 "graduationYear",
                 "Graduation Year",
@@ -319,7 +319,7 @@ export default class StudentEdit extends Component {
                 </select>
               )}
             </Col>
-            <Col className="form-group col-3">
+            <Col className="form-group col-xs-12 col-md-5">
               {this.renderInput(
                 "genderPronouns",
                 "Gender Pronouns",
@@ -336,18 +336,18 @@ export default class StudentEdit extends Component {
             </Col>
           </Row>
           <Row className="my-2">
-            <Col className="col-3">
+            <Col className="col-xs-4 col-md-2">
               <DeleteControl
                 title="Delete Student"
                 onClickAction={this.delete}
               />
             </Col>
-            <Col className="col-1">
+            <Col className="col-xs-4 col-md-1">
               <Button color="secondary" onClick={this.cancel}>
                 Cancel
               </Button>
             </Col>
-            <Col className="col-1">
+            <Col className="col-xs-4 col-md-1">
               <Button color="primary" onClick={this.submit}>
                 Save
               </Button>

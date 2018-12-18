@@ -31,13 +31,21 @@ export default class DinnerRow extends Component {
 
     var date = moment.unix(dinner.timeStamp);
     var dateString = date.isValid()
-      ? date.format("MMMM Do YYYY, h:mm:ss a")
+      ? date.format("dddd, MMMM Do @ h:mm a")
       : dinner.timeStamp;
 
     var userString = dinner.userId;
     var user = this.state.user;
+    user = null;
+
+    let userCellContent;
     if (user !== null) {
       userString = user.firstName + " " + user.lastName;
+      userCellContent = (
+        <NavLink to={"/users/v/" + dinner.userId}>{userString}</NavLink>
+      );
+    } else {
+      userCellContent = <div>No user assigned</div>;
     }
 
     var professorString = dinner.professorID;
@@ -51,24 +59,21 @@ export default class DinnerRow extends Component {
 
     return (
       <tr>
-        <td>
-          <NavLink to={"/dinners/v/" + dinner.id}>View</NavLink>
-        </td>
-        <td>
-          <NavLink to={"/dinners/e/" + dinner.id}>Edit</NavLink>
-        </td>
-        <td className="text-left">{dinner.id}</td>
-        <td className="text-left">
+        <td className="text-left align-middle">{dinner.id}</td>
+        <td className="text-left align-middle">
           <NavLink to={"/professors/v/" + dinner.professorID}>
             {professorString}
           </NavLink>
         </td>
-        <td className="text-left">
-          <NavLink to={"/users/v/" + dinner.userId}>{userString}</NavLink>
+        <td className="text-left align-middle">{userCellContent}</td>
+        <td className="text-left align-middle">{dateString}</td>
+        <td className="text-left align-middle">{cateringString}</td>
+        <td className="text-left align-middle">{transportationString}</td>
+        <td className="align-middle">
+          <NavLink to={"/dinners/s/" + dinner.id}>S</NavLink> |{" "}
+          <NavLink to={"/dinners/v/" + dinner.id}>V</NavLink> |{" "}
+          <NavLink to={"/dinners/e/" + dinner.id}>E</NavLink>
         </td>
-        <td className="text-left">{dateString}</td>
-        <td className="text-left">{cateringString}</td>
-        <td className="text-left">{transportationString}</td>
       </tr>
     );
   }

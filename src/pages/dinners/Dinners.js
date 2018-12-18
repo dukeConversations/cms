@@ -48,14 +48,13 @@ export default class Dinners extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th> </th>
-              <th> </th>
               <th>id</th>
               <th>Professor</th>
               <th>User</th>
               <th>Date/Time</th>
               <th>Catering</th>
-              <th>Transportation</th>
+              <th>Trans.</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

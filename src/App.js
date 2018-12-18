@@ -7,8 +7,7 @@ import { Button, Nav, Navbar, NavItem } from "reactstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import Dashboard from "./pages/Dashboard";
-import Selection from "./pages/Selection";
-import CheckIn from "./pages/CheckIn";
+import CheckIn from "./pages/checkin/CheckIn";
 
 import Students from "./pages/students/Students";
 import StudentDetail from "./pages/students/StudentDetail";
@@ -21,6 +20,7 @@ import ProfessorEdit from "./pages/professors/ProfessorEdit";
 import Dinners from "./pages/dinners/Dinners";
 import DinnerDetail from "./pages/dinners/DinnerDetail";
 import DinnerEdit from "./pages/dinners/DinnerEdit";
+import DinnerSelection from "./pages/dinners/DinnerSelection";
 
 import Users from "./pages/users/Users";
 import UserDetail from "./pages/users/UserDetail";
@@ -54,11 +54,6 @@ class App extends Component {
                 </LinkContainer>
               </NavItem>
               <NavItem>
-                <LinkContainer to="/selection">
-                  <Button color="link">Selection</Button>
-                </LinkContainer>
-              </NavItem>
-              <NavItem>
                 <LinkContainer to="/users">
                   <Button color="link">Users</Button>
                 </LinkContainer>
@@ -73,8 +68,6 @@ class App extends Component {
 
           <div className="content">
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/selection" component={Selection} />
-            <Route exact path="/checkIn" component={CheckIn} />
 
             <Route exact path="/students" component={Students} />
             <Route exact path="/students/v/:netID" component={StudentDetail} />
@@ -100,6 +93,11 @@ class App extends Component {
               exact
               path="/dinners/c"
               render={props => <DinnerEdit {...props} isCreating={true} />}
+            />
+            <Route
+              exact
+              path="/dinners/s/:id"
+              render={props => <DinnerSelection {...props} />}
             />
 
             <Route exact path="/professors" component={Professors} />
@@ -127,6 +125,8 @@ class App extends Component {
               path="/users/c"
               render={props => <UserEdit {...props} isCreating={true} />}
             />
+
+            <Route exact path="/checkIn" component={CheckIn} />
           </div>
         </div>
       </HashRouter>

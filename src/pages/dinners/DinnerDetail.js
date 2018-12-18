@@ -9,8 +9,7 @@ export default class DinnerDetail extends Component {
   constructor() {
     super();
     this.state = {
-      dinner: null,
-      professor: null
+      dinner: null
     };
   }
 
@@ -21,16 +20,6 @@ export default class DinnerDetail extends Component {
       // the data is returned in dinner
       dinner => {
         this.setState({ dinner: dinner });
-
-        API.getProfessor(
-          dinner.professorID,
-          professor => {
-            this.setState({ professor: professor });
-          },
-          error => {
-            console.error(error);
-          }
-        );
       },
       // an error is returned
       error => {
@@ -62,12 +51,22 @@ export default class DinnerDetail extends Component {
   };
 
   renderProfessor = () => {
-    let professor = this.state.professor;
+    let professor = this.state.dinner.professor;
     if (professor != null) {
       let professorName = professor.firstName + " " + professor.lastName;
-      return this.innerRenderLabel("professor", "Professor", professorName);
+      return (
+        <div>
+          <label htmlFor="professorButton">
+            <strong>Professor</strong>
+          </label>
+          <br />
+          <NavLink to={"/professors/v/" + professor.id} id="professorButton">
+            {professorName}
+          </NavLink>
+        </div>
+      );
     } else {
-      return null;
+      return this.innerRenderLabel("professor", "Professor", "Loading...");
     }
   };
 
@@ -102,7 +101,7 @@ export default class DinnerDetail extends Component {
             <Col className="form-group col-1">
               {this.renderLabel("id", "ID")}
             </Col>
-            <Col className="form-group col-2">{this.renderProfessor()}</Col>
+            <Col className="form-group col-3">{this.renderProfessor()}</Col>
             <Col className="form-group">
               {this.renderLabel("topic", "Topic")}
             </Col>
@@ -148,7 +147,7 @@ export default class DinnerDetail extends Component {
                 </strong>
               </label>
               <br />
-              <NavLink to={"/selection/" + dinner.id}>Make Selections</NavLink>
+              <NavLink to={"/dinners/s/" + dinner.id}>Make Selections</NavLink>
             </Col>
           </Row>
         </Container>

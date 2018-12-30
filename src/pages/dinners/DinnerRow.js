@@ -27,17 +27,19 @@ export default class DinnerRow extends Component {
   };
 
   componentDidMount() {
-    API.getUser(
-      this.props.dinner.userId,
-      // the data is returned
-      user => {
-        this.setState({ user: user });
-      },
-      // an error is returned
-      error => {
-        console.error(error);
-      }
-    );
+    if (this.props.dinner.userID !== null) {
+      API.getUser(
+        this.props.dinner.userId,
+        // the data is returned
+        user => {
+          this.setState({ user: user });
+        },
+        // an error is returned
+        error => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   render() {

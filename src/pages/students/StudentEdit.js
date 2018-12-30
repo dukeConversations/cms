@@ -338,7 +338,9 @@ export default class StudentEdit extends Component {
           <Row className="my-2">
             <Col className="col-xs-4 col-md-2">
               <DeleteControl
-                title="Delete Student"
+                modalTitle="Delete Student"
+                buttonTitle="Delete"
+                buttonColor="danger"
                 onClickAction={this.delete}
               />
             </Col>

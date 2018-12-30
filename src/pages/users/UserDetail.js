@@ -14,7 +14,7 @@ export default class UserDetail extends Component {
   // When the component is added, fetch the user and update state
   componentDidMount() {
     API.getUser(
-      this.props.id,
+      this.props.match.params.id,
       // the data is returned in user
       user => {
         this.setState({ user: user });

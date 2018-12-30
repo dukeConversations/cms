@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { Button } from "reactstrap";
 
 export default class UserRow extends Component {
   constructor(props) {
@@ -12,17 +13,25 @@ export default class UserRow extends Component {
 
     return (
       <tr>
-        <td>
-          <NavLink to={"/users/v/" + user.netID}>View</NavLink>
-        </td>
-        <td>
-          <NavLink to={"/users/e/" + user.netID}>Edit</NavLink>
-        </td>
-        <td className="text-left">{user.firstName}</td>
-        <td className="text-left">{user.lastName}</td>
+        <td className="text-left">{user.username}</td>
+        <td className="text-left">{user.firstName + " " + user.lastName}</td>
         <td className="text-left">{user.role}</td>
-        <td className="text-left">{user.dinners}</td>
-        <td className="text-left">{user.semesterDins}</td>
+        <td className="text-left">{user.dinners.length}</td>
+        <td className="text-center">
+          <div className="d-inline-flex">
+            <span className="align-middle">
+              <NavLink to={"/users/v/" + user.id}>
+                <Button color="link">V</Button>
+              </NavLink>{" "}
+              |{" "}
+            </span>
+            <span className="align-middle">
+              <NavLink to={"/users/e/" + user.id}>
+                <Button color="link">E</Button>
+              </NavLink>
+            </span>
+          </div>
+        </td>
       </tr>
     );
   }

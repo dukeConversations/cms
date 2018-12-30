@@ -47,14 +47,12 @@ export default class Students extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th> </th>
-              <th> </th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Name</th>
               <th>NetID</th>
               <th>Class</th>
               <th>Overall Acceptance %</th>
               <th>Semester Acceptance %</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

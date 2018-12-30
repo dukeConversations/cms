@@ -61,23 +61,6 @@ export default class DinnerEdit extends Component {
 
     let validator = new Validator(dinnerObj);
 
-    /*
-    {
-    "id": 1,
-    "timeStamp": "20NOV1652",
-    "topic": "The Spanish Inquisitino",
-    "description": "You'll never expect it",
-    "studentLimit": 1330,
-    "address": "200 Carr",
-    "dietaryRestrictions": "No Heretics",
-    "invitationSentTimeStamp": "12341",
-    "catering": false,
-    "transportation": true,
-    "professorID": "111",
-    "applications": []
-    }
-    */
-
     validator.validate("timeStamp", true);
     validator.validate("topic", true);
     validator.validate("description", true);
@@ -390,7 +373,9 @@ export default class DinnerEdit extends Component {
           <Row className="my-2">
             <Col className="col-3">
               <DeleteControl
-                title="Delete Dinner"
+                modalTitle="Delete Dinner"
+                buttonTitle="Delete"
+                buttonColor="danger"
                 onClickAction={this.delete}
               />
             </Col>

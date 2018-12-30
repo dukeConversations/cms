@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import API from "duke-convos-api";
+import * as USERS_API from "../../api";
+import { Button } from "reactstrap";
+import DeleteControl from "../../DeleteModalControl";
 
 export default class DinnerRow extends Component {
   constructor(props) {
@@ -11,6 +14,17 @@ export default class DinnerRow extends Component {
       user: null
     };
   }
+
+  delete = () => {
+    API.deleteDinner(
+      this.props.dinner.id,
+      professor => {},
+      // an error is returned
+      error => {
+        console.error(error);
+      }
+    );
+  };
 
   componentDidMount() {
     API.getUser(
@@ -69,10 +83,33 @@ export default class DinnerRow extends Component {
         <td className="text-left align-middle">{dateString}</td>
         <td className="text-left align-middle">{cateringString}</td>
         <td className="text-left align-middle">{transportationString}</td>
-        <td className="align-middle">
-          <NavLink to={"/dinners/s/" + dinner.id}>S</NavLink> |{" "}
-          <NavLink to={"/dinners/v/" + dinner.id}>V</NavLink> |{" "}
-          <NavLink to={"/dinners/e/" + dinner.id}>E</NavLink>
+        <td className="text-center">
+          <div className="d-inline-flex">
+            <span className="align-middle">
+              <NavLink to={"/dinners/s/" + dinner.id}>
+                <Button color="link">S</Button>
+              </NavLink>{" "}
+              |{" "}
+            </span>
+            <span className="align-middle">
+              <NavLink to={"/dinners/v/" + dinner.id}>
+                <Button color="link">V</Button>
+              </NavLink>{" "}
+              |{" "}
+            </span>
+            <span className="align-middle">
+              <NavLink to={"/dinners/e/" + dinner.id}>
+                <Button color="link">E</Button>
+              </NavLink>
+              |{" "}
+            </span>
+            <DeleteControl
+              modalTitle="Delete Dinner"
+              buttonTitle="D"
+              buttonColor="link"
+              onClickAction={this.delete}
+            />
+          </div>
         </td>
       </tr>
     );

@@ -385,7 +385,9 @@ export default class ProfessorEdit extends Component {
           <Row className="my-2">
             <Col className="col-3">
               <DeleteControl
-                title="Delete Professor"
+                modalTitle="Delete Professor"
+                buttonTitle="Delete"
+                buttonColor="danger"
                 onClickAction={this.delete}
               />
             </Col>

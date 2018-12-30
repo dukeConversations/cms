@@ -47,13 +47,11 @@ export default class Users extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th> </th>
-              <th> </th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Username</th>
+              <th>Name</th>
               <th>Role</th>
               <th>Dinner Count</th>
-              <th>Semester Dinner Count</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

@@ -11,23 +11,36 @@ export default class DeleteModalControl extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({
       modal: !this.state.modal
     });
-  }
+  };
+
+  actionAndToggle = () => {
+    this.props.onClickAction();
+    this.toggle();
+  };
 
   render() {
+    /*
+    props:
+      buttonColor
+      buttonTitle
+      modalTitle
+    */
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}>
-          Delete
+        <Button color={this.props.buttonColor} onClick={this.toggle}>
+          {this.props.buttonTitle}
         </Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>{this.props.title}</ModalHeader>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} backdrop={false}>
+          <ModalHeader toggle={this.toggle}>
+            {this.props.modalTitle}
+          </ModalHeader>
           <ModalBody>Are you sure? This action cannot be undone.</ModalBody>
           <ModalFooter>
-            <Button color="danger" onClick={this.props.onClickAction}>
+            <Button color="danger" onClick={this.actionAndToggle}>
               Delete
             </Button>
             <Button color="secondary" onClick={this.toggle}>

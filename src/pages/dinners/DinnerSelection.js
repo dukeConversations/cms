@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "reactstrap";
 import * as API from "duke-convos-api";
-import { NavLink } from "react-router-dom";
-import moment from "moment";
 
 export default class DinnerSelection extends Component {
   // Instantiate state when the component is constructed

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button, Modal } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";

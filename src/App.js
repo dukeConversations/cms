@@ -26,8 +26,11 @@ import Users from "./pages/users/Users";
 import UserDetail from "./pages/users/UserDetail";
 import UserEdit from "./pages/users/UserEdit";
 
+import Login from "./pages/Login";
+
 class App extends Component {
   render() {
+    console.log("MAIN RENDER");
     return (
       <HashRouter>
         <div>
@@ -68,6 +71,7 @@ class App extends Component {
 
           <div className="content">
             <Route exact path="/" component={Dashboard} />
+            <Route exact path="/login" component={Login} />
 
             <Route exact path="/students" component={Students} />
             <Route exact path="/students/v/:netID" component={StudentDetail} />

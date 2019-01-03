@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import API from "duke-convos-api";
-import * as USERS_API from "../../api";
 import { Button } from "reactstrap";
 import DeleteControl from "../../DeleteModalControl";
 

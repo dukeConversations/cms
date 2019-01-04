@@ -14,6 +14,7 @@ export default class DinnerEdit extends Component {
     this.state = {
       dinner: null,
       professors: [],
+      users: [],
       showErrors: false,
       validationErrors: {}
     };
@@ -47,6 +48,16 @@ export default class DinnerEdit extends Component {
     API.getProfessors(
       professors => {
         this.setState({ professors: professors });
+      },
+      error => {
+        console.error(error);
+      }
+    );
+
+    API.getUsers(
+      users => {
+        console.log(users);
+        this.setState({ users: users });
       },
       error => {
         console.error(error);
@@ -228,6 +239,22 @@ export default class DinnerEdit extends Component {
         </option>
       );
 
+      let users = this.state.users;
+      const userOptions = users.map(user => {
+        return (
+          <option key={user.id} value={user.id}>
+            {user.firstName + " " + user.lastName}
+          </option>
+        );
+      });
+      userOptions.splice(
+        0,
+        0,
+        <option key={professors.length + 1} disabled>
+          Make Selection
+        </option>
+      );
+
       return (
         <Container>
           <Row className="my-2">
@@ -258,6 +285,22 @@ export default class DinnerEdit extends Component {
                   id="professorID"
                 >
                   {professorOptions}
+                </select>
+              )}
+            </Col>
+            <Col className="form-group col-5">
+              {this.renderInput(
+                "userID",
+                "User",
+                <select
+                  className="form-control"
+                  type="number"
+                  value={this.state.dinner.userID || "Make Selection"}
+                  onChange={this.handleChange}
+                  name="userID"
+                  id="userID"
+                >
+                  {userOptions}
                 </select>
               )}
             </Col>

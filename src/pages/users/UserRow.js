@@ -13,8 +13,8 @@ export default class UserRow extends Component {
 
     return (
       <tr>
-        <td className="text-left">{user.username}</td>
         <td className="text-left">{user.firstName + " " + user.lastName}</td>
+        <td className="text-left">{user.email}</td>
         <td className="text-left">{user.role}</td>
         <td className="text-left">{user.dinners.length}</td>
         <td className="text-center">

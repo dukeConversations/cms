@@ -30,7 +30,7 @@ export default class Users extends Component {
   render() {
     // Generate a list of UserRows from the array in state.users
     const userRows = this.state.users.map(user => {
-      return <UserRow key={user.uniqueID} user={user} />;
+      return <UserRow key={user.id} user={user} />;
     });
 
     // Render the JSX
@@ -47,8 +47,8 @@ export default class Users extends Component {
           {/* Create the header of the table */}
           <thead className="thead-dark">
             <tr>
-              <th>Username</th>
               <th>Name</th>
+              <th>Email</th>
               <th>Role</th>
               <th>Dinner Count</th>
               <th>Actions</th>

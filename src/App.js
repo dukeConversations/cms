@@ -20,7 +20,7 @@ import ProfessorEdit from "./pages/professors/ProfessorEdit";
 import Dinners from "./pages/dinners/Dinners";
 import DinnerDetail from "./pages/dinners/DinnerDetail";
 import DinnerEdit from "./pages/dinners/DinnerEdit";
-import DinnerSelection from "./pages/dinners/DinnerSelection";
+import DinnerSelection from "./pages/dinners/selection/DinnerSelection";
 
 import Users from "./pages/users/Users";
 import UserDetail from "./pages/users/UserDetail";

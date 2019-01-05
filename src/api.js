@@ -93,7 +93,6 @@ exports.updateApplicationAttendance = function(
   successCallback,
   errorCallback
 ) {
-  console.log(statusDict);
   api
     .post("application/checkin", statusDict)
     .then(response => {

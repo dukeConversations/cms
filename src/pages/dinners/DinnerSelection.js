@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container, Row, Col, Button, Table } from "reactstrap";
 import * as API from "duke-convos-api";
 
 export default class DinnerSelection extends Component {
@@ -6,17 +7,23 @@ export default class DinnerSelection extends Component {
   constructor() {
     super();
     this.state = {
-      dinner: null
+      applicationStatuses: {}
     };
   }
 
-  // When the component is added, fetch the dinner and update state
   componentDidMount() {
     API.getDinner(
       this.props.match.params.id,
       // the data is returned in dinner
       dinner => {
-        this.setState({ dinner: dinner });
+        console.log(dinner);
+        let applicationStatuses = {};
+        for (var i = 0; i < dinner.applications.length; i++) {
+          let application = dinner.applications[i];
+          applicationStatuses[application.id] = application.status;
+        }
+
+        this.setState({ applicationStatuses: applicationStatuses });
       },
       // an error is returned
       error => {
@@ -26,25 +33,40 @@ export default class DinnerSelection extends Component {
   }
 
   render() {
-    var dinner = this.state.dinner;
+    let { applicationStatuses } = this.state;
+    let handler = this.updateStatusesDict;
 
-    // +  "id": 1,
-    // +  "timeStamp": "20NOV1652",
-    // +  "topic": "The Spanish Inquisitino",
-    // +  "description": "You'll never expect it",
-    // +  "studentLimit": 1330,
-    // +  "address": "200 Carr",
-    // +  "dietaryRestrictions": "No Heretics",
-    // -  "invitationSentTimeStamp": "12341",
-    // +  "catering": false,
-    // +  "transportation": true,
-    // +  "professorID": "111",
-    // -  "applications": []
+    var waitlistedRows = [];
+    var acceptedRows = [];
+    var unsortedRows = [];
 
-    if (dinner != null) {
-      return <div>{dinner.topic}</div>;
-    } else {
-      return null;
+    for (var appID in applicationStatuses) {
+      let applicationStatus = applicationStatuses[appID];
     }
+
+    return (
+      <Container>
+        <Row className="my-2">
+          <Col className="col-4 mx-2">
+            <Table bordered responsive>
+              <tbody>{unsortedRows}</tbody>
+            </Table>
+          </Col>
+          <Col className="col-4 mx-2">
+            <Table bordered responsive>
+              <tbody>{acceptedRows}</tbody>
+            </Table>
+          </Col>
+          <Col className="col-4 mx-2">
+            <Table bordered responsive>
+              <tbody>{waitlistedRows}</tbody>
+            </Table>
+          </Col>
+        </Row>
+        <Row className="my-2">
+          <Button onClick={this.saveChanges}>Save</Button>
+        </Row>
+      </Container>
+    );
   }
 }

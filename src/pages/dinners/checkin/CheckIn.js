@@ -2,25 +2,22 @@ import React, { Component } from "react";
 import API from "duke-convos-api";
 import API2 from "../../../api.js";
 import CheckInRow from "./CheckInRow";
-import { Button } from "reactstrap";
+import { Button, Table } from "reactstrap";
 
 export default class CheckIn extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      dinner: null,
       attendanceStatuses: {}
     };
   }
 
-  // When the component is added, fetch the dinner and update state
   componentDidMount() {
     API.getDinner(
       this.props.match.params.id,
       // the data is returned in dinner
       dinner => {
-        console.log(dinner);
         let attendanceStatuses = {};
         for (var i = 0; i < dinner.applications.length; i++) {
           let application = dinner.applications[i];
@@ -59,7 +56,7 @@ export default class CheckIn extends Component {
 
   render() {
     let { attendanceStatuses } = this.state;
-
+    let handler = this.updateStatusesDict;
     const checkInRows = Object.keys(attendanceStatuses).map(function(
       applicationID
     ) {
@@ -67,7 +64,7 @@ export default class CheckIn extends Component {
         <CheckInRow
           applicationID={applicationID}
           status={attendanceStatuses[applicationID]}
-          onClickHandler={this.updateStatusesDict}
+          onClickHandler={handler}
         />
       );
     });
@@ -75,7 +72,12 @@ export default class CheckIn extends Component {
     return (
       <div>
         <h3>Check In</h3>
-        {checkInRows}
+        <Table responsive>
+          <tbody>
+            {/* Add the rows to represent each dinner */}
+            {checkInRows}
+          </tbody>
+        </Table>
         <Button onClick={this.saveChanges}>Save</Button>
       </div>
     );

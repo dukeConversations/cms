@@ -93,6 +93,7 @@ exports.updateApplicationAttendance = function(
   successCallback,
   errorCallback
 ) {
+  console.log(statusDict);
   api
     .post("application/checkin", statusDict)
     .then(response => {
@@ -110,6 +111,21 @@ exports.updateApplicationStatuses = function(
 ) {
   api
     .post("application/update", statusDict)
+    .then(response => {
+      successCallback(response.data);
+    })
+    .catch(error => {
+      errorCallback(error);
+    });
+};
+
+exports.confirmDinnerSelection = function(
+  dinnerID,
+  successCallback,
+  errorCallback
+) {
+  api
+    .get("dinner/confirm/" + dinnerID)
     .then(response => {
       successCallback(response.data);
     })

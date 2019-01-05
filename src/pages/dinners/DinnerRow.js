@@ -28,7 +28,7 @@ export default class DinnerRow extends Component {
   componentDidMount() {
     if (this.props.dinner.userID !== null) {
       API.getUser(
-        this.props.dinner.userId,
+        this.props.dinner.userID,
         // the data is returned
         user => {
           this.setState({ user: user });
@@ -49,15 +49,20 @@ export default class DinnerRow extends Component {
       ? date.format("dddd, MMMM Do @ h:mm a")
       : dinner.timeStamp;
 
-    var userString = dinner.userId;
     var user = this.state.user;
-    user = null;
 
     let userCellContent;
     if (user !== null) {
-      userString = user.firstName + " " + user.lastName;
       userCellContent = (
-        <NavLink to={"/users/v/" + dinner.userId}>{userString}</NavLink>
+        <NavLink to={"/users/v/" + dinner.userID}>
+          {user.firstName + " " + user.lastName}
+        </NavLink>
+      );
+    } else if (dinner.userID !== null) {
+      userCellContent = (
+        <NavLink to={"/users/v/" + dinner.userID}>
+          {"user id: " + dinner.userID}
+        </NavLink>
       );
     } else {
       userCellContent = <div>No user assigned</div>;
@@ -89,20 +94,16 @@ export default class DinnerRow extends Component {
             <span className="align-middle">
               <NavLink to={"/dinners/s/" + dinner.id}>
                 <Button color="link">S</Button>
-              </NavLink>{" "}
-              |{" "}
-            </span>
-            <span className="align-middle">
+              </NavLink>
               <NavLink to={"/dinners/v/" + dinner.id}>
                 <Button color="link">V</Button>
-              </NavLink>{" "}
-              |{" "}
-            </span>
-            <span className="align-middle">
+              </NavLink>
               <NavLink to={"/dinners/e/" + dinner.id}>
                 <Button color="link">E</Button>
               </NavLink>
-              |{" "}
+              <NavLink to={"/dinners/ch/" + dinner.id}>
+                <Button color="link">C</Button>
+              </NavLink>
             </span>
             <DeleteControl
               modalTitle="Delete Dinner"

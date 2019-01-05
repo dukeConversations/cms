@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "duke-convos-api";
-import API2 from "../../api.js";
+import API2 from "../../../api.js";
 import CheckInRow from "./CheckInRow";
 import { Button } from "reactstrap";
 
@@ -17,7 +17,7 @@ export default class CheckIn extends Component {
   // When the component is added, fetch the dinner and update state
   componentDidMount() {
     API.getDinner(
-      2,
+      this.props.match.params.id,
       // the data is returned in dinner
       dinner => {
         console.log(dinner);

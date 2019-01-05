@@ -7,7 +7,7 @@ import { Button, Nav, Navbar, NavItem } from "reactstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import Dashboard from "./pages/Dashboard";
-import CheckIn from "./pages/checkin/CheckIn";
+import CheckIn from "./pages/dinners/checkin/CheckIn";
 
 import Students from "./pages/students/Students";
 import StudentDetail from "./pages/students/StudentDetail";
@@ -42,6 +42,11 @@ class App extends Component {
                 </LinkContainer>
               </NavItem>
               <NavItem>
+                <LinkContainer to="/dinners">
+                  <Button color="link">Dinners</Button>
+                </LinkContainer>
+              </NavItem>
+              <NavItem>
                 <LinkContainer to="/students">
                   <Button color="link">Students</Button>
                 </LinkContainer>
@@ -52,18 +57,8 @@ class App extends Component {
                 </LinkContainer>
               </NavItem>
               <NavItem>
-                <LinkContainer to="/dinners">
-                  <Button color="link">Dinners</Button>
-                </LinkContainer>
-              </NavItem>
-              <NavItem>
                 <LinkContainer to="/users">
                   <Button color="link">Users</Button>
-                </LinkContainer>
-              </NavItem>
-              <NavItem>
-                <LinkContainer to="/checkIn">
-                  <Button color="link">Check In</Button>
                 </LinkContainer>
               </NavItem>
             </Nav>
@@ -103,6 +98,11 @@ class App extends Component {
               path="/dinners/s/:id"
               render={props => <DinnerSelection {...props} />}
             />
+            <Route
+              exact
+              path="/dinners/ch/:id"
+              render={props => <CheckIn {...props} />}
+            />
 
             <Route exact path="/professors" component={Professors} />
             <Route exact path="/professors/v/:id" component={ProfessorDetail} />
@@ -129,8 +129,6 @@ class App extends Component {
               path="/users/c"
               render={props => <UserEdit {...props} isCreating={true} />}
             />
-
-            <Route exact path="/checkIn" component={CheckIn} />
           </div>
         </div>
       </HashRouter>

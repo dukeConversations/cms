@@ -9,7 +9,8 @@ export default class CheckIn extends Component {
   constructor() {
     super();
     this.state = {
-      attendanceStatuses: {}
+      originalStatuses: {},
+      currentApplications: {}
     };
   }
 
@@ -19,15 +20,21 @@ export default class CheckIn extends Component {
       // the data is returned in dinner
       dinner => {
         let attendanceStatuses = {};
+        let applicationsDict = {};
+
         for (var i = 0; i < dinner.applications.length; i++) {
           let application = dinner.applications[i];
 
           if (application.status === 1) {
             attendanceStatuses[application.id] = application.present;
+            applicationsDict[application.id] = application;
           }
         }
 
-        this.setState({ attendanceStatuses: attendanceStatuses });
+        this.setState({
+          originalStatuses: attendanceStatuses,
+          currentApplications: applicationsDict
+        });
       },
       // an error is returned
       error => {
@@ -36,15 +43,24 @@ export default class CheckIn extends Component {
     );
   }
 
-  updateStatusesDict = applicationID => {
-    var statuses = this.state.attendanceStatuses;
-    statuses[applicationID] = !statuses[applicationID];
-    this.setState({ attendanceStatuses: statuses });
+  updateApplicationAttendance = id => {
+    var applicationsDict = this.state.currentApplications;
+    applicationsDict[id].present = !applicationsDict[id].present;
+    this.setState({ currentApplications: applicationsDict });
   };
 
   saveChanges = () => {
+    let { currentApplications, originalStatuses } = this.state;
+    let applicationsToUpdate = {};
+
+    for (let id in currentApplications) {
+      if (currentApplications[id].present !== originalStatuses[id]) {
+        applicationsToUpdate[id] = currentApplications[id].present;
+      }
+    }
+
     API2.updateApplicationAttendance(
-      this.state.attendanceStatuses,
+      applicationsToUpdate,
       response => {
         console.log(response);
       },
@@ -55,15 +71,15 @@ export default class CheckIn extends Component {
   };
 
   render() {
-    let { attendanceStatuses } = this.state;
-    let handler = this.updateStatusesDict;
-    const checkInRows = Object.keys(attendanceStatuses).map(function(
+    let { currentApplications } = this.state;
+    let handler = this.updateApplicationAttendance;
+
+    const checkInRows = Object.keys(currentApplications).map(function(
       applicationID
     ) {
       return (
         <CheckInRow
-          applicationID={applicationID}
-          status={attendanceStatuses[applicationID]}
+          application={currentApplications[applicationID]}
           onClickHandler={handler}
         />
       );

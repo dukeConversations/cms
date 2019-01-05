@@ -3,14 +3,14 @@ import { Button } from "reactstrap";
 
 export default class CheckInRow extends Component {
   onClickAction = () => {
-    this.props.onClickHandler(this.props.applicationID);
+    this.props.onClickHandler(this.props.application.id);
   };
 
   render() {
     return (
       <tr>
         <td className="text-left align-middle">
-          {this.props.status.toString()}
+          {this.props.application.present.toString()}
         </td>
         <td className="text-right align-middle">
           <Button onClick={this.onClickAction}>Toggle</Button>

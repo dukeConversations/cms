@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import * as API from "../api.js";
+import LoginPopup from "./LoginPopup";
 
 export default class Dashboard extends Component {
   constructor() {
@@ -20,30 +21,12 @@ export default class Dashboard extends Component {
   }
 
   login = () => {
-    API.getUserInfo(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-
     API.login(
       this.state.username,
       this.state.password,
 
       response => {
         console.log(response);
-
-        API.getUserInfo(
-          response => {
-            console.log(response);
-          },
-          error => {
-            console.log(error);
-          }
-        );
       },
       // an error is returned
       error => {
@@ -53,32 +36,6 @@ export default class Dashboard extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <input
-          className="form-control"
-          type="text"
-          name="username"
-          id="username"
-          placeholder="user"
-          value={this.state.username}
-          onChange={this.handleChange}
-        />
-
-        <input
-          className="form-control"
-          type="text"
-          name="password"
-          id="password"
-          placeholder="pass"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-
-        <Button color="primary" onClick={this.login}>
-          Login
-        </Button>
-      </div>
-    );
+    return <LoginPopup />;
   }
 }

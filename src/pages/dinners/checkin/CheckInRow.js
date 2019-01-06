@@ -7,10 +7,14 @@ export default class CheckInRow extends Component {
   };
 
   render() {
+    let application = this.props.application;
     return (
       <tr>
         <td className="text-left align-middle">
-          {this.props.application.present.toString()}
+          {application.student.firstName + " " + application.student.lastName}
+        </td>
+        <td className="text-left align-middle">
+          {application.present.toString()}
         </td>
         <td className="text-right align-middle">
           <Button onClick={this.onClickAction}>Toggle</Button>

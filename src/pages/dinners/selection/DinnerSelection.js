@@ -1,7 +1,18 @@
-import React, { Component } from "react";
-import { Container, Row, Col, Button, Table } from "reactstrap";
+import React, { Component, Fragment } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Table,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from "reactstrap";
 import * as API from "duke-convos-api";
 import SelectionRow from "./SelectionRow";
+import ApplicationModalBody from "./ApplicationModalBody";
 
 export default class DinnerSelection extends Component {
   // Instantiate state when the component is constructed
@@ -9,7 +20,9 @@ export default class DinnerSelection extends Component {
     super();
     this.state = {
       originalApplicationStatuses: {},
-      applicationsDict: {}
+      applicationsDict: {},
+      showModal: false,
+      selectedApplication: null
     };
   }
 
@@ -82,9 +95,21 @@ export default class DinnerSelection extends Component {
     this.setState({ applicationsDict: applicationsDict });
   };
 
+  toggle = () => {
+    this.setState({ showModal: false });
+  };
+
+  viewApplication = id => {
+    let { applicationsDict } = this.state;
+    let application = applicationsDict[id];
+
+    this.setState({ showModal: true, selectedApplication: application });
+  };
+
   render() {
     let { applicationsDict } = this.state;
     let handler = this.updateApplicationStatus;
+    let openAppHandler = this.viewApplication;
 
     var pendingRows = [];
     var acceptedRows = [];
@@ -92,49 +117,70 @@ export default class DinnerSelection extends Component {
 
     for (let applicationID in applicationsDict) {
       let application = applicationsDict[applicationID];
+      let applicationSelectionRow = (
+        <SelectionRow
+          key={application.id}
+          application={application}
+          changeStatusHandler={handler}
+          openAppHandler={openAppHandler}
+        />
+      );
       if (application.status === 0 || application.status == 2) {
-        pendingRows.push(
-          <SelectionRow application={application} onClickHandler={handler} />
-        );
+        pendingRows.push(applicationSelectionRow);
       } else if (application.status === 1) {
-        acceptedRows.push(
-          <SelectionRow application={application} onClickHandler={handler} />
-        );
+        acceptedRows.push(applicationSelectionRow);
       } else if (application.status === 3) {
-        waitlistedRows.push(
-          <SelectionRow application={application} onClickHandler={handler} />
-        );
+        waitlistedRows.push(applicationSelectionRow);
       }
     }
 
     return (
-      <Container>
-        <Row className="my-2">
-          <Col className="col-4">
-            <Table bordered responsive>
-              <tbody>{pendingRows}</tbody>
-            </Table>
-          </Col>
-          <Col className="col-4">
-            <Table bordered responsive>
-              <tbody>{acceptedRows}</tbody>
-            </Table>
-          </Col>
-          <Col className="col-4">
-            <Table bordered responsive>
-              <tbody>{waitlistedRows}</tbody>
-            </Table>
-          </Col>
-        </Row>
-        <Row className="my-2">
-          <Col className="col-4 mx-2">
-            <Button onClick={this.confirm}>Confirm & Notify Applicants</Button>
-          </Col>
-          <Col className="col-4 mx-2">
-            <Button onClick={this.saveChanges}>Save</Button>
-          </Col>
-        </Row>
-      </Container>
+      <Fragment>
+        <Container>
+          <Row className="my-2">
+            <Col className="col-4">
+              <Table bordered responsive>
+                <tbody>{pendingRows}</tbody>
+              </Table>
+            </Col>
+            <Col className="col-4">
+              <Table bordered responsive>
+                <tbody>{acceptedRows}</tbody>
+              </Table>
+            </Col>
+            <Col className="col-4">
+              <Table bordered responsive>
+                <tbody>{waitlistedRows}</tbody>
+              </Table>
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col className="col-4 mx-2">
+              <Button onClick={this.confirm}>
+                Confirm & Notify Applicants
+              </Button>
+            </Col>
+            <Col className="col-4 mx-2">
+              <Button onClick={this.saveChanges}>Save</Button>
+            </Col>
+          </Row>
+        </Container>
+        {this.state.showModal &&
+          this.state.selectedApplication !== null && (
+            <Modal
+              className="modal-dialog modal-dialog-centered"
+              isOpen={this.state.showModal}
+              toggle={this.toggle}
+              backdrop={false}
+            >
+              <ApplicationModalBody
+                application={this.state.selectedApplication}
+                toggle={this.toggle}
+                changeStatusHandler={handler}
+              />
+            </Modal>
+          )}
+      </Fragment>
     );
   }
 }

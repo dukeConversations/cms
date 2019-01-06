@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 
 export default class CheckInRow extends Component {
-  onClickAction = status => {
-    this.props.onClickHandler(this.props.application.id, status);
+  changeStatus = status => {
+    this.props.changeStatusHandler(this.props.application.id, status);
   };
 
   render() {
@@ -14,14 +14,34 @@ export default class CheckInRow extends Component {
         <td className="text-left align-middle">
           {this.props.application.status}
         </td>
+        {application.status !== 0 && (
+          <td className="text-right align-middle">
+            <Button color="link" onClick={() => this.changeStatus(0)}>
+              R
+            </Button>
+          </td>
+        )}
+        {application.status !== 1 && (
+          <td className="text-right align-middle">
+            <Button color="link" onClick={() => this.changeStatus(1)}>
+              A
+            </Button>
+          </td>
+        )}
+        {application.status !== 3 && (
+          <td className="text-right align-middle">
+            <Button color="link" onClick={() => this.changeStatus(3)}>
+              W
+            </Button>
+          </td>
+        )}
         <td className="text-right align-middle">
-          <Button onClick={() => this.onClickAction(1)}>Accept</Button>
-        </td>
-        <td className="text-right align-middle">
-          <Button onClick={() => this.onClickAction(3)}>Waitlist</Button>
-        </td>
-        <td className="text-right align-middle">
-          <Button onClick={() => this.onClickAction(0)}>Reject</Button>
+          <Button
+            color="link"
+            onClick={() => this.props.openAppHandler(application.id)}
+          >
+            View
+          </Button>
         </td>
       </tr>
     );

@@ -8,16 +8,17 @@ export default class CheckInRow extends Component {
 
   render() {
     let application = this.props.application;
+
+    let buttonText = application.present ? "Mark as Absent" : "Mark as Present";
     return (
       <tr>
         <td className="text-left align-middle">
           {application.student.firstName + " " + application.student.lastName}
         </td>
-        <td className="text-left align-middle">
-          {application.present.toString()}
-        </td>
         <td className="text-right align-middle">
-          <Button onClick={this.onClickAction}>Toggle</Button>
+          <Button backgroundColor="red" onClick={this.onClickAction}>
+            {buttonText}
+          </Button>
         </td>
       </tr>
     );

@@ -70,7 +70,7 @@ export default class UserDetail extends Component {
           );
           break;
       }
-
+      console.log(user);
       return (
         <Container>
           <Row>
@@ -87,7 +87,7 @@ export default class UserDetail extends Component {
           </Row>
           <div>Phone: {user.phone}</div>
           <div>Major: {user.major}</div>
-          <div># of dinners: {user.dinners}</div>
+          <div># of dinners: {user.dinnerCount}</div>
           <div># of dinners this semester: {user.semesterDins}</div>
           <div>email text: {user.emailText}</div>
           <div>picture id: {user.pictureId}</div>

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import API from "duke-convos-api";
-import API2 from "../../../api.js";
 import CheckInRow from "./CheckInRow";
 import { Button, Table } from "reactstrap";
 
@@ -59,7 +58,7 @@ export default class CheckIn extends Component {
       }
     }
 
-    API2.updateApplicationAttendance(
+    API.updateApplicationAttendance(
       applicationsToUpdate,
       response => {
         console.log(response);

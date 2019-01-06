@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button, Table } from "reactstrap";
 import * as API from "duke-convos-api";
-import API2 from "../../../api.js";
 import SelectionRow from "./SelectionRow";
 
 export default class DinnerSelection extends Component {
@@ -52,7 +51,7 @@ export default class DinnerSelection extends Component {
       }
     }
 
-    API2.updateApplicationStatuses(
+    API.updateApplicationStatuses(
       applicationsToUpdate,
       response => {
         console.log(response);
@@ -64,7 +63,7 @@ export default class DinnerSelection extends Component {
   };
 
   confirm = () => {
-    API2.confirmDinnerSelection(
+    API.confirmDinnerSelection(
       this.props.match.params.id,
       response => {
         console.log(response);

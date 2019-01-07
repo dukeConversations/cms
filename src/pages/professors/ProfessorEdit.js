@@ -141,6 +141,10 @@ export default class ProfessorEdit extends Component {
     );
   };
 
+  displayProp = (obj, prop, def) => {
+    return obj.hasOwnProperty(prop) ? obj[prop] : def;
+  };
+
   render() {
     var professor = this.state.professor;
 
@@ -225,7 +229,7 @@ export default class ProfessorEdit extends Component {
                   name="firstName"
                   id="firstName"
                   placeholder="Johnny"
-                  value={professor.firstName || ""}
+                  value={this.displayProp(professor, "firstName", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -240,7 +244,7 @@ export default class ProfessorEdit extends Component {
                   name="lastName"
                   id="lastName"
                   placeholder="Appleseed"
-                  value={professor.lastName || ""}
+                  value={this.displayProp(professor, "lastName", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -256,7 +260,7 @@ export default class ProfessorEdit extends Component {
                   id="uniqueID"
                   placeholder="12345"
                   disabled={!this.props.isCreating}
-                  value={professor.uniqueID || ""}
+                  value={this.displayProp(professor, "uniqueID", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -271,11 +275,11 @@ export default class ProfessorEdit extends Component {
                   className="form-control"
                   id="genderPronouns"
                   name="genderPronouns"
-                  value={
-                    professor.hasOwnProperty("genderPronouns")
-                      ? professor.genderPronouns
-                      : "Make Selection"
-                  }
+                  value={this.displayProp(
+                    professor,
+                    "genderPronouns",
+                    "Make Selection"
+                  )}
                   onChange={this.handleChange}
                 >
                   {genderPronounOptions}
@@ -292,7 +296,7 @@ export default class ProfessorEdit extends Component {
                   name="email"
                   id="email"
                   placeholder="cbray@duke.edu"
-                  value={professor.email || ""}
+                  value={this.displayProp(professor, "email", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -309,7 +313,7 @@ export default class ProfessorEdit extends Component {
                   name="title"
                   id="title"
                   placeholder="Supreme dictator of maths"
-                  value={professor.title || ""}
+                  value={this.displayProp(professor, "title", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -324,11 +328,11 @@ export default class ProfessorEdit extends Component {
                   className="form-control"
                   id="department"
                   name="department"
-                  value={
-                    professor.hasOwnProperty("department")
-                      ? professor.department
-                      : "Make Selection"
-                  }
+                  value={this.displayProp(
+                    professor,
+                    "department",
+                    "Make Selection"
+                  )}
                   onChange={this.handleChange}
                 >
                   {departmentOptions}
@@ -343,11 +347,11 @@ export default class ProfessorEdit extends Component {
                   className="form-control"
                   id="school"
                   name="school"
-                  value={
-                    professor.hasOwnProperty("school")
-                      ? professor.school
-                      : "Make Selection"
-                  }
+                  value={this.displayProp(
+                    professor,
+                    "school",
+                    "Make Selection"
+                  )}
                   onChange={this.handleChange}
                 >
                   {schoolOptions}

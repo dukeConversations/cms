@@ -202,24 +202,13 @@ export default class DinnerEdit extends Component {
     );
   }
 
+  displayProp = (obj, prop, def) => {
+    return obj.hasOwnProperty(prop) ? obj[prop] : def;
+  };
+
   render() {
     let dinner = this.state.dinner;
-    /*
-    {
-  -  "id": 1,
-  +  "timeStamp": "20NOV1652",
-  +  "topic": "The Spanish Inquisitino",
-  +  "description": "You'll never expect it",
-  +  "studentLimit": 1330,
-  +  "address": "200 Carr",
-  +  "dietaryRestrictions": "No Heretics",
-  -  "invitationSentTimeStamp": "12341",
-  +  "catering": false,
-  +  "transportation": true,
-  +  "professorID": "111",
-  -  "applications": []
-    }
-    */
+
     if (dinner != null) {
       let date = moment.unix(dinner.timeStamp);
 
@@ -270,7 +259,7 @@ export default class DinnerEdit extends Component {
                   name="topic"
                   id="topic"
                   placeholder="The history of history"
-                  value={this.state.dinner.topic || ""}
+                  value={this.displayProp(dinner, "topic", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -281,7 +270,11 @@ export default class DinnerEdit extends Component {
                 "professor",
                 <select
                   className="form-control"
-                  value={this.state.dinner.professorID || "Make Selection"}
+                  value={this.displayProp(
+                    dinner,
+                    "professorID",
+                    "Make Selection"
+                  )}
                   onChange={this.handleChange}
                   name="professorID"
                   id="professorID"
@@ -298,7 +291,7 @@ export default class DinnerEdit extends Component {
                   <select
                     className="form-control"
                     type="number"
-                    value={this.state.dinner.userID || "Make Selection"}
+                    value={this.displayProp(dinner, "userID", "Unclaimed")}
                     onChange={this.handleChange}
                     name="userID"
                     id="userID"
@@ -321,7 +314,7 @@ export default class DinnerEdit extends Component {
                   name="description"
                   id="description"
                   placeholder="This conversation is about this and this and this, too. Oh! and even that."
-                  value={this.state.dinner.description || ""}
+                  value={this.displayProp(dinner, "description", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -339,7 +332,7 @@ export default class DinnerEdit extends Component {
                   name="address"
                   id="address"
                   placeholder="1 Infinite Loop"
-                  value={this.state.dinner.address || ""}
+                  value={this.displayProp(dinner, "address", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -371,7 +364,7 @@ export default class DinnerEdit extends Component {
                   id="studentLimit"
                   placeholder={12}
                   min={0}
-                  value={this.state.dinner.studentLimit || ""}
+                  value={this.displayProp(dinner, "studentLimit", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -387,7 +380,7 @@ export default class DinnerEdit extends Component {
                   name="dietaryRestrictions"
                   id="dietaryRestrictions"
                   placeholder="Wheat, liquid, meat"
-                  value={this.state.dinner.dietaryRestrictions || ""}
+                  value={this.displayProp(dinner, "dietaryRestrictions", "")}
                   onChange={this.handleChange}
                 />
               )}
@@ -401,7 +394,7 @@ export default class DinnerEdit extends Component {
                 type="checkbox"
                 name="catering"
                 id="catering"
-                value={this.state.dinner.catering || false}
+                checked={this.displayProp(dinner, "catering", false)}
                 onChange={this.handleBooleanChange}
               />
             </Col>
@@ -412,7 +405,7 @@ export default class DinnerEdit extends Component {
                 type="checkbox"
                 name="transportation"
                 id="transportation"
-                value={this.state.dinner.transportation || false}
+                checked={this.displayProp(dinner, "transportation", false)}
                 onChange={this.handleBooleanChange}
               />
             </Col>

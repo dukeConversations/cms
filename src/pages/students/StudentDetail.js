@@ -44,12 +44,6 @@ export default class StudentDetail extends Component {
   render() {
     var student = this.state.student;
 
-    // var majors = [0, 1, 2, 3, 4, 5, 6, 7];
-    //
-    // var gradYears = [2019, 2020, 2021, 2022];
-    //
-    // var genderPronouns = [0, 1, 2, 3, 4];
-
     if (student != null) {
       return (
         <Container>

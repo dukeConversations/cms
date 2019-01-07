@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
+import Dicts from "../../../dictionaries";
 
 export default class CheckInRow extends Component {
   changeStatus = status => {
@@ -8,11 +9,13 @@ export default class CheckInRow extends Component {
 
   render() {
     let application = this.props.application;
-
+    let gradYearString =
+      "'" + application.student.graduationYear.toString().substring(2, 4);
     return (
       <tr>
         <td className="text-left align-middle">
-          {this.props.application.status}
+          <div>{gradYearString}</div>
+          <div>{Dicts.getMajor(application.student.major)}</div>
         </td>
         {application.status !== 0 && (
           <td className="text-right align-middle">

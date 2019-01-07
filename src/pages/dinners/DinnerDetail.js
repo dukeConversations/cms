@@ -70,6 +70,26 @@ export default class DinnerDetail extends Component {
     }
   };
 
+  renderUser = () => {
+    let dinner = this.state.dinner;
+    if (dinner.userID !== -1) {
+      let userName = dinner.user.firstName + " " + dinner.user.lastName;
+      return (
+        <div>
+          <label htmlFor="userButton">
+            <strong>User</strong>
+          </label>
+          <br />
+          <NavLink to={"/users/v/" + dinner.userID} id="userButton">
+            {userName}
+          </NavLink>
+        </div>
+      );
+    } else {
+      return this.innerRenderLabel("user", "User", "No user assigned");
+    }
+  };
+
   renderDate = (id, labelName) => {
     let unixDate = this.state.dinner[id];
     let date = moment.unix(unixDate);
@@ -78,20 +98,9 @@ export default class DinnerDetail extends Component {
   };
 
   render() {
+    let nullObj = {};
+    console.log(nullObj === null);
     var dinner = this.state.dinner;
-
-    // +  "id": 1,
-    // +  "timeStamp": "20NOV1652",
-    // +  "topic": "The Spanish Inquisitino",
-    // +  "description": "You'll never expect it",
-    // +  "studentLimit": 1330,
-    // +  "address": "200 Carr",
-    // +  "dietaryRestrictions": "No Heretics",
-    // -  "invitationSentTimeStamp": "12341",
-    // +  "catering": false,
-    // +  "transportation": true,
-    // +  "professorID": "111",
-    // -  "applications": []
 
     if (dinner != null) {
       return (
@@ -102,6 +111,7 @@ export default class DinnerDetail extends Component {
               {this.renderLabel("id", "ID")}
             </Col>
             <Col className="form-group col-3">{this.renderProfessor()}</Col>
+            <Col className="form-group col-3">{this.renderUser()}</Col>
             <Col className="form-group">
               {this.renderLabel("topic", "Topic")}
             </Col>

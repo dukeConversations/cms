@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import * as API from "duke-convos-api";
+import Dicts from "../../dictionaries";
 
 export default class ProfessorDetail extends Component {
   // Instantiate state when the component is constructed
@@ -61,8 +62,6 @@ export default class ProfessorDetail extends Component {
       1: "Trinity"
     };
 
-    let genderPronouns = { 0: "He, Him", 1: "She, Her", 2: "They, Them" };
-
     if (professor != null) {
       // Render the JSX
       return (
@@ -84,7 +83,7 @@ export default class ProfessorDetail extends Component {
               {this.innerRenderLabel(
                 "genderPronouns",
                 "Gender Pronouns",
-                genderPronouns[this.state.professor.genderPronouns]
+                Dicts.getGenderPronouns(professor.genderPronouns)
               )}
             </Col>
             <Col className="form-group col-4">

@@ -10,6 +10,7 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import Dicts from "../../../dictionaries";
 
 export default class CheckInRow extends Component {
   changeStatus = status => {
@@ -43,6 +44,9 @@ export default class CheckInRow extends Component {
               <Col>
                 <ul>
                   <li>{"grad year: " + application.student.graduationYear}</li>
+                  <li>
+                    {"major: " + Dicts.getMajor(application.student.major)}
+                  </li>
                   <li>{"apps: " + application.student.numberApplications}</li>
                   <li>
                     {"apps this sem: " +

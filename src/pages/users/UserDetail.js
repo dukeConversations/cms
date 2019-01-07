@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 import * as API from "duke-convos-api";
+import Dicts from "../../dictionaries";
 
 export default class UserDetail extends Component {
   // Instantiate state when the component is constructed
@@ -86,7 +87,7 @@ export default class UserDetail extends Component {
             <Col className="col-3">Net id: {user.netID}</Col>
           </Row>
           <div>Phone: {user.phone}</div>
-          <div>Major: {user.major}</div>
+          <div>Major: {Dicts.getMajor(user.major)}</div>
           <div># of dinners: {user.dinnerCount}</div>
           <div># of dinners this semester: {user.semesterDins}</div>
           <div>email text: {user.emailText}</div>

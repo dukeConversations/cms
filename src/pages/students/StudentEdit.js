@@ -4,6 +4,7 @@ import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
 import DeleteControl from "../../DeleteModalControl";
+import Dicts from "../../dictionaries";
 
 export default class StudentEdit extends Component {
   // Instantiate state when the component is constructed
@@ -147,16 +148,11 @@ export default class StudentEdit extends Component {
   render() {
     var student = this.state.student;
 
-    let majors = {
-      0: "Computer Science",
-      1: "Neuro Science",
-      2: "Political Science",
-      3: "Public Policy"
-    };
+    let majors = Dicts.majorsDict();
 
-    let gradYears = [2019, 2020, 2021, 2022];
+    let gradYears = Dicts.gradYears();
 
-    let genderPronouns = { 0: "He, Him", 1: "She, Her", 2: "They, Them" };
+    let genderPronouns = Dicts.genderPronouns();
 
     if (student != null) {
       const majorOptions = Object.keys(majors).map(key => {

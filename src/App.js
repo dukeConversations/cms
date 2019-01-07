@@ -30,7 +30,6 @@ import Login from "./pages/Login";
 
 class App extends Component {
   render() {
-    console.log("MAIN RENDER");
     return (
       <HashRouter>
         <div>

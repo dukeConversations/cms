@@ -8,28 +8,19 @@ import DeleteControl from "../../DeleteModalControl";
 export default class DinnerRow extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      professor: null,
-      user: null
-    };
+    this.state = {};
   }
 
   delete = () => {
     API.deleteDinner(
       this.props.dinner.id,
-      professor => {},
+      dinner => {},
       // an error is returned
       error => {
         console.error(error);
       }
     );
   };
-
-  componentDidMount() {
-    if (this.props.dinner.userID !== -1 && this.props.dinner.userID !== null) {
-      this.setState({ user: this.props.dinner.user });
-    }
-  }
 
   render() {
     var dinner = this.props.dinner;
@@ -39,19 +30,11 @@ export default class DinnerRow extends Component {
       ? date.format("dddd, MMMM Do @ h:mm a")
       : dinner.timeStamp;
 
-    var user = this.state.user;
-
     let userCellContent;
-    if (user !== null) {
+    if (dinner.userID !== -1) {
       userCellContent = (
         <NavLink to={"/users/v/" + dinner.userID}>
-          {user.firstName + " " + user.lastName}
-        </NavLink>
-      );
-    } else if (dinner.userID !== -1) {
-      userCellContent = (
-        <NavLink to={"/users/v/" + dinner.userID}>
-          {"user id: " + dinner.userID}
+          {dinner.user.firstName + " " + dinner.user.lastName}
         </NavLink>
       );
     } else {

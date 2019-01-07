@@ -224,9 +224,11 @@ export default class DinnerEdit extends Component {
       let date = moment.unix(dinner.timeStamp);
 
       let professors = this.state.professors;
+
+      let key = 0;
       const professorOptions = professors.map(prof => {
         return (
-          <option key={prof.uniqueID} value={prof.uniqueID}>
+          <option key={key++} value={prof.uniqueID}>
             {prof.firstName + " " + prof.lastName}
           </option>
         );
@@ -234,7 +236,7 @@ export default class DinnerEdit extends Component {
       professorOptions.splice(
         0,
         0,
-        <option key={professors.length} disabled>
+        <option key={key++} disabled>
           Make Selection
         </option>
       );
@@ -242,7 +244,7 @@ export default class DinnerEdit extends Component {
       let users = this.state.users;
       const userOptions = users.map(user => {
         return (
-          <option key={user.id} value={user.id}>
+          <option key={key++} value={user.id}>
             {user.firstName + " " + user.lastName}
           </option>
         );
@@ -250,8 +252,8 @@ export default class DinnerEdit extends Component {
       userOptions.splice(
         0,
         0,
-        <option key={professors.length + 1} disabled>
-          Make Selection
+        <option key={key++} value={-1}>
+          Unclaimed
         </option>
       );
 
@@ -288,22 +290,24 @@ export default class DinnerEdit extends Component {
                 </select>
               )}
             </Col>
-            <Col className="form-group col-5">
-              {this.renderInput(
-                "userID",
-                "User",
-                <select
-                  className="form-control"
-                  type="number"
-                  value={this.state.dinner.userID || "Make Selection"}
-                  onChange={this.handleChange}
-                  name="userID"
-                  id="userID"
-                >
-                  {userOptions}
-                </select>
-              )}
-            </Col>
+            {this.props.isCreating === false && (
+              <Col className="form-group col-5">
+                {this.renderInput(
+                  "userID",
+                  "User",
+                  <select
+                    className="form-control"
+                    type="number"
+                    value={this.state.dinner.userID || "Make Selection"}
+                    onChange={this.handleChange}
+                    name="userID"
+                    id="userID"
+                  >
+                    {userOptions}
+                  </select>
+                )}
+              </Col>
+            )}
           </Row>
           <Row>
             <Col className="form-group">

@@ -26,18 +26,8 @@ export default class DinnerRow extends Component {
   };
 
   componentDidMount() {
-    if (this.props.dinner.userID !== null) {
-      API.getUser(
-        this.props.dinner.userID,
-        // the data is returned
-        user => {
-          this.setState({ user: user });
-        },
-        // an error is returned
-        error => {
-          console.error(error);
-        }
-      );
+    if (this.props.dinner.userID !== -1 && this.props.dinner.userID !== null) {
+      this.setState({ user: this.props.dinner.user });
     }
   }
 
@@ -58,7 +48,7 @@ export default class DinnerRow extends Component {
           {user.firstName + " " + user.lastName}
         </NavLink>
       );
-    } else if (dinner.userID !== null) {
+    } else if (dinner.userID !== -1) {
       userCellContent = (
         <NavLink to={"/users/v/" + dinner.userID}>
           {"user id: " + dinner.userID}

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
 import DeleteControl from "../../DeleteModalControl";
 import API from "duke-convos-api";
+import Dicts from "../../dictionaries";
 
 export default class ProfessorRow extends Component {
   constructor(props) {
@@ -27,7 +28,9 @@ export default class ProfessorRow extends Component {
       <tr>
         <td className="text-left">{professor.firstName}</td>
         <td className="text-left">{professor.lastName}</td>
-        <td className="text-left">{professor.department}</td>
+        <td className="text-left">
+          {Dicts.getDepartment(professor.department)}
+        </td>
         <td className="text-left">{professor.dinnerCount}</td>
         <td className="text-center">
           <div className="d-inline-flex">

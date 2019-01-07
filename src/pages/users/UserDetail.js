@@ -71,7 +71,7 @@ export default class UserDetail extends Component {
           );
           break;
       }
-      console.log(user);
+
       return (
         <Container>
           <Row>

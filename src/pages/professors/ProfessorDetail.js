@@ -50,18 +50,6 @@ export default class ProfessorDetail extends Component {
   render() {
     var professor = this.state.professor;
 
-    let departments = {
-      0: "Computer Science",
-      1: "Neuro Science",
-      2: "Political Science",
-      3: "Public Policy"
-    };
-
-    let schools = {
-      0: "Pratt",
-      1: "Trinity"
-    };
-
     if (professor != null) {
       // Render the JSX
       return (
@@ -113,14 +101,14 @@ export default class ProfessorDetail extends Component {
               {this.innerRenderLabel(
                 "department",
                 "Department",
-                departments[this.state.professor["department"]]
+                Dicts.getDepartment([this.state.professor["department"]])
               )}
             </Col>
             <Col className="form-group col-3">
               {this.innerRenderLabel(
                 "school",
                 "School",
-                schools[this.state.professor["school"]]
+                Dicts.getSchool([this.state.professor["school"]])
               )}
             </Col>
           </Row>

@@ -4,6 +4,8 @@ import * as API from "duke-convos-api";
 import Validator from "../../validator";
 import * as Rules from "../../rules";
 import DeleteControl from "../../DeleteModalControl";
+import Dicts from "../../dictionaries";
+
 export default class ProfessorEdit extends Component {
   // Instantiate state when the component is constructed
   constructor() {
@@ -148,19 +150,11 @@ export default class ProfessorEdit extends Component {
   render() {
     var professor = this.state.professor;
 
-    let departments = {
-      0: "Computer Science",
-      1: "Neuro Science",
-      2: "Political Science",
-      3: "Public Policy"
-    };
+    let departments = Dicts.departments();
 
-    let schools = {
-      0: "Pratt",
-      1: "Trinity"
-    };
+    let schools = Dicts.schools();
 
-    let genderPronouns = { 0: "He, Him", 1: "She, Her", 2: "They, Them" };
+    let genderPronouns = Dicts.genderPronouns();
 
     if (professor != null) {
       const departmentOptions = Object.keys(departments).map(key => {

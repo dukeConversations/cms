@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import * as API from "duke-convos-api";
+import Dicts from "../../dictionaries";
 
 export default class StudentDetail extends Component {
   // Instantiate state when the component is constructed
@@ -27,7 +28,7 @@ export default class StudentDetail extends Component {
     );
   }
 
-  renderLabel = (id, labelName) => {
+  innerRenderLabel = (id, labelName, labelValue) => {
     return (
       <div>
         <label htmlFor={id}>
@@ -35,10 +36,14 @@ export default class StudentDetail extends Component {
         </label>
         <br />
         <label className="property-label" id={id}>
-          {this.state.student[id]}
+          {labelValue}
         </label>
       </div>
     );
+  };
+
+  renderLabel = (id, labelName) => {
+    return this.innerRenderLabel(id, labelName, this.state.student[id]);
   };
 
   render() {
@@ -69,7 +74,11 @@ export default class StudentDetail extends Component {
               {this.renderLabel("phoneNumber", "Phone")}
             </Col>
             <Col className="form-group col-4">
-              {this.renderLabel("major", "Major")}
+              {this.innerRenderLabel(
+                "major",
+                "Major",
+                Dicts.getMajor(student.major)
+              )}
             </Col>
           </Row>
           <Row className="my-2">
@@ -77,7 +86,11 @@ export default class StudentDetail extends Component {
               {this.renderLabel("graduationYear", "Graduation Year")}
             </Col>
             <Col className="form-group col-3">
-              {this.renderLabel("genderPronouns", "Gender Pronouns")}
+              {this.innerRenderLabel(
+                "genderPronouns",
+                "Gender Pronouns",
+                Dicts.getMajor(student.genderPronouns)
+              )}
             </Col>
           </Row>
           <Row className="my-2">

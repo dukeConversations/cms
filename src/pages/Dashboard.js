@@ -26,11 +26,13 @@ export default class Dashboard extends Component {
         for (var i = 0; i < dinners.length; i++) {
           let dinner = dinners[i];
 
-          if (dinner.status === 2 && dinner.userID === myUserId) {
-            completedDinners.push(dinner);
-          } else if (dinner.status === 1 && dinner.userID === myUserId) {
-            claimedDinners.push(dinner);
-          } else if (dinner.userID === null) {
+          if (dinner.userID === myUserId) {
+            if (dinner.status === 2) {
+              completedDinners.push(dinner);
+            } else if (dinner.status === 1) {
+              claimedDinners.push(dinner);
+            }
+          } else if (dinner.userID === -1) {
             unclaimedDinners.push(dinner);
           }
         }
@@ -45,38 +47,6 @@ export default class Dashboard extends Component {
         console.log(error);
       }
     );
-
-    // API.getDinnersForUserAndStatus(
-    //   "ce92",
-    //   2,
-    //   dinners => {
-    //     this.setState({ completedDinners: dinners });
-    //   },
-    //   error => {
-    //     console.error(error);
-    //   }
-    // );
-    //
-    // API.getDinnersForUserAndStatus(
-    //   "ce92",
-    //   1,
-    //   dinners => {
-    //     this.setState({ claimedDinners: dinners });
-    //   },
-    //   error => {
-    //     console.error(error);
-    //   }
-    // );
-    //
-    // API.getDinnersWithStatus(
-    //   0,
-    //   dinners => {
-    //     this.setState({ unclaimedDinners: dinners });
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // );
   }
 
   render() {

@@ -43,17 +43,6 @@ export default class ProfessorEdit extends Component {
 
     let validator = new Validator(professorObj);
 
-    /*
-    "uniqueID": String
-    "firstName": String
-    "lastName": String
-    "email": String
-    "genderPronouns": Integer
-    "department": Integer
-    "title": String
-    "school": Integer
-    */
-
     validator.validate("uniqueID", true);
     validator.validate("firstName", true);
     validator.validate("lastName", true);
@@ -180,11 +169,7 @@ export default class ProfessorEdit extends Component {
       departmentOptions.splice(
         0,
         0,
-        <option
-          key={Object.keys(departments).length}
-          value="Make Selection"
-          disabled
-        >
+        <option key={Object.keys(departments).length} disabled>
           Make Selection
         </option>
       );
@@ -227,28 +212,6 @@ export default class ProfessorEdit extends Component {
         </option>
       );
 
-      /*
-      firstName
-      lastName
-      genderPronouns
-      department
-      title
-      School
-          0 = Pratt
-          1 = Trinity
-      */
-
-      /*
-      "uniqueID": String
-      "firstName": String
-      "lastName": String
-      "email": String
-      "genderPronouns": Integer
-      "department": Integer
-      "title": Integer
-      "school": Integer
-      */
-
       return (
         <Container>
           <Row className="my-2">
@@ -262,7 +225,7 @@ export default class ProfessorEdit extends Component {
                   name="firstName"
                   id="firstName"
                   placeholder="Johnny"
-                  value={this.state.professor.firstName || ""}
+                  value={professor.firstName || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -277,7 +240,7 @@ export default class ProfessorEdit extends Component {
                   name="lastName"
                   id="lastName"
                   placeholder="Appleseed"
-                  value={this.state.professor.lastName || ""}
+                  value={professor.lastName || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -293,7 +256,7 @@ export default class ProfessorEdit extends Component {
                   id="uniqueID"
                   placeholder="12345"
                   disabled={!this.props.isCreating}
-                  value={this.state.professor.uniqueID || ""}
+                  value={professor.uniqueID || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -309,7 +272,9 @@ export default class ProfessorEdit extends Component {
                   id="genderPronouns"
                   name="genderPronouns"
                   value={
-                    this.state.professor.genderPronouns || "Make Selection"
+                    professor.hasOwnProperty("genderPronouns")
+                      ? professor.genderPronouns
+                      : "Make Selection"
                   }
                   onChange={this.handleChange}
                 >
@@ -327,7 +292,7 @@ export default class ProfessorEdit extends Component {
                   name="email"
                   id="email"
                   placeholder="cbray@duke.edu"
-                  value={this.state.professor.email || ""}
+                  value={professor.email || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -344,7 +309,7 @@ export default class ProfessorEdit extends Component {
                   name="title"
                   id="title"
                   placeholder="Supreme dictator of maths"
-                  value={this.state.professor.title || ""}
+                  value={professor.title || ""}
                   onChange={this.handleChange}
                 />
               )}
@@ -359,7 +324,11 @@ export default class ProfessorEdit extends Component {
                   className="form-control"
                   id="department"
                   name="department"
-                  value={this.state.professor.department || "Make Selection"}
+                  value={
+                    professor.hasOwnProperty("department")
+                      ? professor.department
+                      : "Make Selection"
+                  }
                   onChange={this.handleChange}
                 >
                   {departmentOptions}
@@ -374,7 +343,11 @@ export default class ProfessorEdit extends Component {
                   className="form-control"
                   id="school"
                   name="school"
-                  value={this.state.professor.school || "Make Selection"}
+                  value={
+                    professor.hasOwnProperty("school")
+                      ? professor.school
+                      : "Make Selection"
+                  }
                   onChange={this.handleChange}
                 >
                   {schoolOptions}

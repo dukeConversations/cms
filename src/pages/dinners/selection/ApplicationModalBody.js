@@ -30,9 +30,49 @@ export default class CheckInRow extends Component {
     return (
       <Fragment>
         <ModalHeader close={closeBtn} toggle={this.props.toggle}>
-          {application.student.firstName + " " + application.student.lastName}
+          Application Details
         </ModalHeader>
-        <ModalBody>{application.interest}</ModalBody>
+        <ModalBody>
+          <Container>
+            <Row>
+              <Col>
+                <strong>Applicant statistics:</strong>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <ul>
+                  <li>{"grad year: " + application.student.graduationYear}</li>
+                  <li>{"apps: " + application.student.numberApplications}</li>
+                  <li>
+                    {"apps this sem: " +
+                      application.student.numberApplicationsSemester}
+                  </li>
+                  <li>
+                    {"selections: " + application.student.numberSelections}
+                  </li>
+                  <li>
+                    {"selections this sem: " +
+                      application.student.numberSelectionsSemester}
+                  </li>
+                </ul>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col>
+                <strong>Applicantion:</strong>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <ul>
+                  <li>{"Interest: " + application.interest}</li>
+                </ul>
+              </Col>
+            </Row>
+          </Container>
+        </ModalBody>
         <ModalFooter>
           {application.status !== 0 && (
             <Button color="primary" onClick={() => this.changeStatus(0)}>
@@ -50,7 +90,7 @@ export default class CheckInRow extends Component {
             </Button>
           )}
           <Button color="secondary" onClick={this.props.toggle}>
-            Cancel
+            Close
           </Button>
         </ModalFooter>
       </Fragment>

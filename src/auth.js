@@ -19,9 +19,8 @@ exports.isLoggedIn = function() {
 };
 
 exports.loggedInUser = function() {
-  let user = JSON.parse(Cookies.get("currentUser"));
-  console.log(user);
-  return user === undefined ? null : user;
+  let user = Cookies.get("currentUser");
+  return user === undefined ? null : JSON.parse(user);
 };
 
 exports.getCurrentUserToken = function(key) {

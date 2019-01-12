@@ -3,8 +3,23 @@ import "./react-datetime.css";
 
 import React, { Component } from "react";
 import { Route, HashRouter } from "react-router-dom";
-import { Button, Nav, Navbar, NavItem } from "reactstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import {
+  Button,
+  Nav,
+  Navbar,
+  NavItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
+import { LinkContainer, NavLink } from "react-router-bootstrap";
+
+import * as Auth from "./auth";
 
 import Dashboard from "./pages/Dashboard";
 import CheckIn from "./pages/dinners/checkin/CheckIn";
@@ -27,14 +42,71 @@ import UserDetail from "./pages/users/UserDetail";
 import UserEdit from "./pages/users/UserEdit";
 
 import Login from "./pages/Login";
+import LoginPopup from "./pages/LoginPopup";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      showLogin: false,
+      loggedIn: Auth.isLoggedIn(),
+      loggedInUser: Auth.loggedInUser()
+    };
+  }
+
+  toggleLogin = () => {
+    this.setState({ showLogin: !this.state.showLogin });
+  };
+
+  handleLogin = loginResponse => {
+    Auth.setLogin(loginResponse);
+    this.setState({
+      loggedIn: Auth.isLoggedIn(),
+      loggedInUser: Auth.loggedInUser()
+    });
+  };
+
+  handleLogout = () => {
+    Auth.logout();
+    this.setState({
+      loggedIn: null,
+      loggedInUser: null
+    });
+  };
+
+  /*
+  {Auth.isLoggedIn() && (
+    <UncontrolledDropdown nav inNavbar>
+      <DropdownToggle nav caret>
+        {Auth.loggedInUser().firstName +
+          " " +
+          Auth.loggedInUser().lastName}
+      </DropdownToggle>
+      <DropdownMenu right>
+        <DropdownItem>
+          <NavLink to={"/users/v/" + Auth.loggedInUser().id}>
+            Your profile
+          </NavLink>
+        </DropdownItem>
+        <DropdownItem>
+          <Button color="link" onClick={this.handleLogout}>
+            Logout
+          </Button>
+        </DropdownItem>
+      </DropdownMenu>
+    </UncontrolledDropdown>
+  )}
+  */
+
   render() {
+    let toggleHandler = this.toggleLogin;
+    let loginHandler = this.handleLogin;
+
     return (
       <HashRouter>
         <div>
           <Navbar color="dark" expand="md">
-            <Nav>
+            <Nav className="mr-auto" navbar>
               <NavItem>
                 <LinkContainer to="/">
                   <Button color="link">Dashboard</Button>
@@ -61,6 +133,43 @@ class App extends Component {
                 </LinkContainer>
               </NavItem>
             </Nav>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                {!Auth.isLoggedIn() && (
+                  <Button color="primary" onClick={this.toggleLogin}>
+                    Login
+                  </Button>
+                )}
+                {Auth.isLoggedIn() && (
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      {Auth.loggedInUser().firstName +
+                        " " +
+                        Auth.loggedInUser().lastName}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>
+                        <LinkContainer
+                          to={"/users/v/" + Auth.loggedInUser().id}
+                        >
+                          <Button color="link">Your profile</Button>
+                        </LinkContainer>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Button color="link" onClick={this.toggleLogin}>
+                          Re-authenticate
+                        </Button>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Button color="link" onClick={this.handleLogout}>
+                          Logout
+                        </Button>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                )}
+              </NavItem>
+            </Nav>
           </Navbar>
 
           <div className="content">
@@ -85,7 +194,13 @@ class App extends Component {
             <Route
               exact
               path="/dinners/e/:id"
-              render={props => <DinnerEdit {...props} isCreating={false} />}
+              render={props => (
+                <DinnerEdit
+                  {...props}
+                  isCreating={false}
+                  loginFunc={this.setLoginVisibility}
+                />
+              )}
             />
             <Route
               exact
@@ -128,6 +243,12 @@ class App extends Component {
               path="/users/c"
               render={props => <UserEdit {...props} isCreating={true} />}
             />
+            {this.state.showLogin && (
+              <LoginPopup
+                toggleHandler={toggleHandler}
+                loginHandler={loginHandler}
+              />
+            )}
           </div>
         </div>
       </HashRouter>

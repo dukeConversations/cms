@@ -15,6 +15,7 @@ exports.login = function(username, password, successCallback, errorCallback) {
       successCallback(response.data);
     })
     .catch(error => {
+      console.log(error);
       errorCallback(error);
     });
 };

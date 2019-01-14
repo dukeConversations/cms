@@ -28,10 +28,20 @@ export default class Dinners extends Component {
     );
   }
 
+  refreshPage = () => {
+    this.componentDidMount();
+  };
+
   render() {
     // Generate a list of DinnerRows from the array in state.dinners
     const dinnerRows = this.state.dinners.map(dinner => {
-      return <DinnerRow key={dinner.id} dinner={dinner} />;
+      return (
+        <DinnerRow
+          key={dinner.id}
+          dinner={dinner}
+          forceRender={this.refreshPage}
+        />
+      );
     });
 
     // Render the JSX

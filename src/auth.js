@@ -4,9 +4,9 @@ exports.setLogin = function(loginResponse) {
   console.log(loginResponse);
   let user = {
     id: loginResponse.user.id,
-    netID: loginResponse.user.netID,
     firstName: loginResponse.user.firstName,
-    lastName: loginResponse.user.lastName
+    lastName: loginResponse.user.lastName,
+    role: loginResponse.user.role
   };
 
   Cookies.set("token", loginResponse.access_token);

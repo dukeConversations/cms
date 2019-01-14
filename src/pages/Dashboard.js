@@ -13,6 +13,11 @@ export default class Dashboard extends Component {
     };
   }
 
+  refreshPage = () => {
+    console.log("force update");
+    this.componentDidMount();
+  };
+
   componentDidMount() {
     if (Auth.isLoggedIn()) {
       let currentUser = Auth.loggedInUser();
@@ -31,7 +36,7 @@ export default class Dashboard extends Component {
             if (dinner.userID === myUserId) {
               if (dinner.status === 2) {
                 completedDinners.push(dinner);
-              } else if (dinner.status === 1) {
+              } else {
                 claimedDinners.push(dinner);
               }
             } else if (dinner.userID === -1) {
@@ -56,13 +61,25 @@ export default class Dashboard extends Component {
     return (
       <div>
         <h3>Completed Dinners</h3>
-        <DinnersTable dinners={this.state.completedDinners} rowType={2} />
+        <DinnersTable
+          dinners={this.state.completedDinners}
+          rowType={2}
+          forceRender={this.refreshPage}
+        />
         <br />
         <h3>Claimed Dinners</h3>
-        <DinnersTable dinners={this.state.claimedDinners} rowType={1} />
+        <DinnersTable
+          dinners={this.state.claimedDinners}
+          rowType={1}
+          forceRender={this.refreshPage}
+        />
         <br />
         <h3>Unclaimed Dinners</h3>
-        <DinnersTable dinners={this.state.unclaimedDinners} rowType={0} />
+        <DinnersTable
+          dinners={this.state.unclaimedDinners}
+          rowType={0}
+          forceRender={this.refreshPage}
+        />
       </div>
     );
   }

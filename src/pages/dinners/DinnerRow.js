@@ -12,17 +12,16 @@ export default class DinnerRow extends Component {
     this.state = {};
   }
 
-  claimDinner = () => {
+  claimDinner = shouldClaim => {
     let updatedDinner = JSON.parse(JSON.stringify(this.props.dinner));
     if (Auth.isLoggedIn()) {
-      updatedDinner.userID = Auth.loggedInUser().id;
+      updatedDinner.userID = shouldClaim ? Auth.loggedInUser().id : -1;
       API.updateDinner(
         this.props.dinner.id,
         updatedDinner,
         // the data is returned in dinner
         dinner => {
-          console.log(dinner);
-          this.props.history.goBack();
+          this.props.forceRender();
         },
         // an error is returned
         error => {
@@ -36,7 +35,9 @@ export default class DinnerRow extends Component {
   delete = () => {
     API.deleteDinner(
       this.props.dinner.id,
-      dinner => {},
+      dinner => {
+        this.props.forceRender();
+      },
       // an error is returned
       error => {
         console.error(error);
@@ -72,6 +73,15 @@ export default class DinnerRow extends Component {
     var cateringString = dinner.catering ? "Yes" : "No";
     var transportationString = dinner.transportation ? "Yes" : "No";
 
+    let shouldShowClaim = dinner.userID === -1;
+
+    let isOwner = false;
+    let isSuperAdmin = false;
+    if (Auth.isLoggedIn()) {
+      isOwner = dinner.userID === Auth.loggedInUser().id;
+      isSuperAdmin = Auth.loggedInUser().role === 0;
+    }
+
     return (
       <tr>
         <td className="text-left align-middle">{dinner.id}</td>
@@ -93,22 +103,44 @@ export default class DinnerRow extends Component {
               <NavLink to={"/dinners/v/" + dinner.id}>
                 <Button color="link">V</Button>
               </NavLink>
-              <NavLink to={"/dinners/e/" + dinner.id}>
-                <Button color="link">E</Button>
-              </NavLink>
               <NavLink to={"/dinners/ch/" + dinner.id}>
                 <Button color="link">C</Button>
               </NavLink>
-              <Button color="link" onClick={this.claimDinner}>
+              {isSuperAdmin && (
+                <NavLink to={"/dinners/e/" + dinner.id}>
+                  <Button color="link">E</Button>
+                </NavLink>
+              )}
+            </span>
+            {isSuperAdmin && (
+              <DeleteControl
+                modalTitle="Delete Dinner"
+                buttonTitle="D"
+                buttonColor="link"
+                onClickAction={this.delete}
+              />
+            )}
+
+            {shouldShowClaim && (
+              <Button
+                color="link"
+                onClick={() => {
+                  this.claimDinner(true);
+                }}
+              >
                 Claim
               </Button>
-            </span>
-            <DeleteControl
-              modalTitle="Delete Dinner"
-              buttonTitle="D"
-              buttonColor="link"
-              onClickAction={this.delete}
-            />
+            )}
+            {isOwner && (
+              <Button
+                color="link"
+                onClick={() => {
+                  this.claimDinner(false);
+                }}
+              >
+                Unclaim
+              </Button>
+            )}
           </div>
         </td>
       </tr>

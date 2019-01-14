@@ -11,6 +11,7 @@ export default class DinnersTable extends Component {
           key={dinner.id}
           dinner={dinner}
           rowType={this.props.rowType}
+          forceRender={this.props.forceRender}
         />
       );
     });

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import API from "duke-convos-api";
+import Auth from "../../auth";
 import { Button } from "reactstrap";
 import DeleteControl from "../../DeleteModalControl";
 
@@ -10,6 +11,27 @@ export default class DinnerRow extends Component {
     super(props);
     this.state = {};
   }
+
+  claimDinner = () => {
+    let updatedDinner = JSON.parse(JSON.stringify(this.props.dinner));
+    if (Auth.isLoggedIn()) {
+      updatedDinner.userID = Auth.loggedInUser().id;
+      API.updateDinner(
+        this.props.dinner.id,
+        updatedDinner,
+        // the data is returned in dinner
+        dinner => {
+          console.log(dinner);
+          this.props.history.goBack();
+        },
+        // an error is returned
+        error => {
+          console.error(error);
+          //this.props.history.goBack();
+        }
+      );
+    }
+  };
 
   delete = () => {
     API.deleteDinner(
@@ -77,6 +99,9 @@ export default class DinnerRow extends Component {
               <NavLink to={"/dinners/ch/" + dinner.id}>
                 <Button color="link">C</Button>
               </NavLink>
+              <Button color="link" onClick={this.claimDinner}>
+                Claim
+              </Button>
             </span>
             <DeleteControl
               modalTitle="Delete Dinner"

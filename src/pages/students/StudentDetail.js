@@ -42,6 +42,10 @@ export default class StudentDetail extends Component {
     );
   };
 
+  cancel = () => {
+    this.props.history.goBack();
+  };
+
   renderLabel = (id, labelName) => {
     return this.innerRenderLabel(id, labelName, this.state.student[id]);
   };
@@ -91,14 +95,6 @@ export default class StudentDetail extends Component {
                 "Gender Pronouns",
                 Dicts.getMajor(student.genderPronouns)
               )}
-            </Col>
-          </Row>
-          <Row className="my-2">
-            <Col className="col-2">
-              <Button onClick={this.cancel}>Cancel</Button>
-            </Col>
-            <Col className="col-2">
-              <Button onClick={this.submit}>Submit</Button>
             </Col>
           </Row>
         </Container>

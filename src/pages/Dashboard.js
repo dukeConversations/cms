@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DinnersTable from "./dinners/DinnersTable";
+import Auth from "../auth";
 import API from "duke-convos-api";
 
 export default class Dashboard extends Component {
@@ -13,40 +14,42 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    let myUserId = "ce92";
+    if (Auth.isLoggedIn()) {
+      let currentUser = Auth.loggedInUser();
+      console.log(currentUser);
+      let myUserId = currentUser.id;
 
-    API.getDinners(
-      dinners => {
-        console.log(dinners);
+      API.getDinners(
+        dinners => {
+          let completedDinners = [];
+          let claimedDinners = [];
+          let unclaimedDinners = [];
 
-        let completedDinners = [];
-        let claimedDinners = [];
-        let unclaimedDinners = [];
+          for (var i = 0; i < dinners.length; i++) {
+            let dinner = dinners[i];
 
-        for (var i = 0; i < dinners.length; i++) {
-          let dinner = dinners[i];
-
-          if (dinner.userID === myUserId) {
-            if (dinner.status === 2) {
-              completedDinners.push(dinner);
-            } else if (dinner.status === 1) {
-              claimedDinners.push(dinner);
+            if (dinner.userID === myUserId) {
+              if (dinner.status === 2) {
+                completedDinners.push(dinner);
+              } else if (dinner.status === 1) {
+                claimedDinners.push(dinner);
+              }
+            } else if (dinner.userID === -1) {
+              unclaimedDinners.push(dinner);
             }
-          } else if (dinner.userID === -1) {
-            unclaimedDinners.push(dinner);
           }
-        }
 
-        this.setState({
-          completedDinners: completedDinners,
-          claimedDinners: claimedDinners,
-          unclaimedDinners: unclaimedDinners
-        });
-      },
-      error => {
-        console.log(error);
-      }
-    );
+          this.setState({
+            completedDinners: completedDinners,
+            claimedDinners: claimedDinners,
+            unclaimedDinners: unclaimedDinners
+          });
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   render() {

@@ -1,8 +1,10 @@
 var Cookies = require("js-cookie");
 
 exports.setLogin = function(loginResponse) {
+  console.log(loginResponse);
   let user = {
     id: loginResponse.user.id,
+    netID: loginResponse.user.netID,
     firstName: loginResponse.user.firstName,
     lastName: loginResponse.user.lastName
   };

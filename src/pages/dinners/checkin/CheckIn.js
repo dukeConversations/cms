@@ -74,11 +74,6 @@ export default class CheckIn extends Component {
   };
 
   render() {
-    let error = this.state.error;
-    if (error !== null) {
-      return <ErrorView error={error} />;
-    }
-
     let { currentApplications } = this.state;
     let handler = this.updateApplicationAttendance;
 
@@ -95,6 +90,7 @@ export default class CheckIn extends Component {
 
     return (
       <div>
+        {this.state.error !== null && <ErrorView error={this.state.error} />}
         <h3>Check In</h3>
         <Table responsive>
           <tbody>

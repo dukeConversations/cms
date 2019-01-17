@@ -208,11 +208,6 @@ export default class DinnerEdit extends Component {
   };
 
   render() {
-    let error = this.state.error;
-    if (error !== null) {
-      return <ErrorView error={error} />;
-    }
-
     let dinner = this.state.dinner;
     if (dinner != null) {
       let date = moment.unix(dinner.timeStamp);
@@ -253,6 +248,7 @@ export default class DinnerEdit extends Component {
 
       return (
         <Container>
+          {this.state.error !== null && <ErrorView error={this.state.error} />}
           <Row className="my-2">
             <Col className="form-group col-5">
               {this.renderInput(

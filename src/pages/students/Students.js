@@ -36,13 +36,10 @@ export default class Students extends Component {
       return <StudentRow key={student.netID} student={student} />;
     });
 
-    let error = this.state.error;
-    if (error !== null) {
-      return <ErrorView error={error} />;
-    }
     // Render the JSX
     return (
       <div>
+        {this.state.error !== null && <ErrorView error={this.state.error} />}
         <h1>Students</h1>
         <NavLink to={"/students/c"}>Create</NavLink>
         <span> | </span>

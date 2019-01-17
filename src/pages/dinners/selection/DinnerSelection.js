@@ -111,11 +111,6 @@ export default class DinnerSelection extends Component {
   };
 
   render() {
-    let error = this.state.error;
-    if (error !== null) {
-      return <ErrorView error={error} />;
-    }
-
     let { applicationsDict } = this.state;
     let handler = this.updateApplicationStatus;
     let openAppHandler = this.viewApplication;
@@ -145,6 +140,7 @@ export default class DinnerSelection extends Component {
 
     return (
       <Fragment>
+        {this.state.error !== null && <ErrorView error={this.state.error} />}
         <Container>
           <Row className="my-2">
             <Col className="col-4">

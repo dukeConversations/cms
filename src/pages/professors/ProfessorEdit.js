@@ -212,13 +212,9 @@ export default class ProfessorEdit extends Component {
         </option>
       );
 
-      let error = this.state.error;
-      if (error !== null) {
-        return <ErrorView error={error} />;
-      }
-
       return (
         <Container>
+          {this.state.error !== null && <ErrorView error={this.state.error} />}
           <Row className="my-2">
             <Col className="form-group col-3">
               {this.renderInput(

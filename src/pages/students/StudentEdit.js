@@ -98,11 +98,12 @@ export default class StudentEdit extends Component {
           this.state.student,
           // the data is returned in student
           student => {
+            this.setState({ error: null });
             this.props.history.goBack();
           },
           // an error is returned
           error => {
-            console.log(error);
+            this.setState({ error: error });
             //this.props.history.goBack();
           }
         );
@@ -115,12 +116,12 @@ export default class StudentEdit extends Component {
       this.state.student.netID,
       // the data is returned in student
       student => {
-        console.log(student);
+        this.setState({ error: null });
         this.props.history.goBack();
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   };
@@ -146,11 +147,6 @@ export default class StudentEdit extends Component {
   };
 
   render() {
-    let error = this.state.error;
-    if (error !== null) {
-      return <ErrorView error={error} />;
-    }
-
     var student = this.state.student;
 
     let majors = Dicts.majorsDict();
@@ -207,6 +203,7 @@ export default class StudentEdit extends Component {
 
       return (
         <Container>
+          {this.state.error !== null && <ErrorView error={this.state.error} />}
           <Row className="my-2">
             <Col className="form-group col-xs-12 col-md-4">
               {this.renderInput(

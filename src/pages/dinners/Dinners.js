@@ -3,13 +3,15 @@ import DinnerRow from "./DinnerRow";
 import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import ErrorView from "../../ErrorView";
 
 export default class Dinners extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      dinners: []
+      dinners: [],
+      error: null
     };
   }
 
@@ -18,12 +20,12 @@ export default class Dinners extends Component {
     API.getDinners(
       // the data is returned in dinners
       dinners => {
-        console.log(dinners);
+        this.setState({ error: null });
         this.setState({ dinners: dinners });
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -43,6 +45,11 @@ export default class Dinners extends Component {
         />
       );
     });
+
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
 
     // Render the JSX
     return (

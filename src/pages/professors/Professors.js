@@ -3,13 +3,15 @@ import ProfessorRow from "./ProfessorRow";
 import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import ErrorView from "../../ErrorView";
 
 export default class Professors extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      professors: []
+      professors: [],
+      error: null
     };
   }
 
@@ -18,11 +20,12 @@ export default class Professors extends Component {
     API.getProfessors(
       // the data is returned in professors
       professors => {
+        this.setState({ error: null });
         this.setState({ professors: professors });
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -32,6 +35,11 @@ export default class Professors extends Component {
     const professorRows = this.state.professors.map(professor => {
       return <ProfessorRow key={professor.uniqueID} professor={professor} />;
     });
+
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
 
     // Render the JSX
     return (

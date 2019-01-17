@@ -3,13 +3,15 @@ import { Container, Row, Col } from "reactstrap";
 import * as API from "duke-convos-api";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
+import ErrorView from "../../ErrorView";
 
 export default class DinnerDetail extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      dinner: null
+      dinner: null,
+      error: null
     };
   }
 
@@ -19,11 +21,12 @@ export default class DinnerDetail extends Component {
       this.props.match.params.id,
       // the data is returned in dinner
       dinner => {
+        this.setState({ error: null });
         this.setState({ dinner: dinner });
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -98,6 +101,11 @@ export default class DinnerDetail extends Component {
   };
 
   render() {
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
+
     let nullObj = {};
     console.log(nullObj === null);
     var dinner = this.state.dinner;

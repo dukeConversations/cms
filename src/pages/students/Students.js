@@ -3,13 +3,15 @@ import StudentRow from "./StudentRow";
 import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import ErrorView from "../../ErrorView";
 
 export default class Students extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      students: []
+      students: [],
+      error: null
     };
   }
 
@@ -18,11 +20,12 @@ export default class Students extends Component {
     API.getStudents(
       // the data is returned in students
       students => {
+        this.setState({ error: null });
         this.setState({ students: students });
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -33,6 +36,10 @@ export default class Students extends Component {
       return <StudentRow key={student.netID} student={student} />;
     });
 
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
     // Render the JSX
     return (
       <div>

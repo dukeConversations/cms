@@ -5,6 +5,7 @@ import Validator from "../../validator";
 import * as Rules from "../../rules";
 import DeleteControl from "../../DeleteModalControl";
 import Dicts from "../../dictionaries";
+import ErrorView from "../../ErrorView";
 
 export default class ProfessorEdit extends Component {
   // Instantiate state when the component is constructed
@@ -13,7 +14,8 @@ export default class ProfessorEdit extends Component {
     this.state = {
       professor: null,
       showErrors: false,
-      validationErrors: {}
+      validationErrors: {},
+      error: null
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -25,12 +27,12 @@ export default class ProfessorEdit extends Component {
         this.props.match.params.id,
         // the data is returned in professor
         professor => {
-          console.log(professor);
+          this.setState({ error: null });
           this.setState({ professor: professor });
         },
         // an error is returned
         error => {
-          console.error(error);
+          this.setState({ error: error });
         }
       );
     } else {
@@ -87,7 +89,7 @@ export default class ProfessorEdit extends Component {
           },
           // an error is returned
           error => {
-            console.error(error);
+            console.log(error);
           }
         );
       } else {
@@ -100,7 +102,7 @@ export default class ProfessorEdit extends Component {
           },
           // an error is returned
           error => {
-            console.error(error);
+            console.log(error);
             //this.props.history.goBack();
           }
         );
@@ -209,6 +211,11 @@ export default class ProfessorEdit extends Component {
           Make Selection
         </option>
       );
+
+      let error = this.state.error;
+      if (error !== null) {
+        return <ErrorView error={error} />;
+      }
 
       return (
         <Container>

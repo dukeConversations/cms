@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "duke-convos-api";
 import CheckInRow from "./CheckInRow";
 import { Button, Table } from "reactstrap";
+import ErrorView from "../../../ErrorView";
 
 export default class CheckIn extends Component {
   // Instantiate state when the component is constructed
@@ -9,7 +10,8 @@ export default class CheckIn extends Component {
     super();
     this.state = {
       originalStatuses: {},
-      currentApplications: {}
+      currentApplications: {},
+      error: null
     };
   }
 
@@ -18,6 +20,8 @@ export default class CheckIn extends Component {
       this.props.match.params.id,
       // the data is returned in dinner
       dinner => {
+        this.setState({ error: null });
+
         let attendanceStatuses = {};
         let applicationsDict = {};
 
@@ -37,7 +41,7 @@ export default class CheckIn extends Component {
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -70,6 +74,11 @@ export default class CheckIn extends Component {
   };
 
   render() {
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
+
     let { currentApplications } = this.state;
     let handler = this.updateApplicationAttendance;
 

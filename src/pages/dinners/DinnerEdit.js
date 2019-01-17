@@ -6,6 +6,7 @@ import * as Rules from "../../rules";
 import moment from "moment";
 import DateTime from "react-datetime";
 import DeleteControl from "../../DeleteModalControl";
+import ErrorView from "../../ErrorView";
 
 export default class DinnerEdit extends Component {
   // Instantiate state when the component is constructed
@@ -28,11 +29,12 @@ export default class DinnerEdit extends Component {
         this.props.match.params.id,
         // the data is returned in dinner
         dinner => {
+          this.setState({ error: null });
           this.setState({ dinner: dinner });
         },
         // an error is returned
         error => {
-          console.error(error);
+          this.setState({ error: error });
         }
       );
     } else {
@@ -128,7 +130,6 @@ export default class DinnerEdit extends Component {
           this.state.dinner,
           // the data is returned in dinners
           dinner => {
-            console.log(dinner);
             this.props.history.goBack();
           },
           // an error is returned
@@ -207,8 +208,12 @@ export default class DinnerEdit extends Component {
   };
 
   render() {
-    let dinner = this.state.dinner;
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
 
+    let dinner = this.state.dinner;
     if (dinner != null) {
       let date = moment.unix(dinner.timeStamp);
 

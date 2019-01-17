@@ -5,6 +5,7 @@ import Validator from "../../validator";
 import * as Rules from "../../rules";
 import DeleteControl from "../../DeleteModalControl";
 import Dicts from "../../dictionaries";
+import ErrorView from "../../ErrorView";
 
 export default class StudentEdit extends Component {
   // Instantiate state when the component is constructed
@@ -13,7 +14,8 @@ export default class StudentEdit extends Component {
     this.state = {
       student: null,
       showErrors: false,
-      validationErrors: {}
+      validationErrors: {},
+      error: null
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -58,12 +60,12 @@ export default class StudentEdit extends Component {
         this.props.match.params.netID,
         // the data is returned in student
         student => {
-          console.log(student);
+          this.setState({ error: null });
           this.setState({ student: student });
         },
         // an error is returned
         error => {
-          console.error(error);
+          this.setState({ error: error });
         }
       );
     } else {
@@ -74,7 +76,6 @@ export default class StudentEdit extends Component {
   }
 
   submit = () => {
-    console.log(this.state.student);
     this.setState({ showErrors: true });
     let valid = this.validateFields();
     if (valid) {
@@ -83,12 +84,12 @@ export default class StudentEdit extends Component {
           this.state.student,
           // the data is returned in students
           student => {
-            console.log(student);
+            this.setState({ error: null });
             this.props.history.goBack();
           },
           // an error is returned
           error => {
-            console.error(error);
+            this.setState({ error: error });
           }
         );
       } else {
@@ -97,12 +98,11 @@ export default class StudentEdit extends Component {
           this.state.student,
           // the data is returned in student
           student => {
-            console.log(student);
             this.props.history.goBack();
           },
           // an error is returned
           error => {
-            console.error(error);
+            console.log(error);
             //this.props.history.goBack();
           }
         );
@@ -146,6 +146,11 @@ export default class StudentEdit extends Component {
   };
 
   render() {
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
+
     var student = this.state.student;
 
     let majors = Dicts.majorsDict();

@@ -13,6 +13,7 @@ import {
 import * as API from "duke-convos-api";
 import SelectionRow from "./SelectionRow";
 import ApplicationModalBody from "./ApplicationModalBody";
+import ErrorView from "../../../ErrorView";
 
 export default class DinnerSelection extends Component {
   // Instantiate state when the component is constructed
@@ -22,7 +23,8 @@ export default class DinnerSelection extends Component {
       originalApplicationStatuses: {},
       applicationsDict: {},
       showModal: false,
-      selectedApplication: null
+      selectedApplication: null,
+      error: null
     };
   }
 
@@ -31,6 +33,8 @@ export default class DinnerSelection extends Component {
       this.props.match.params.id,
       // the data is returned in dinner
       dinner => {
+        this.setState({ error: null });
+
         let applicationStatuses = {};
         let applicationsDict = {};
 
@@ -47,7 +51,7 @@ export default class DinnerSelection extends Component {
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -107,6 +111,11 @@ export default class DinnerSelection extends Component {
   };
 
   render() {
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
+
     let { applicationsDict } = this.state;
     let handler = this.updateApplicationStatus;
     let openAppHandler = this.viewApplication;

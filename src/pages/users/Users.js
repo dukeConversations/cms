@@ -3,13 +3,15 @@ import UserRow from "./UserRow";
 import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import ErrorView from "../../ErrorView";
 
 export default class Users extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      users: []
+      users: [],
+      error: null
     };
   }
 
@@ -18,11 +20,13 @@ export default class Users extends Component {
     API.getUsers(
       // the data is returned in users
       users => {
+        this.setState({ error: null });
         this.setState({ users: users });
       },
       // an error is returned
       error => {
-        console.error(error);
+        console.log(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -32,6 +36,11 @@ export default class Users extends Component {
     const userRows = this.state.users.map(user => {
       return <UserRow key={user.id} user={user} />;
     });
+
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
 
     // Render the JSX
     return (

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DinnersTable from "./dinners/DinnersTable";
 import Auth from "../auth";
 import API from "duke-convos-api";
+import ErrorView from "../ErrorView";
 
 export default class Dashboard extends Component {
   constructor() {
@@ -9,12 +10,12 @@ export default class Dashboard extends Component {
     this.state = {
       completedDinners: [],
       claimedDinners: [],
-      unclaimedDinners: []
+      unclaimedDinners: [],
+      error: null
     };
   }
 
   refreshPage = () => {
-    console.log("force update");
     this.componentDidMount();
   };
 
@@ -26,6 +27,7 @@ export default class Dashboard extends Component {
 
       API.getDinners(
         dinners => {
+          this.setState({ error: null });
           let completedDinners = [];
           let claimedDinners = [];
           let unclaimedDinners = [];
@@ -51,13 +53,18 @@ export default class Dashboard extends Component {
           });
         },
         error => {
-          console.log(error);
+          this.setState({ error: error });
         }
       );
     }
   }
 
   render() {
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
+
     return (
       <div>
         <h3>Completed Dinners</h3>

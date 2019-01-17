@@ -3,13 +3,15 @@ import { Container, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import * as API from "duke-convos-api";
 import Dicts from "../../dictionaries";
+import ErrorView from "../../ErrorView";
 
 export default class StudentDetail extends Component {
   // Instantiate state when the component is constructed
   constructor() {
     super();
     this.state = {
-      student: null
+      student: null,
+      error: null
     };
   }
 
@@ -19,11 +21,12 @@ export default class StudentDetail extends Component {
       this.props.match.params.netID,
       // the data is returned in student
       student => {
+        this.setState({ error: null });
         this.setState({ student: student });
       },
       // an error is returned
       error => {
-        console.error(error);
+        this.setState({ error: error });
       }
     );
   }
@@ -51,6 +54,11 @@ export default class StudentDetail extends Component {
   };
 
   render() {
+    let error = this.state.error;
+    if (error !== null) {
+      return <ErrorView error={error} />;
+    }
+
     var student = this.state.student;
 
     if (student != null) {

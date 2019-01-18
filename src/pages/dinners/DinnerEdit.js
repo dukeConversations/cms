@@ -17,7 +17,8 @@ export default class DinnerEdit extends Component {
       professors: [],
       users: [],
       showErrors: false,
-      validationErrors: {}
+      validationErrors: {},
+      error: null
     };
     this.handleChange = this.handleChange.bind(this);
   }

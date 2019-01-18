@@ -1,5 +1,4 @@
 let majorsDict = {
-  "0": "Error",
   "1": "African and African American Studies",
   "2": "Art History",
   "3": "Asian and Middel Eastern Studies",
@@ -57,7 +56,6 @@ let majorsDict = {
 };
 
 let departments = {
-  "0": "Error",
   "1": "African and African American Studies",
   "2": "Art History",
   "3": "Asian and Middel Eastern Studies",
@@ -113,10 +111,9 @@ let departments = {
   "53": "Visual and Media Studies"
 };
 
-let schools = { "0": "Error", "1": "Pratt", "2": "Trinity" };
+let schools = { "1": "Pratt", "2": "Trinity" };
 
 let genderPronounsDict = {
-  "0": "Error",
   "1": "he/him/his",
   "2": "she/her/hers",
   "3": "they/them/theirs",

@@ -32,10 +32,13 @@ export default class Users extends Component {
   }
 
   render() {
+
+
     // Generate a list of UserRows from the array in state.users
     const userRows = this.state.users.map(user => {
       return <UserRow key={user.id} user={user} />;
     });
+
 
     let error = this.state.error;
     if (error !== null) {

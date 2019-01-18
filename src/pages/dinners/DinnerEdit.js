@@ -34,6 +34,7 @@ export default class DinnerEdit extends Component {
         },
         // an error is returned
         error => {
+          console.log(error);
           this.setState({ error: error });
         }
       );
@@ -222,6 +223,7 @@ export default class DinnerEdit extends Component {
           </option>
         );
       });
+      
       professorOptions.splice(
         0,
         0,

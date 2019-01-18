@@ -13,40 +13,49 @@ export default class CheckInRow extends Component {
       "'" + application.student.graduationYear.toString().substring(2, 4);
     return (
       <tr>
-        <td className="text-left align-middle">
-          <div>{gradYearString}</div>
-          <div>{Dicts.getMajor(application.student.major)}</div>
-        </td>
-        {application.status !== 0 && (
-          <td className="text-right align-middle">
-            <Button color="link" onClick={() => this.changeStatus(0)}>
-              R
-            </Button>
-          </td>
-        )}
-        {application.status !== 1 && (
-          <td className="text-right align-middle">
-            <Button color="link" onClick={() => this.changeStatus(1)}>
-              A
-            </Button>
-          </td>
-        )}
-        {application.status !== 3 && (
-          <td className="text-right align-middle">
-            <Button color="link" onClick={() => this.changeStatus(3)}>
-              W
-            </Button>
-          </td>
-        )}
-        <td className="text-right align-middle">
-          <Button
-            color="link"
-            onClick={() => this.props.openAppHandler(application.id)}
-          >
-            View
-          </Button>
-        </td>
+        <div className="card">
+          <div className="card-header">
+            {gradYearString} {Dicts.getMajor(application.student.major)}
+          </div>
+          <div class="btn-group" role="group" >
+            {application.status !== 0 && application.status !== 2 && (
+                <Button type="button" className="btn btn-danger" onClick={() => this.changeStatus(0)}>
+                  Reject
+                </Button>
+            )}
+
+            {application.status !== 0 && application.status !== 2 && (<Button
+              type="button" className="btn btn-secondary"
+              onClick={() => this.props.openAppHandler(application.id)}>
+              View
+            </Button>)}
+
+            { application.status !== 1 && (
+                <Button type="button" className="btn btn-success" onClick={() => this.changeStatus(1)}>
+                  Accept
+                </Button>
+            )}
+
+            {application.status !== 1 && application.status !== 3 && (<Button
+              type="button" className="btn btn-secondary"
+              onClick={() => this.props.openAppHandler(application.id)}>
+              View
+            </Button>)}
+
+
+            {application.status !== 3 && (
+              <Button  type="button" className="btn btn-warning" onClick={() => this.changeStatus(3)}>
+                Wait
+              </Button>
+            )}
+
+          </div>
+        </div>
+
+        <br />
+
       </tr>
+
     );
   }
 }

@@ -23,6 +23,21 @@ export default class LoginPopup extends Component {
   }
 
   login = () => {
+
+    // Ensure the user has entered content in to the username and password inputs
+    if(this.state.username == "" && this.state.password == ""){
+      this.setState({errorMessage: "Username and password fields cannot be left blank."})
+      return;
+    }
+    else if(this.state.username == ""){
+      this.setState({errorMessage: "Username field cannot be left blank."})
+      return;
+    }
+    else if(this.state.password == ""){
+      this.setState({errorMessage: "Password field cannot be left blank."})
+      return;
+    }
+
     API.login(
       this.state.username,
       this.state.password,
@@ -48,6 +63,7 @@ export default class LoginPopup extends Component {
       <Modal isOpen={true} toggle={this.toggle} backdrop={false}>
         <ModalHeader toggle={this.toggle}>Login</ModalHeader>
         <ModalBody>
+          <label> Username </label>
           <input
             className="form-control"
             type="text"
@@ -57,6 +73,8 @@ export default class LoginPopup extends Component {
             value={this.state.username}
             onChange={this.handleChange}
           />
+          <br/>
+          <label> Password </label>
           <input
             className="form-control"
             type="text"

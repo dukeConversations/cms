@@ -96,7 +96,7 @@ export default class UserDetail extends Component {
             <div>Phone: {user.phone}</div>
             <div>Major: {Dicts.getMajor(user.major)}</div>
             <div># of dinners: {user.dinnerCount}</div>
-            <div># of dinners this semester: {user.semesterDins}</div>
+            <div># of dinners this semester: {user.semDinnerCount}</div>
             <div>email text: {user.emailText}</div>
             <div>picture id: {user.pictureId}</div>
           </Container>

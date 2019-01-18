@@ -24,7 +24,8 @@ export default class DinnerSelection extends Component {
       applicationsDict: {},
       showModal: false,
       selectedApplication: null,
-      error: null
+      error: null,
+      displayMessage : null
     };
   }
 
@@ -56,6 +57,29 @@ export default class DinnerSelection extends Component {
     );
   }
 
+  reset = () => {
+    let { applicationsDict } = this.state;
+    let applicationsToUpdate = {};
+
+    for (let applicationID in applicationsDict) {
+      let application = applicationsDict[applicationID];
+      applicationsToUpdate[application.id] = 2;
+    }
+
+    API.updateApplicationStatuses(
+      applicationsToUpdate,
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    window.location.reload();
+
+  }
+
   saveChanges = () => {
     let { applicationsDict, originalApplicationStatuses } = this.state;
     let applicationsToUpdate = {};
@@ -77,6 +101,8 @@ export default class DinnerSelection extends Component {
         console.log(error);
       }
     );
+
+    this.setState({displayMessage: "Changes Saved!"});
   };
 
   confirm = () => {
@@ -89,6 +115,9 @@ export default class DinnerSelection extends Component {
         console.log(error);
       }
     );
+
+    this.setState({displayMessage: "Dinners Confirmed!"});
+
   };
 
   updateApplicationStatus = (id, status) => {
@@ -141,35 +170,50 @@ export default class DinnerSelection extends Component {
     return (
       <Fragment>
         {this.state.error !== null && <ErrorView error={this.state.error} />}
-        <Container>
+        <Container style = {{paddingTop: 20}}>
           <Row className="my-2">
-            <Col className="col-4">
+            <Col className="col-4 text-center">
+              <h2> PENDING </h2>
+              <hr />
               <Table bordered responsive>
                 <tbody>{pendingRows}</tbody>
               </Table>
             </Col>
-            <Col className="col-4">
+            <Col className="col-4 text-center">
+              <h2> ACCEPTED </h2>
+              <hr />
               <Table bordered responsive>
                 <tbody>{acceptedRows}</tbody>
               </Table>
             </Col>
-            <Col className="col-4">
+            <Col className="col-4 text-center">
+              <h3> WAITLISTED </h3>
+              <hr />
               <Table bordered responsive>
                 <tbody>{waitlistedRows}</tbody>
               </Table>
             </Col>
           </Row>
+
+          <hr />
+
+
           <Row className="my-2">
-            <Col className="col-4 mx-2">
-              <Button onClick={this.confirm}>
+            <Col className="col-4 text-center">
+              <Button style={{width:"80%", backgroundColor:"green"}} onClick={this.confirm}>
                 Confirm & Notify Applicants
               </Button>
             </Col>
-            <Col className="col-4 mx-2">
-              <Button onClick={this.saveChanges}>Save</Button>
+            <Col className = "col-4 text-center">
+              <Button style={{width:"80%"}} onClick={this.reset}>Reset</Button>
+            </Col>
+            <Col className="col-4 text-center">
+              <Button style={{width:"80%", backgroundColor:"blue"}} onClick={this.saveChanges}>Save</Button>
             </Col>
           </Row>
+
         </Container>
+
         {this.state.showModal &&
           this.state.selectedApplication !== null && (
             <Modal

@@ -32,13 +32,10 @@ export default class Users extends Component {
   }
 
   render() {
-
-
     // Generate a list of UserRows from the array in state.users
     const userRows = this.state.users.map(user => {
       return <UserRow key={user.id} user={user} />;
     });
-
 
     let error = this.state.error;
     if (error !== null) {
@@ -50,10 +47,6 @@ export default class Users extends Component {
       <div>
         <h1>Users</h1>
         <NavLink to={"/users/c"}>Create</NavLink>
-        <span> | </span>
-        <Button color="link" type="button">
-          Delete Selected
-        </Button>
 
         <Table bordered responsive>
           {/* Create the header of the table */}

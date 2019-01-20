@@ -46,10 +46,6 @@ export default class Professors extends Component {
       <div>
         <h1>Professors</h1>
         <NavLink to={"/professors/c"}>Create</NavLink>
-        <span> | </span>
-        <Button color="link" type="button">
-          Delete Selected
-        </Button>
 
         <Table bordered responsive>
           {/* Create the header of the table */}

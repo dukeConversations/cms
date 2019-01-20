@@ -42,10 +42,6 @@ export default class Students extends Component {
         {this.state.error !== null && <ErrorView error={this.state.error} />}
         <h1>Students</h1>
         <NavLink to={"/students/c"}>Create</NavLink>
-        <span> | </span>
-        <Button color="link" type="button">
-          Delete Selected
-        </Button>
 
         <Table bordered responsive>
           {/* Create the header of the table */}

@@ -56,10 +56,6 @@ export default class Dinners extends Component {
       <div>
         <h1>Dinners</h1>
         <NavLink to={"/dinners/c"}>Create</NavLink>
-        <span> | </span>
-        <Button color="link" type="button">
-          Delete Selected
-        </Button>
 
         <Table bordered responsive>
           {/* Create the header of the table */}

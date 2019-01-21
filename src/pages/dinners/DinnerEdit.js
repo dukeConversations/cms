@@ -209,6 +209,11 @@ export default class DinnerEdit extends Component {
     return obj.hasOwnProperty(prop) ? obj[prop] : def;
   };
 
+  isFutureDate = function(current) {
+    var yesterday = moment().subtract(1, "day");
+    return current.isAfter(yesterday);
+  };
+
   render() {
     let dinner = this.state.dinner;
     if (dinner != null) {
@@ -348,6 +353,7 @@ export default class DinnerEdit extends Component {
                 <DateTime
                   name="timeStamp"
                   id="timeStamp"
+                  isValidDate={this.isFutureDate}
                   renderInput={this.renderDateInput}
                   timeConstraints={{ minutes: { step: 5 } }}
                   value={date.isValid() ? date : null}

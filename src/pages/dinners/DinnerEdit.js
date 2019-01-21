@@ -224,7 +224,7 @@ export default class DinnerEdit extends Component {
           </option>
         );
       });
-      
+
       professorOptions.splice(
         0,
         0,

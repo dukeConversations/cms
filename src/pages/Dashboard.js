@@ -67,13 +67,6 @@ export default class Dashboard extends Component {
 
     return (
       <div>
-        <h3>Completed Dinners</h3>
-        <DinnersTable
-          dinners={this.state.completedDinners}
-          rowType={2}
-          forceRender={this.refreshPage}
-        />
-        <br />
         <h3>Claimed Dinners</h3>
         <DinnersTable
           dinners={this.state.claimedDinners}
@@ -85,6 +78,13 @@ export default class Dashboard extends Component {
         <DinnersTable
           dinners={this.state.unclaimedDinners}
           rowType={0}
+          forceRender={this.refreshPage}
+        />
+        <h3>Completed Dinners</h3>
+        <br />
+        <DinnersTable
+          dinners={this.state.completedDinners}
+          rowType={2}
           forceRender={this.refreshPage}
         />
       </div>

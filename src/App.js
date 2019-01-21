@@ -2,6 +2,7 @@ import "./App.css";
 import "./react-datetime.css";
 
 import React, { Component } from "react";
+import { Redirect } from "react-router";
 import { Route, HashRouter } from "react-router-dom";
 import {
   Button,
@@ -41,7 +42,6 @@ import Users from "./pages/users/Users";
 import UserDetail from "./pages/users/UserDetail";
 import UserEdit from "./pages/users/UserEdit";
 
-import Login from "./pages/Login";
 import LoginPopup from "./pages/LoginPopup";
 
 class App extends Component {
@@ -69,34 +69,10 @@ class App extends Component {
   handleLogout = () => {
     Auth.logout();
     this.setState({
-      loggedIn: null,
+      loggedIn: false,
       loggedInUser: null
     });
   };
-
-  /*
-  {Auth.isLoggedIn() && (
-    <UncontrolledDropdown nav inNavbar>
-      <DropdownToggle nav caret>
-        {Auth.loggedInUser().firstName +
-          " " +
-          Auth.loggedInUser().lastName}
-      </DropdownToggle>
-      <DropdownMenu right>
-        <DropdownItem>
-          <NavLink to={"/users/v/" + Auth.loggedInUser().id}>
-            Your profile
-          </NavLink>
-        </DropdownItem>
-        <DropdownItem>
-          <Button color="link" onClick={this.handleLogout}>
-            Logout
-          </Button>
-        </DropdownItem>
-      </DropdownMenu>
-    </UncontrolledDropdown>
-  )}
-  */
 
   render() {
     let toggleHandler = this.toggleLogin;
@@ -174,7 +150,6 @@ class App extends Component {
 
           <div className="content">
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/login" component={Login} />
 
             <Route exact path="/students" component={Students} />
             <Route exact path="/students/v/:netID" component={StudentDetail} />

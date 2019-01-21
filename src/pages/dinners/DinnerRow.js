@@ -70,6 +70,8 @@ export default class DinnerRow extends Component {
       professorString = professor.firstName + " " + professor.lastName;
     }
 
+    var numberOfApplications = dinner.applications.length;
+
     var cateringString = dinner.catering ? "Yes" : "No";
     var transportationString = dinner.transportation ? "Yes" : "No";
 
@@ -92,6 +94,7 @@ export default class DinnerRow extends Component {
         </td>
         <td className="text-left align-middle">{userCellContent}</td>
         <td className="text-left align-middle">{dateString}</td>
+        <td className="text-left align-middle">{numberOfApplications}</td>
         <td className="text-left align-middle">{cateringString}</td>
         <td className="text-left align-middle">{transportationString}</td>
         <td className="text-center">

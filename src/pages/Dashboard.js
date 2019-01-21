@@ -78,8 +78,8 @@ export default class Dashboard extends Component {
           dinners={this.state.unclaimedDinners}
           forceRender={this.refreshPage}
         />
-        <h3>Completed Dinners</h3>
         <br />
+        <h3>Completed Dinners</h3>
         <DinnersTable
           dinners={this.state.completedDinners}
           forceRender={this.refreshPage}

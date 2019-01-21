@@ -26,6 +26,7 @@ export default class DinnersTable extends Component {
               <th>Professor</th>
               <th>User</th>
               <th>Date/Time</th>
+              <th># apps</th>
               <th>Catering</th>
               <th>Trans.</th>
               <th>Actions</th>

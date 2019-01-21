@@ -84,7 +84,7 @@ export default class DinnerRow extends Component {
 
     return (
       <tr>
-        <td className="text-left align-middle">{dinner.id}</td>
+        <td className="text-left align-middle">{dinner.topic}</td>
         <td className="text-left align-middle">
           <NavLink to={"/professors/v/" + dinner.professorID}>
             {professorString}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DinnerRow from "./DinnerRow";
+import DinnersTable from "./DinnersTable";
 import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
@@ -35,17 +35,6 @@ export default class Dinners extends Component {
   };
 
   render() {
-    // Generate a list of DinnerRows from the array in state.dinners
-    const dinnerRows = this.state.dinners.map(dinner => {
-      return (
-        <DinnerRow
-          key={dinner.id}
-          dinner={dinner}
-          forceRender={this.refreshPage}
-        />
-      );
-    });
-
     let error = this.state.error;
     if (error !== null) {
       return <ErrorView error={error} />;
@@ -56,25 +45,10 @@ export default class Dinners extends Component {
       <div>
         <h1>Dinners</h1>
         <NavLink to={"/dinners/c"}>Create</NavLink>
-
-        <Table bordered responsive>
-          {/* Create the header of the table */}
-          <thead className="thead-dark">
-            <tr>
-              <th>id</th>
-              <th>Professor</th>
-              <th>User</th>
-              <th>Date/Time</th>
-              <th>Catering</th>
-              <th>Trans.</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Add the rows to represent each dinner */}
-            {dinnerRows}
-          </tbody>
-        </Table>
+        <DinnersTable
+          dinners={this.state.dinners}
+          forceRender={this.refreshPage}
+        />
       </div>
     );
   }

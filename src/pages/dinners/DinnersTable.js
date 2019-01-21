@@ -10,7 +10,6 @@ export default class DinnersTable extends Component {
         <DinnerRow
           key={dinner.id}
           dinner={dinner}
-          rowType={this.props.rowType}
           forceRender={this.props.forceRender}
         />
       );
@@ -23,7 +22,7 @@ export default class DinnersTable extends Component {
         <Table bordered responsive>
           <thead className="thead-dark">
             <tr>
-              <th>id</th>
+              <th>Topic</th>
               <th>Professor</th>
               <th>User</th>
               <th>Date/Time</th>

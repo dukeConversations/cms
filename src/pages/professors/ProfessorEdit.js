@@ -378,6 +378,8 @@ export default class ProfessorEdit extends Component {
           </Row>
         </Container>
       );
+    } else if (this.state.error !== null) {
+      return <ErrorView error={this.state.error} />;
     } else {
       return null;
     }

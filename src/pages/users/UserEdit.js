@@ -4,6 +4,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 import Validator from "../../validator";
 import DeleteControl from "../../DeleteModalControl";
 import * as Rules from "../../rules";
+import Dicts from "../../dictionaries";
 import ErrorView from "../../ErrorView";
 
 export default class UserEdit extends Component {
@@ -40,6 +41,7 @@ export default class UserEdit extends Component {
     validator.validate("password", true);
     validator.validate("email", true, [Rules.isEmail]);
     validator.validate("role", true);
+    validator.validate("major", true);
     validator.validate("netID", true);
     validator.validate("uniqueID", true);
     validator.validate("phone", true, [Rules.isPhoneNumber]);
@@ -166,6 +168,23 @@ export default class UserEdit extends Component {
     var user = this.state.user;
 
     if (user != null) {
+      let majors = Dicts.majorsDict();
+
+      const majorOptions = Object.keys(majors).map(key => {
+        return (
+          <option key={key} value={key}>
+            {majors[key]}
+          </option>
+        );
+      });
+      majorOptions.splice(
+        0,
+        0,
+        <option key={majors.length} disabled>
+          Make Selection
+        </option>
+      );
+
       return (
         <Container>
           {this.state.error !== null && <ErrorView error={this.state.error} />}
@@ -245,6 +264,21 @@ export default class UserEdit extends Component {
                   value={this.displayProp(user, "email", "")}
                   onChange={this.handleChange}
                 />
+              )}
+            </Col>
+            <Col className="form-group col-xs-12 col-md-6">
+              {this.renderInput(
+                "major",
+                "Major",
+                <select
+                  onChange={this.handleChange}
+                  value={this.state.user.major || "Make Selection"}
+                  name="major"
+                  className="form-control"
+                  id="major"
+                >
+                  {majorOptions}
+                </select>
               )}
             </Col>
           </Row>

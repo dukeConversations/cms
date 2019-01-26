@@ -27,7 +27,7 @@
   color: #ff0000;
 }
 
-div:empty {
+/* div:empty {
   position: absolute;
   top: calc(50% - 4em);
   left: calc(50% - 4em);
@@ -46,4 +46,4 @@ div:empty {
   100% {
     transform: rotate(360deg);
   }
-}
+} */

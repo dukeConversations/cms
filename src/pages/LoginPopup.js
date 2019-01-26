@@ -45,6 +45,7 @@ export default class LoginPopup extends Component {
         this.setState({ errorMessage: null });
         this.props.toggleHandler();
         this.props.loginHandler(response);
+        window.location.reload();
       },
       // an error is returned
       error => {
@@ -52,6 +53,7 @@ export default class LoginPopup extends Component {
         console.error(error);
       }
     );
+
   };
 
   toggle = () => {

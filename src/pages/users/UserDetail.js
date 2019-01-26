@@ -4,6 +4,10 @@ import * as API from "duke-convos-api";
 import Dicts from "../../dictionaries";
 import ErrorView from "../../ErrorView";
 
+// To allow reroute to the user's profile information
+import { NavLink } from "react-router-dom";
+import { Button } from "reactstrap";
+
 export default class UserDetail extends Component {
   // Instantiate state when the component is constructed
   constructor() {
@@ -99,6 +103,10 @@ export default class UserDetail extends Component {
             <div># of dinners this semester: {user.semDinnerCount}</div>
             <div>email text: {user.emailText}</div>
             <div>picture id: {user.pictureId}</div>
+
+            <NavLink to={"/users/e/" + user.id}>
+              <Button color="link">E</Button>
+            </NavLink>
           </Container>
         );
       }

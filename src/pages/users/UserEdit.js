@@ -38,7 +38,8 @@ export default class UserEdit extends Component {
     "emailText": String
     */
     validator.validate("username", true);
-    validator.validate("password", true);
+    validator.validate("oldPassword", false);
+    validator.validate("newPassword", false);
     validator.validate("email", true, [Rules.isEmail]);
     validator.validate("role", true);
     validator.validate("major", true);
@@ -111,7 +112,7 @@ export default class UserEdit extends Component {
         );
       } else {
         API.updateUser(
-          this.state.user.uniqueID,
+          this.state.user.id,
           this.state.user,
           user => {
             this.setState({ error: null });
@@ -285,15 +286,30 @@ export default class UserEdit extends Component {
           <Row className="my-2">
             <Col className="form-group col-xs-12 col-md-3">
               {this.renderInput(
-                "password",
-                "Password",
+                "oldPassword",
+                "Old Password",
                 <input
                   className="form-control"
                   type="text"
-                  name="password"
-                  id="password"
-                  placeholder="passworddd"
-                  value={this.displayProp(user, "password", "")}
+                  name="oldPassword"
+                  id="oldPassword"
+                  placeholder="passworddd olddd"
+                  value={this.displayProp(user, "oldPassword", "")}
+                  onChange={this.handleChange}
+                />
+              )}
+            </Col>
+            <Col className="form-group col-xs-12 col-md-3">
+              {this.renderInput(
+                "newPassword",
+                "New Password",
+                <input
+                  className="form-control"
+                  type="text"
+                  name= "newPassword"
+                  id="newPassword"
+                  placeholder="New passworddd"
+                  value={this.displayProp(user, "newPassword", "")}
                   onChange={this.handleChange}
                 />
               )}

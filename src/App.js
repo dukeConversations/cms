@@ -72,6 +72,9 @@ class App extends Component {
       loggedIn: false,
       loggedInUser: null
     });
+
+    window.location.reload();
+
   };
 
   render() {

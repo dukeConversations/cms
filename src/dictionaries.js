@@ -121,6 +121,8 @@ let genderPronounsDict = {
   "5": "other"
 };
 
+let roles = {"0":"Super Admin", "1":"Executive","2":"Conversationalist"}
+
 exports.majorsDict = function() {
   return majorsDict;
 };
@@ -162,4 +164,8 @@ exports.departments = function() {
 
 exports.getDepartment = function(key) {
   return departments[key];
+};
+
+exports.getRole = function(key){
+  return roles[key];
 };

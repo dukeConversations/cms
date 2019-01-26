@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
+import Dicts from "../../dictionaries";
 
 export default class UserRow extends Component {
   constructor(props) {
@@ -10,12 +11,13 @@ export default class UserRow extends Component {
 
   render() {
     var user = this.props.user;
+    var roleString = Dicts.getRole(user.role.toString());
 
     return (
       <tr>
         <td className="text-left">{user.firstName + " " + user.lastName}</td>
         <td className="text-left">{user.email}</td>
-        <td className="text-left">{user.role}</td>
+        <td className="text-left">{roleString}</td>
         <td className="text-left">{user.dinners.length}</td>
         <td className="text-center">
           <div className="d-inline-flex">

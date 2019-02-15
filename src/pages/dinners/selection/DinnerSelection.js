@@ -25,7 +25,7 @@ export default class DinnerSelection extends Component {
       showModal: false,
       selectedApplication: null,
       error: null,
-      displayMessage : null
+      displayMessage: null
     };
   }
 
@@ -77,8 +77,7 @@ export default class DinnerSelection extends Component {
     );
 
     window.location.reload();
-
-  }
+  };
 
   saveChanges = () => {
     let { applicationsDict, originalApplicationStatuses } = this.state;
@@ -102,7 +101,7 @@ export default class DinnerSelection extends Component {
       }
     );
 
-    this.setState({displayMessage: "Changes Saved!"});
+    this.setState({ displayMessage: "Changes Saved!" });
   };
 
   confirm = () => {
@@ -116,8 +115,8 @@ export default class DinnerSelection extends Component {
       }
     );
 
-    this.setState({displayMessage: "Dinners Confirmed!"});
-
+    this.setState({ displayMessage: "Dinners Confirmed!" });
+    this.props.history.push("/");
   };
 
   updateApplicationStatus = (id, status) => {
@@ -170,7 +169,7 @@ export default class DinnerSelection extends Component {
     return (
       <Fragment>
         {this.state.error !== null && <ErrorView error={this.state.error} />}
-        <Container style = {{paddingTop: 20}}>
+        <Container style={{ paddingTop: 20 }}>
           <Row className="my-2">
             <Col className="col-4 text-center">
               <h2> PENDING </h2>
@@ -197,21 +196,29 @@ export default class DinnerSelection extends Component {
 
           <hr />
 
-
           <Row className="my-2">
             <Col className="col-4 text-center">
-              <Button style={{width:"80%", backgroundColor:"green"}} onClick={this.confirm}>
+              <Button
+                style={{ width: "80%", backgroundColor: "green" }}
+                onClick={this.confirm}
+              >
                 Confirm & Notify Applicants
               </Button>
             </Col>
-            <Col className = "col-4 text-center">
-              <Button style={{width:"80%"}} onClick={this.reset}>Reset</Button>
+            <Col className="col-4 text-center">
+              <Button style={{ width: "80%" }} onClick={this.reset}>
+                Reset
+              </Button>
             </Col>
             <Col className="col-4 text-center">
-              <Button style={{width:"80%", backgroundColor:"blue"}} onClick={this.saveChanges}>Save</Button>
+              <Button
+                style={{ width: "80%", backgroundColor: "blue" }}
+                onClick={this.saveChanges}
+              >
+                Save
+              </Button>
             </Col>
           </Row>
-
         </Container>
 
         {this.state.showModal &&

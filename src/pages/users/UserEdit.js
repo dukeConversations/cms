@@ -306,7 +306,7 @@ export default class UserEdit extends Component {
                 <input
                   className="form-control"
                   type="text"
-                  name= "newPassword"
+                  name="newPassword"
                   id="newPassword"
                   placeholder="New passworddd"
                   value={this.displayProp(user, "newPassword", "")}

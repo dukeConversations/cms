@@ -7,7 +7,6 @@ import ErrorView from "../../ErrorView";
 import ReactTable from "react-table";
 import Dicts from "../../dictionaries";
 
-
 export default class Students extends Component {
   // Instantiate state when the component is constructed
   constructor() {
@@ -76,40 +75,45 @@ export default class Students extends Component {
 
     const moreData = this.state.students;
 
-    const columns = [{
-      Header: 'First Name',
-      accessor: 'firstName', // String-based value accessors!
-      maxWidth:100,
-      Cell: props => <span>{props.value}</span> // Custom cell components!
-    },
-    {
-      Header: 'Last Name',
-      accessor: 'lastName',
-      maxWidth:100,
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    }, {
-      Header: 'NetID',
-      accessor: 'netID',
-      maxWidth:100,
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    },
-    {
-      Header: 'Class',
-      accessor: 'graduationYear',
-      maxWidth:100,
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    },{
-      Header: 'Selections',
-      accessor: 'numberSelections',
-      maxWidth:100,
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    },{
-      Header: 'Sem. Selections',
-      accessor: 'numberSelectionsSemester',
-      maxWidth:400,
-      minWidth: 150,
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    }];
+    const columns = [
+      {
+        Header: "First Name",
+        accessor: "firstName", // String-based value accessors!
+        maxWidth: 100,
+        Cell: props => <span>{props.value}</span> // Custom cell components!
+      },
+      {
+        Header: "Last Name",
+        accessor: "lastName",
+        maxWidth: 100,
+        Cell: props => <span className="number">{props.value}</span> // Custom cell components!
+      },
+      {
+        Header: "NetID",
+        accessor: "netID",
+        maxWidth: 100,
+        Cell: props => <span className="number">{props.value}</span> // Custom cell components!
+      },
+      {
+        Header: "Class",
+        accessor: "graduationYear",
+        maxWidth: 100,
+        Cell: props => <span className="number">{props.value}</span> // Custom cell components!
+      },
+      {
+        Header: "Selections",
+        accessor: "numberSelections",
+        maxWidth: 100,
+        Cell: props => <span className="number">{props.value}</span> // Custom cell components!
+      },
+      {
+        Header: "Sem. Selections",
+        accessor: "numberSelectionsSemester",
+        maxWidth: 400,
+        minWidth: 150,
+        Cell: props => <span className="number">{props.value}</span> // Custom cell components!
+      }
+    ];
 
     // Render the JSX
     return (
@@ -118,86 +122,180 @@ export default class Students extends Component {
         <Row>
           <Col>
             <h1>Students</h1>
-         </Col>
+          </Col>
 
-         <Col> </Col>
+          <Col> </Col>
 
-         <Col style = {{textAlign:"right"}}>
-             <NavLink to={"/students/c"}> <Button style = {{backgroundColor:"#343A40"}}> Create New Student </Button> </NavLink>
-         </Col>
-
-       </Row>
-        <hr/>
+          <Col style={{ textAlign: "right" }}>
+            <NavLink to={"/students/c"}>
+              {" "}
+              <Button style={{ backgroundColor: "#343A40" }}>
+                {" "}
+                Create New Student{" "}
+              </Button>{" "}
+            </NavLink>
+          </Col>
+        </Row>
+        <hr />
 
         <Row>
-
           <Col>
-            <ReactTable getTrProps={(state, rowInfo) => {
-              if (rowInfo && rowInfo.row) {
-                return {
-                  onClick: (e) => {
-                    this.setState({
-                      selected: rowInfo.index
-                    });
-                    console.log(this.state.students);
-                    console.log(rowInfo.index);
-                    console.log(rowInfo.netID);
+            <ReactTable
+              getTrProps={(state, rowInfo) => {
+                if (rowInfo && rowInfo.row) {
+                  return {
+                    onClick: e => {
+                      this.setState({
+                        selected: rowInfo.index
+                      });
+                      console.log(this.state.students);
+                      console.log(rowInfo.index);
+                      console.log(rowInfo.netID);
 
-                    this.setState({
-                      selectedStudent: rowInfo.index
-                    });
-                  },
-                  style: {
-                    background: rowInfo.index === this.state.selected ? '#00afec' : 'white',
-                    color: rowInfo.index === this.state.selected ? 'white' : 'black'
-                  }
+                      this.setState({
+                        selectedStudent: rowInfo.index
+                      });
+                    },
+                    style: {
+                      background:
+                        rowInfo.index === this.state.selected
+                          ? "#00afec"
+                          : "white",
+                      color:
+                        rowInfo.index === this.state.selected
+                          ? "white"
+                          : "black"
+                    }
+                  };
+                } else {
+                  return {};
                 }
-              } else {
-                return {}
-              }
-            }}
-            data={moreData}
-            columns={columns}
-            defaultPageSize={10}
-            className= "-striped -highlight"/>
+              }}
+              data={moreData}
+              columns={columns}
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
           </Col>
 
-          {this.state.selectedStudent !== null && (<Col style={{paddingLeft: 100}}>
-            {/* <h3> <strong>{  this.state.students[this.state.selectedStudent].firstName} {this.state.students[this.state.selectedStudent].lastName }</strong> </h3> */}
-            <Row>
-              <Col> <Row><strong> First Name: </strong>  </Row> <Row>{this.state.students[this.state.selectedStudent].firstName}  </Row> </Col>
-              <Col> <Row><strong> Last Name: </strong> </Row> <Row>{this.state.students[this.state.selectedStudent].lastName} </Row> </Col>
-            </Row>
-            <br/>
-            <Row>
-              <Col> <Row><strong> netID: </strong>  </Row> <Row>{this.state.students[this.state.selectedStudent].netID}  </Row> </Col>
-              <Col> <Row><strong> uniqueID: </strong> </Row> <Row>{this.state.students[this.state.selectedStudent].uniqueID} </Row> </Col>
-            </Row>
-            <br/>
-            <Row>
-              <Col> <Row><strong> Phone: </strong>  </Row> <Row>{this.state.students[this.state.selectedStudent].phoneNumber}  </Row> </Col>
-              <Col> <Row><strong> Major: </strong> </Row> <Row>{Dicts.getMajor(this.state.students[this.state.selectedStudent].major)} </Row> </Col>
-            </Row>
-            <br/>
-            <Row>
-              <Col> <Row><strong> Class: </strong>  </Row> <Row>{this.state.students[this.state.selectedStudent].graduationYear}  </Row> </Col>
-              <Col> <Row><strong> Pronouns: </strong> </Row> <Row>{Dicts.getGenderPronouns(this.state.students[this.state.selectedStudent].genderPronouns)} </Row> </Col>
-            </Row>
+          {this.state.selectedStudent !== null && (
+            <Col style={{ paddingLeft: 100 }}>
+              {/* <h3> <strong>{  this.state.students[this.state.selectedStudent].firstName} {this.state.students[this.state.selectedStudent].lastName }</strong> </h3> */}
+              <Row>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> First Name: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {this.state.students[this.state.selectedStudent].firstName}{" "}
+                  </Row>{" "}
+                </Col>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> Last Name: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {this.state.students[this.state.selectedStudent].lastName}{" "}
+                  </Row>{" "}
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> netID: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {this.state.students[this.state.selectedStudent].netID}{" "}
+                  </Row>{" "}
+                </Col>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> uniqueID: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {this.state.students[this.state.selectedStudent].uniqueID}{" "}
+                  </Row>{" "}
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> Phone: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {
+                      this.state.students[this.state.selectedStudent]
+                        .phoneNumber
+                    }{" "}
+                  </Row>{" "}
+                </Col>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> Major: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {Dicts.getMajor(
+                      this.state.students[this.state.selectedStudent].major
+                    )}{" "}
+                  </Row>{" "}
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> Class: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {
+                      this.state.students[this.state.selectedStudent]
+                        .graduationYear
+                    }{" "}
+                  </Row>{" "}
+                </Col>
+                <Col>
+                  {" "}
+                  <Row>
+                    <strong> Pronouns: </strong>{" "}
+                  </Row>{" "}
+                  <Row>
+                    {Dicts.getGenderPronouns(
+                      this.state.students[this.state.selectedStudent]
+                        .genderPronouns
+                    )}{" "}
+                  </Row>{" "}
+                </Col>
+              </Row>
 
-            <Row style= {{paddingTop: 100}}><NavLink to={"/students/e/" + this.state.students[this.state.selectedStudent].netID}><Button>EDIT</Button></NavLink></Row>
-          </Col>
-
+              <Row style={{ paddingTop: 100 }}>
+                <NavLink
+                  to={
+                    "/students/e/" +
+                    this.state.students[this.state.selectedStudent].netID
+                  }
+                >
+                  <Button>EDIT</Button>
+                </NavLink>
+              </Row>
+            </Col>
           )}
 
-          {this.state.selectedStudent === null && (<Col>
-            <h3> Select a row to learn more! </h3>
-          </Col>)}
-
+          {this.state.selectedStudent === null && (
+            <Col>
+              <h3> Select a row to learn more! </h3>
+            </Col>
+          )}
         </Row>
-
       </Container>
-
-
     );
   }
 }

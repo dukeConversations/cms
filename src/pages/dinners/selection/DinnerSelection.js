@@ -108,15 +108,15 @@ export default class DinnerSelection extends Component {
     API.confirmDinnerSelection(
       this.props.match.params.id,
       response => {
+        this.setState({ displayMessage: "Dinners Confirmed!" });
+        this.props.history.push("/");
         console.log(response);
       },
       error => {
+        this.setState({ displayMessage: "Error" });
         console.log(error);
       }
     );
-
-    this.setState({ displayMessage: "Dinners Confirmed!" });
-    this.props.history.push("/");
   };
 
   updateApplicationStatus = (id, status) => {

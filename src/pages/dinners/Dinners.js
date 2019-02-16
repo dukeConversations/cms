@@ -4,6 +4,7 @@ import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import ErrorView from "../../ErrorView";
+import { Table, Button, Row, Col, Container } from "reactstrap";
 
 export default class Dinners extends Component {
   // Instantiate state when the component is constructed
@@ -42,14 +43,15 @@ export default class Dinners extends Component {
 
     // Render the JSX
     return (
-      <div>
+
+      <Container>
         <h1>Dinners</h1>
         <NavLink to={"/dinners/c"}>Create</NavLink>
         <DinnersTable
           dinners={this.state.dinners}
           forceRender={this.refreshPage}
         />
-      </div>
+      </Container>
     );
   }
 }

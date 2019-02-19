@@ -15,7 +15,7 @@ export default class DinnerRow extends Component {
   claimDinner = shouldClaim => {
     let updatedDinner = JSON.parse(JSON.stringify(this.props.dinner));
     if (Auth.isLoggedIn()) {
-      updatedDinner.userID = shouldClaim ? Auth.loggedInUser().id : null;
+      updatedDinner.userID = shouldClaim ? Auth.loggedInUser().id : -1;
       API.updateDinner(
         this.props.dinner.id,
         updatedDinner,

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import DinnersTable from "./DinnersTable";
 import * as API from "duke-convos-api";
-import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import ErrorView from "../../ErrorView";
 import { Table, Button, Row, Col, Container } from "reactstrap";

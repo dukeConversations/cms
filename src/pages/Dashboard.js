@@ -3,6 +3,8 @@ import DinnersTable from "./dinners/DinnersTable";
 import Auth from "../auth";
 import API from "duke-convos-api";
 import ErrorView from "../ErrorView";
+import { Container } from "reactstrap";
+
 
 export default class Dashboard extends Component {
   constructor() {
@@ -41,7 +43,7 @@ export default class Dashboard extends Component {
               } else {
                 claimedDinners.push(dinner);
               }
-            } else if (dinner.userID === -1) {
+            } else if (dinner.userID ===  null) {
               unclaimedDinners.push(dinner);
             }
           }
@@ -66,7 +68,7 @@ export default class Dashboard extends Component {
     }
 
     return (
-      <div>
+      <Container>
         <h3>Claimed Dinners</h3>
         <DinnersTable
           dinners={this.state.claimedDinners}
@@ -84,7 +86,7 @@ export default class Dashboard extends Component {
           dinners={this.state.completedDinners}
           forceRender={this.refreshPage}
         />
-      </div>
+      </Container>
     );
   }
 }

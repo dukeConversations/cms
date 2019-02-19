@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ProfessorRow from "./ProfessorRow";
 import * as API from "duke-convos-api";
-import { Table, Button } from "reactstrap";
+import { Table, Button, Container } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import ErrorView from "../../ErrorView";
 
@@ -43,7 +43,7 @@ export default class Professors extends Component {
 
     // Render the JSX
     return (
-      <div>
+      <Container>
         <h1>Professors</h1>
         <NavLink to={"/professors/c"}>Create</NavLink>
 
@@ -63,7 +63,7 @@ export default class Professors extends Component {
             {professorRows}
           </tbody>
         </Table>
-      </div>
+      </Container>
     );
   }
 }

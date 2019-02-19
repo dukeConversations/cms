@@ -4,6 +4,7 @@ import * as API from "duke-convos-api";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import ErrorView from "../../ErrorView";
+import {  Container } from "reactstrap";
 
 export default class Users extends Component {
   // Instantiate state when the component is constructed
@@ -44,7 +45,7 @@ export default class Users extends Component {
 
     // Render the JSX
     return (
-      <div>
+      <Container>
         <h1>Users</h1>
         <NavLink to={"/users/c"}>Create</NavLink>
 
@@ -64,7 +65,7 @@ export default class Users extends Component {
             {userRows}
           </tbody>
         </Table>
-      </div>
+      </Container>
     );
   }
 }

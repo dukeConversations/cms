@@ -37,12 +37,13 @@ export default class CheckInRow extends Component {
           <Container>
             <Row>
               <Col>
-                <strong>Applicant statistics:</strong>
+                <strong>Applicant info:</strong>
               </Col>
             </Row>
             <Row>
               <Col>
                 <ul>
+                  <li>{"netID: " + application.student.netID}</li>
                   <li>{"grad year: " + application.student.graduationYear}</li>
                   <li>
                     {"major: " + Dicts.getMajor(application.student.major)}
@@ -59,13 +60,17 @@ export default class CheckInRow extends Component {
                     {"selections this sem: " +
                       application.student.numberSelectionsSemester}
                   </li>
+                  <li>
+                    {"dietary restrictions: " +
+                      application.student.dietaryRestrictions}
+                  </li>
                 </ul>
               </Col>
             </Row>
             <br />
             <Row>
               <Col>
-                <strong>Applicantion:</strong>
+                <strong>Application:</strong>
               </Col>
             </Row>
             <Row>

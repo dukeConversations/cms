@@ -54,7 +54,7 @@ export default class DinnerRow extends Component {
       : dinner.timeStamp;
 
     let userCellContent;
-    if (dinner.userID !== -1) {
+    if (dinner.userID !== null) {
       userCellContent = (
         <NavLink to={"/users/v/" + dinner.userID}>
           {dinner.user.firstName + " " + dinner.user.lastName}
@@ -75,7 +75,7 @@ export default class DinnerRow extends Component {
     var cateringString = dinner.catering ? "Yes" : "No";
     var transportationString = dinner.transportation ? "Yes" : "No";
 
-    let shouldShowClaim = dinner.userID === -1;
+    let shouldShowClaim = dinner.userID === null;
 
     let isOwner = false;
     let isSuperAdmin = false;

@@ -35,20 +35,6 @@ export default class Students extends Component {
     );
   }
 
-  // onRowClick(e, t, rowInfo) {
-  //   this.setState((oldState) => {
-  //       let data = oldState.data.slice();
-  //       let copy = Object.assign({},  data[rowInfo.index]);
-  //
-  //       copy.selected = true;
-  //       copy.FirstName = "selected";
-  //       data[rowInfo.index] = copy;
-  //
-  //       return {
-  //           data: data
-  //       }
-  // });
-
   innerRenderLabel = (id, labelName, labelValue) => {
     return (
       <div>
@@ -69,10 +55,6 @@ export default class Students extends Component {
 
   render() {
     // // Generate a list of StudentRows from the array in state.students
-    // const studentRows = this.state.students.map(student => {
-    //   return <StudentRow key={student.netID} student={student} />;
-    // });
-
     const moreData = this.state.students;
 
     const columns = [

@@ -285,19 +285,20 @@ export default class UserEdit extends Component {
           </Row>
           <Row className="my-2">
             <Col className="form-group col-xs-12 col-md-3">
-              {this.renderInput(
-                "oldPassword",
-                "Old Password",
-                <input
-                  className="form-control"
-                  type="text"
-                  name="oldPassword"
-                  id="oldPassword"
-                  placeholder="passworddd olddd"
-                  value={this.displayProp(user, "oldPassword", "")}
-                  onChange={this.handleChange}
-                />
-              )}
+              {!this.props.isCreating &&
+                this.renderInput(
+                  "oldPassword",
+                  "Old Password",
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="oldPassword"
+                    id="oldPassword"
+                    placeholder="passworddd olddd"
+                    value={this.displayProp(user, "oldPassword", "")}
+                    onChange={this.handleChange}
+                  />
+                )}
             </Col>
             <Col className="form-group col-xs-12 col-md-3">
               {this.renderInput(
